@@ -1,0 +1,80 @@
+2026-04-19T16:29:36.2752342Z Initialize start
+2026-04-19T16:29:36.2764974Z RequestWrite trigger=Initialize currentScreen=<null>
+2026-04-19T16:29:36.2860639Z WroteState revision=1 trigger=Initialize screen=<null>
+2026-04-19T16:29:36.2862684Z BridgeMainThreadDispatcher: using Harmony pump strategy (NRun._Process / NControllerManager._Process)
+2026-04-19T16:29:36.2868627Z BridgeCommandReader started; watching C:\Users\hi\AppData\Roaming\SlayTheSpire2\hermesbridge\commands.json
+2026-04-19T16:29:36.6085486Z BridgeSingleton ctor
+2026-04-19T16:29:37.2078323Z BridgeMainThreadDispatcher.Pump first tick
+2026-04-19T16:29:37.5708363Z MainMenu _Ready postfix fired
+2026-04-19T16:29:37.5711419Z SetScreen screen=MainMenu trigger=MainMenuReady
+2026-04-19T16:29:37.5714456Z RequestWrite trigger=MainMenuReady currentScreen=MainMenu
+2026-04-19T16:29:37.5800652Z WroteState revision=2 trigger=MainMenuReady screen=MainMenu
+2026-04-19T16:30:14.3409712Z BridgeCommandReader dispatching id=708 type=ContinueRun
+2026-04-19T16:30:14.3715340Z DispatchContinueRun invoked OnContinueButtonPressedAsync
+2026-04-19T16:30:14.3718254Z RequestWrite trigger=PostDispatch:ContinueRun currentScreen=MainMenu
+2026-04-19T16:30:14.3798041Z WroteState revision=3 trigger=PostDispatch:ContinueRun screen=MainMenu
+2026-04-19T16:30:14.3813986Z BridgeCommandReader wrote result id=708 status=ok
+2026-04-19T16:30:16.0780067Z MapScreen _Ready postfix fired
+2026-04-19T16:30:16.0783198Z SetScreen screen=Map trigger=MapScreenReady
+2026-04-19T16:30:16.0785105Z RequestWrite trigger=MapScreenReady currentScreen=Map
+2026-04-19T16:30:16.0871469Z WroteState revision=4 trigger=MapScreenReady screen=Map
+2026-04-19T16:30:16.2039428Z NMapScreen.SetMap postfix fired (map=<ok>)
+2026-04-19T16:30:16.2062367Z RequestWrite trigger=MapScreenSetMap currentScreen=Map
+2026-04-19T16:30:16.2161045Z WroteState revision=5 trigger=MapScreenSetMap screen=Map
+2026-04-19T16:30:16.2186599Z NMapScreen.Close postfix fired
+2026-04-19T16:30:16.2188347Z SetScreen screen=MapClosed trigger=MapScreenClose
+2026-04-19T16:30:16.2189805Z RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+2026-04-19T16:30:16.2250529Z WroteState revision=6 trigger=MapScreenClose screen=MapClosed
+2026-04-19T16:30:16.2327608Z Hook BeforeRoomEntered roomType=Treasure id=<null>
+2026-04-19T16:30:16.3228209Z NTreasureRoom._Ready postfix fired
+2026-04-19T16:30:16.3231948Z SetScreen screen=Treasure trigger=TreasureRoomReady
+2026-04-19T16:30:16.3233487Z RequestWrite trigger=TreasureRoomReady currentScreen=Treasure
+2026-04-19T16:30:16.3320411Z WroteState revision=7 trigger=TreasureRoomReady screen=Treasure
+2026-04-19T16:30:16.3323316Z SetCurrentTreasureNode(TreasureRoomReady) captured node
+2026-04-19T16:30:16.3326485Z PushTreasure(TreasureRoomReady) skipped: no TreasureRoom
+2026-04-19T16:30:16.3343758Z Hook AfterRoomEntered roomType=Treasure
+2026-04-19T16:30:16.3345803Z SetScreen screen=Room:Treasure trigger=AfterRoomEntered
+2026-04-19T16:30:16.3347376Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Treasure
+2026-04-19T16:30:16.3413282Z WroteState revision=8 trigger=AfterRoomEntered screen=Room:Treasure
+2026-04-19T16:30:16.3450315Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Treasure
+2026-04-19T16:30:16.3554340Z WroteState revision=9 trigger=AfterRoomEntered screen=Room:Treasure
+2026-04-19T16:30:16.3556396Z RequestWrite trigger=AfterRoomEntered-ClearEvent currentScreen=Room:Treasure
+2026-04-19T16:30:16.3616726Z WroteState revision=10 trigger=AfterRoomEntered-ClearEvent screen=Room:Treasure
+2026-04-19T16:30:16.3618891Z RequestWrite trigger=AfterRoomEntered-ClearShop currentScreen=Room:Treasure
+2026-04-19T16:30:16.3672051Z WroteState revision=11 trigger=AfterRoomEntered-ClearShop screen=Room:Treasure
+2026-04-19T16:30:16.3674006Z RequestWrite trigger=AfterRoomEntered-ClearRestSite currentScreen=Room:Treasure
+2026-04-19T16:30:16.3731138Z WroteState revision=12 trigger=AfterRoomEntered-ClearRestSite screen=Room:Treasure
+2026-04-19T16:30:16.3738937Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Treasure
+2026-04-19T16:30:16.3803412Z WroteState revision=13 trigger=AfterRoomEntered screen=Room:Treasure
+2026-04-19T16:30:16.3807086Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Treasure
+2026-04-19T16:30:16.3861114Z WroteState revision=14 trigger=AfterRoomEntered screen=Room:Treasure
+2026-04-19T16:30:43.4330810Z BridgeCommandReader dispatching id=709 type=OpenChest
+2026-04-19T16:30:43.4522104Z NTreasureRoom.OpenChest postfix fired
+2026-04-19T16:30:43.4525974Z RequestWrite trigger=TreasureChestOpened currentScreen=Room:Treasure
+2026-04-19T16:30:43.4615122Z WroteState revision=15 trigger=TreasureChestOpened screen=Room:Treasure
+2026-04-19T16:30:43.4617922Z DispatchOpenChest invoked NTreasureRoom.OpenChest
+2026-04-19T16:30:43.4619538Z RequestWrite trigger=PostDispatch:OpenChest currentScreen=Room:Treasure
+2026-04-19T16:30:43.4678262Z WroteState revision=16 trigger=PostDispatch:OpenChest screen=Room:Treasure
+2026-04-19T16:30:43.4730401Z BridgeCommandReader wrote result id=709 status=ok
+2026-04-19T16:30:58.3270593Z BridgeCommandReader dispatching id=710 type=SelectTreasureRelic
+2026-04-19T16:30:58.3532645Z NTreasureRoomRelicCollection.PickRelic postfix fired
+2026-04-19T16:30:58.3535841Z RequestWrite trigger=TreasureRelicPicked currentScreen=Room:Treasure
+2026-04-19T16:30:58.3606014Z WroteState revision=17 trigger=TreasureRelicPicked screen=Room:Treasure
+2026-04-19T16:30:58.3615464Z RequestWrite trigger=TreasureRelicPicked currentScreen=Room:Treasure
+2026-04-19T16:30:58.3675418Z WroteState revision=18 trigger=TreasureRelicPicked screen=Room:Treasure
+2026-04-19T16:30:58.3677086Z DispatchSelectTreasureRelic invoked PickRelic(index=0)
+2026-04-19T16:30:58.3678617Z RequestWrite trigger=PostDispatch:SelectTreasureRelic currentScreen=Room:Treasure
+2026-04-19T16:30:58.3734197Z WroteState revision=19 trigger=PostDispatch:SelectTreasureRelic screen=Room:Treasure
+2026-04-19T16:30:58.3782913Z BridgeCommandReader wrote result id=710 status=ok
+2026-04-19T16:30:58.3817293Z NTreasureRoom.OpenChest task completed
+2026-04-19T16:31:11.8120051Z BridgeCommandReader dispatching id=711 type=Proceed
+2026-04-19T16:31:11.8200504Z NMapScreen.Open postfix fired
+2026-04-19T16:31:11.8202813Z SetScreen screen=Map trigger=MapScreenOpen
+2026-04-19T16:31:11.8204308Z RequestWrite trigger=MapScreenOpen currentScreen=Map
+2026-04-19T16:31:11.8273834Z WroteState revision=20 trigger=MapScreenOpen screen=Map
+2026-04-19T16:31:11.8278202Z RequestWrite trigger=MapScreenOpen currentScreen=Map
+2026-04-19T16:31:11.8344100Z WroteState revision=21 trigger=MapScreenOpen screen=Map
+2026-04-19T16:31:11.8345574Z DispatchProceed via NTreasureRoom.OnProceedButtonReleased
+2026-04-19T16:31:11.8346930Z RequestWrite trigger=PostDispatch:Proceed currentScreen=Map
+2026-04-19T16:31:11.8412594Z WroteState revision=22 trigger=PostDispatch:Proceed screen=Map
+2026-04-19T16:31:11.8462582Z BridgeCommandReader wrote result id=711 status=ok

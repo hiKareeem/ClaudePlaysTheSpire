@@ -1,0 +1,565 @@
+2026-04-19T17:16:52.8644444Z Initialize start
+2026-04-19T17:16:52.8655298Z RequestWrite trigger=Initialize currentScreen=<null>
+2026-04-19T17:16:52.8756750Z WroteState revision=1 trigger=Initialize screen=<null>
+2026-04-19T17:16:52.8758939Z BridgeMainThreadDispatcher: using Harmony pump strategy (NRun._Process / NControllerManager._Process)
+2026-04-19T17:16:52.8765211Z BridgeCommandReader started; watching C:\Users\hi\AppData\Roaming\SlayTheSpire2\hermesbridge\commands.json
+2026-04-19T17:16:53.2088964Z BridgeSingleton ctor
+2026-04-19T17:16:53.8399850Z BridgeMainThreadDispatcher.Pump first tick
+2026-04-19T17:16:54.2309360Z MainMenu _Ready postfix fired
+2026-04-19T17:16:54.2312534Z SetScreen screen=MainMenu trigger=MainMenuReady
+2026-04-19T17:16:54.2315385Z RequestWrite trigger=MainMenuReady currentScreen=MainMenu
+2026-04-19T17:16:54.2388290Z WroteState revision=2 trigger=MainMenuReady screen=MainMenu
+2026-04-19T17:18:01.9943452Z BridgeCommandReader dispatching id=815 type=ContinueRun
+2026-04-19T17:18:02.0361089Z DispatchContinueRun invoked OnContinueButtonPressedAsync
+2026-04-19T17:18:02.0363592Z RequestWrite trigger=PostDispatch:ContinueRun currentScreen=MainMenu
+2026-04-19T17:18:02.0435859Z WroteState revision=3 trigger=PostDispatch:ContinueRun screen=MainMenu
+2026-04-19T17:18:02.0452202Z BridgeCommandReader wrote result id=815 status=ok
+2026-04-19T17:18:03.7385062Z MapScreen _Ready postfix fired
+2026-04-19T17:18:03.7387997Z SetScreen screen=Map trigger=MapScreenReady
+2026-04-19T17:18:03.7389419Z RequestWrite trigger=MapScreenReady currentScreen=Map
+2026-04-19T17:18:03.7467933Z WroteState revision=4 trigger=MapScreenReady screen=Map
+2026-04-19T17:18:03.8653163Z NMapScreen.SetMap postfix fired (map=<ok>)
+2026-04-19T17:18:03.8676155Z RequestWrite trigger=MapScreenSetMap currentScreen=Map
+2026-04-19T17:18:03.8767020Z WroteState revision=5 trigger=MapScreenSetMap screen=Map
+2026-04-19T17:18:03.8794697Z NMapScreen.Close postfix fired
+2026-04-19T17:18:03.8796454Z SetScreen screen=MapClosed trigger=MapScreenClose
+2026-04-19T17:18:03.8798059Z RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+2026-04-19T17:18:03.8857097Z WroteState revision=6 trigger=MapScreenClose screen=MapClosed
+2026-04-19T17:18:04.0264186Z Hook BeforeRewardsOffered rewardCount=2
+2026-04-19T17:18:04.0292307Z NRewardsScreen._Ready postfix fired
+2026-04-19T17:18:04.0294151Z SetScreen screen=Rewards trigger=RewardsScreenReady
+2026-04-19T17:18:04.0295700Z RequestWrite trigger=RewardsScreenReady currentScreen=Rewards
+2026-04-19T17:18:04.0374374Z WroteState revision=7 trigger=RewardsScreenReady screen=Rewards
+2026-04-19T17:18:04.0376473Z NRewardsScreen.AfterOverlayOpened postfix fired
+2026-04-19T17:18:04.0378216Z SetScreen screen=Rewards trigger=RewardsScreenOpened
+2026-04-19T17:18:04.0379659Z RequestWrite trigger=RewardsScreenOpened currentScreen=Rewards
+2026-04-19T17:18:04.0439598Z WroteState revision=8 trigger=RewardsScreenOpened screen=Rewards
+2026-04-19T17:18:04.0442123Z NRewardsScreen.AfterOverlayShown postfix fired
+2026-04-19T17:18:04.0443750Z SetScreen screen=Rewards trigger=RewardsScreenShown
+2026-04-19T17:18:04.0445129Z RequestWrite trigger=RewardsScreenShown currentScreen=Rewards
+2026-04-19T17:18:04.0507095Z WroteState revision=9 trigger=RewardsScreenShown screen=Rewards
+2026-04-19T17:18:04.0548560Z NRewardsScreen.SetRewards postfix fired (capturing payload)
+2026-04-19T17:18:04.0569667Z SetScreen screen=Rewards trigger=RewardsScreenSetRewards
+2026-04-19T17:18:04.0571409Z RequestWrite trigger=RewardsScreenSetRewards currentScreen=Rewards
+2026-04-19T17:18:04.0630859Z WroteState revision=10 trigger=RewardsScreenSetRewards screen=Rewards
+2026-04-19T17:18:04.0633050Z RequestWrite trigger=RewardsScreenSetRewardsPayload currentScreen=Rewards
+2026-04-19T17:18:04.0718704Z WroteState revision=11 trigger=RewardsScreenSetRewardsPayload screen=Rewards
+2026-04-19T17:20:37.5054261Z BridgeCommandReader dispatching id=816 type=SelectReward
+2026-04-19T17:20:37.5276352Z Hook AfterRewardTaken rewardType=GoldReward
+2026-04-19T17:20:37.5309640Z RequestWrite trigger=AfterRewardTaken currentScreen=Rewards
+2026-04-19T17:20:37.5411893Z WroteState revision=12 trigger=AfterRewardTaken screen=Rewards
+2026-04-19T17:20:37.5413796Z DispatchSelectReward setIdx=1 type=GoldReward
+2026-04-19T17:20:37.5415321Z RequestWrite trigger=PostDispatch:SelectReward currentScreen=Rewards
+2026-04-19T17:20:37.5481383Z WroteState revision=13 trigger=PostDispatch:SelectReward screen=Rewards
+2026-04-19T17:20:37.5491505Z BridgeCommandReader wrote result id=816 status=ok
+2026-04-19T17:20:44.6521448Z BridgeCommandReader dispatching id=817 type=SelectReward
+2026-04-19T17:20:44.6750184Z NCardRewardSelectionScreen.RefreshOptions postfix fired (capturing payload)
+2026-04-19T17:20:44.6758342Z SetScreen screen=CardReward trigger=CardRewardRefreshOptions
+2026-04-19T17:20:44.6760460Z RequestWrite trigger=CardRewardRefreshOptions currentScreen=CardReward
+2026-04-19T17:20:44.6841121Z WroteState revision=14 trigger=CardRewardRefreshOptions screen=CardReward
+2026-04-19T17:20:44.6843775Z RequestWrite trigger=CardRewardRefreshOptionsPayload currentScreen=CardReward
+2026-04-19T17:20:44.6923926Z WroteState revision=15 trigger=CardRewardRefreshOptionsPayload screen=CardReward
+2026-04-19T17:20:44.6926986Z CardRewardSelectionScreen _Ready postfix fired
+2026-04-19T17:20:44.6928946Z SetScreen screen=CardReward trigger=CardRewardSelectionScreenReady
+2026-04-19T17:20:44.6930559Z RequestWrite trigger=CardRewardSelectionScreenReady currentScreen=CardReward
+2026-04-19T17:20:44.6990951Z WroteState revision=16 trigger=CardRewardSelectionScreenReady screen=CardReward
+2026-04-19T17:20:44.7011270Z NCardRewardSelectionScreen.AfterOverlayOpened postfix fired
+2026-04-19T17:20:44.7012983Z SetScreen screen=CardReward trigger=CardRewardSelectionOpened
+2026-04-19T17:20:44.7014335Z RequestWrite trigger=CardRewardSelectionOpened currentScreen=CardReward
+2026-04-19T17:20:44.7073790Z WroteState revision=17 trigger=CardRewardSelectionOpened screen=CardReward
+2026-04-19T17:20:44.7075844Z NCardRewardSelectionScreen.AfterOverlayShown postfix fired
+2026-04-19T17:20:44.7077367Z SetScreen screen=CardReward trigger=CardRewardSelectionShown
+2026-04-19T17:20:44.7078664Z RequestWrite trigger=CardRewardSelectionShown currentScreen=CardReward
+2026-04-19T17:20:44.7137870Z WroteState revision=18 trigger=CardRewardSelectionShown screen=CardReward
+2026-04-19T17:20:44.7158717Z DispatchSelectReward setIdx=5 type=CardReward
+2026-04-19T17:20:44.7160570Z RequestWrite trigger=PostDispatch:SelectReward currentScreen=CardReward
+2026-04-19T17:20:44.7218500Z WroteState revision=19 trigger=PostDispatch:SelectReward screen=CardReward
+2026-04-19T17:20:44.7225522Z BridgeCommandReader wrote result id=817 status=ok
+2026-04-19T17:20:53.6041884Z BridgeCommandReader dispatching id=818 type=SelectCardOption
+2026-04-19T17:20:53.6217720Z NCardRewardSelectionScreen.AfterOverlayClosed postfix fired
+2026-04-19T17:20:53.6220529Z RequestWrite trigger=CardRewardSelectionClosed-ClearPayload currentScreen=CardReward
+2026-04-19T17:20:53.6339976Z WroteState revision=20 trigger=CardRewardSelectionClosed-ClearPayload screen=CardReward
+2026-04-19T17:20:53.6341492Z SetScreen screen=CardRewardClosed trigger=CardRewardSelectionClosed
+2026-04-19T17:20:53.6342781Z RequestWrite trigger=CardRewardSelectionClosed currentScreen=CardRewardClosed
+2026-04-19T17:20:53.6411840Z WroteState revision=21 trigger=CardRewardSelectionClosed screen=CardRewardClosed
+2026-04-19T17:20:53.6414541Z NRewardsScreen.AfterOverlayShown postfix fired
+2026-04-19T17:20:53.6416047Z SetScreen screen=Rewards trigger=RewardsScreenShown
+2026-04-19T17:20:53.6417322Z RequestWrite trigger=RewardsScreenShown currentScreen=Rewards
+2026-04-19T17:20:53.6482463Z WroteState revision=22 trigger=RewardsScreenShown screen=Rewards
+2026-04-19T17:20:53.6486830Z Hook AfterRewardTaken rewardType=CardReward
+2026-04-19T17:20:53.6494462Z RequestWrite trigger=AfterRewardTaken currentScreen=Rewards
+2026-04-19T17:20:53.6561578Z WroteState revision=23 trigger=AfterRewardTaken screen=Rewards
+2026-04-19T17:20:53.6564514Z DispatchSelectCardOption idx=0 card=Primal Force
+2026-04-19T17:20:53.6566611Z RequestWrite trigger=PostDispatch:SelectCardOption currentScreen=Rewards
+2026-04-19T17:20:53.6626050Z WroteState revision=24 trigger=PostDispatch:SelectCardOption screen=Rewards
+2026-04-19T17:20:53.6637956Z BridgeCommandReader wrote result id=818 status=ok
+2026-04-19T17:21:12.1241473Z BridgeCommandReader dispatching id=819 type=Proceed
+2026-04-19T17:21:12.1347325Z NMapScreen.Open postfix fired
+2026-04-19T17:21:12.1349649Z SetScreen screen=Map trigger=MapScreenOpen
+2026-04-19T17:21:12.1351269Z RequestWrite trigger=MapScreenOpen currentScreen=Map
+2026-04-19T17:21:12.1421085Z WroteState revision=25 trigger=MapScreenOpen screen=Map
+2026-04-19T17:21:12.1426436Z RequestWrite trigger=MapScreenOpen currentScreen=Map
+2026-04-19T17:21:12.1503434Z WroteState revision=26 trigger=MapScreenOpen screen=Map
+2026-04-19T17:21:12.1505097Z DispatchProceed via NRewardsScreen.OnProceedButtonPressed
+2026-04-19T17:21:12.1506572Z RequestWrite trigger=PostDispatch:Proceed currentScreen=Map
+2026-04-19T17:21:12.1569334Z WroteState revision=27 trigger=PostDispatch:Proceed screen=Map
+2026-04-19T17:21:12.1577203Z BridgeCommandReader wrote result id=819 status=ok
+2026-04-19T17:21:23.1959973Z BridgeCommandReader dispatching id=820 type=SelectMapNode
+2026-04-19T17:21:23.2170008Z DispatchSelectMapNode col=5 row=15
+2026-04-19T17:21:23.2172111Z RequestWrite trigger=PostDispatch:SelectMapNode currentScreen=Map
+2026-04-19T17:21:23.2251018Z WroteState revision=28 trigger=PostDispatch:SelectMapNode screen=Map
+2026-04-19T17:21:23.2258621Z BridgeCommandReader wrote result id=820 status=ok
+2026-04-19T17:21:23.7978943Z NRewardsScreen.AfterOverlayClosed postfix fired
+2026-04-19T17:21:23.7981864Z RequestWrite trigger=RewardsScreenClosed-ClearPayload currentScreen=Map
+2026-04-19T17:21:23.8055224Z WroteState revision=29 trigger=RewardsScreenClosed-ClearPayload screen=Map
+2026-04-19T17:21:23.8057182Z SetScreen screen=RewardsClosed trigger=RewardsScreenClosed
+2026-04-19T17:21:23.8058546Z RequestWrite trigger=RewardsScreenClosed currentScreen=RewardsClosed
+2026-04-19T17:21:23.8121635Z WroteState revision=30 trigger=RewardsScreenClosed screen=RewardsClosed
+2026-04-19T17:21:23.8145916Z NMapScreen.Close postfix fired
+2026-04-19T17:21:23.8147595Z SetScreen screen=MapClosed trigger=MapScreenClose
+2026-04-19T17:21:23.8148884Z RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+2026-04-19T17:21:23.8209087Z WroteState revision=31 trigger=MapScreenClose screen=MapClosed
+2026-04-19T17:21:23.8743634Z Hook BeforeRoomEntered roomType=RestSite id=<null>
+2026-04-19T17:21:24.0885556Z NRestSiteRoom.UpdateRestSiteOptions postfix
+2026-04-19T17:21:24.0912541Z RequestWrite trigger=RestSiteUpdateOptions currentScreen=MapClosed
+2026-04-19T17:21:24.1036304Z WroteState revision=32 trigger=RestSiteUpdateOptions screen=MapClosed
+2026-04-19T17:21:24.1039368Z PushRestSite(RestSiteUpdateOptions) skipped: no RestSiteRoom
+2026-04-19T17:21:24.1047268Z NRestSiteRoom._Ready postfix fired
+2026-04-19T17:21:24.1049324Z SetScreen screen=RestSite trigger=RestSiteRoomReady
+2026-04-19T17:21:24.1051016Z RequestWrite trigger=RestSiteRoomReady currentScreen=RestSite
+2026-04-19T17:21:24.1111514Z WroteState revision=33 trigger=RestSiteRoomReady screen=RestSite
+2026-04-19T17:21:24.1113029Z PushRestSite(RestSiteRoomReady) skipped: no RestSiteRoom
+2026-04-19T17:21:24.1121672Z Hook AfterRoomEntered roomType=RestSite
+2026-04-19T17:21:24.1123483Z SetScreen screen=Room:RestSite trigger=AfterRoomEntered
+2026-04-19T17:21:24.1125071Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:RestSite
+2026-04-19T17:21:24.1182946Z WroteState revision=34 trigger=AfterRoomEntered screen=Room:RestSite
+2026-04-19T17:21:24.1191992Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:RestSite
+2026-04-19T17:21:24.1251407Z WroteState revision=35 trigger=AfterRoomEntered screen=Room:RestSite
+2026-04-19T17:21:24.1253567Z RequestWrite trigger=AfterRoomEntered-ClearEvent currentScreen=Room:RestSite
+2026-04-19T17:21:24.1310758Z WroteState revision=36 trigger=AfterRoomEntered-ClearEvent screen=Room:RestSite
+2026-04-19T17:21:24.1312634Z RequestWrite trigger=AfterRoomEntered-ClearShop currentScreen=Room:RestSite
+2026-04-19T17:21:24.1372425Z WroteState revision=37 trigger=AfterRoomEntered-ClearShop screen=Room:RestSite
+2026-04-19T17:21:24.1375175Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:RestSite
+2026-04-19T17:21:24.1437731Z WroteState revision=38 trigger=AfterRoomEntered screen=Room:RestSite
+2026-04-19T17:21:24.1439670Z RequestWrite trigger=AfterRoomEntered-ClearTreasure currentScreen=Room:RestSite
+2026-04-19T17:21:24.1502776Z WroteState revision=39 trigger=AfterRoomEntered-ClearTreasure screen=Room:RestSite
+2026-04-19T17:21:24.1505247Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:RestSite
+2026-04-19T17:21:24.1569226Z WroteState revision=40 trigger=AfterRoomEntered screen=Room:RestSite
+2026-04-19T17:21:51.6793425Z BridgeCommandReader dispatching id=821 type=SelectRestOption
+2026-04-19T17:21:51.6862337Z RequestWrite trigger=PostDispatch:SelectRestOption currentScreen=Room:RestSite
+2026-04-19T17:21:51.6938552Z WroteState revision=41 trigger=PostDispatch:SelectRestOption screen=Room:RestSite
+2026-04-19T17:21:51.6950495Z BridgeCommandReader wrote result id=821 status=error
+2026-04-19T17:22:02.5506289Z BridgeCommandReader dispatching id=822 type=SelectRestOption
+2026-04-19T17:22:02.5605238Z NRestSiteRoom.AfterSelectingOption postfix optionId=HEAL
+2026-04-19T17:22:02.5607473Z RequestWrite trigger=RestSiteAfterSelectingOption currentScreen=Room:RestSite
+2026-04-19T17:22:02.5672209Z WroteState revision=42 trigger=RestSiteAfterSelectingOption screen=Room:RestSite
+2026-04-19T17:22:02.5675579Z DispatchSelectRestOption idx=0 type=HealRestSiteOption via NRestSiteButton.SelectOption
+2026-04-19T17:22:02.5677600Z RequestWrite trigger=PostDispatch:SelectRestOption currentScreen=Room:RestSite
+2026-04-19T17:22:02.5739555Z WroteState revision=43 trigger=PostDispatch:SelectRestOption screen=Room:RestSite
+2026-04-19T17:22:02.5746622Z BridgeCommandReader wrote result id=822 status=ok
+2026-04-19T17:22:04.0523534Z NRestSiteRoom.UpdateRestSiteOptions postfix
+2026-04-19T17:22:04.0527419Z RequestWrite trigger=RestSiteUpdateOptions currentScreen=Room:RestSite
+2026-04-19T17:22:04.0604049Z WroteState revision=44 trigger=RestSiteUpdateOptions screen=Room:RestSite
+2026-04-19T17:22:04.0605753Z RequestWrite trigger=RestSiteUpdateOptions currentScreen=Room:RestSite
+2026-04-19T17:22:04.0669420Z WroteState revision=45 trigger=RestSiteUpdateOptions screen=Room:RestSite
+2026-04-19T17:22:15.2311914Z BridgeCommandReader dispatching id=823 type=Proceed
+2026-04-19T17:22:15.2369246Z NMapScreen.Open postfix fired
+2026-04-19T17:22:15.2371254Z SetScreen screen=Map trigger=MapScreenOpen
+2026-04-19T17:22:15.2372590Z RequestWrite trigger=MapScreenOpen currentScreen=Map
+2026-04-19T17:22:15.2440061Z WroteState revision=46 trigger=MapScreenOpen screen=Map
+2026-04-19T17:22:15.2442988Z RequestWrite trigger=MapScreenOpen currentScreen=Map
+2026-04-19T17:22:15.2501693Z WroteState revision=47 trigger=MapScreenOpen screen=Map
+2026-04-19T17:22:15.2503153Z DispatchProceed via NRestSiteRoom.OnProceedButtonReleased
+2026-04-19T17:22:15.2504501Z RequestWrite trigger=PostDispatch:Proceed currentScreen=Map
+2026-04-19T17:22:15.2560600Z WroteState revision=48 trigger=PostDispatch:Proceed screen=Map
+2026-04-19T17:22:15.2567554Z BridgeCommandReader wrote result id=823 status=ok
+2026-04-19T17:25:12.2659564Z BridgeCommandReader dispatching id=824 type=SelectMapNode
+2026-04-19T17:25:12.2705859Z DispatchSelectMapNode col=3 row=16
+2026-04-19T17:25:12.2707646Z RequestWrite trigger=PostDispatch:SelectMapNode currentScreen=Map
+2026-04-19T17:25:12.2780001Z WroteState revision=49 trigger=PostDispatch:SelectMapNode screen=Map
+2026-04-19T17:25:12.2787846Z BridgeCommandReader wrote result id=824 status=ok
+2026-04-19T17:25:12.8707355Z NMapScreen.Close postfix fired
+2026-04-19T17:25:12.8710001Z SetScreen screen=MapClosed trigger=MapScreenClose
+2026-04-19T17:25:12.8711981Z RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+2026-04-19T17:25:12.8792720Z WroteState revision=50 trigger=MapScreenClose screen=MapClosed
+2026-04-19T17:25:12.9034890Z Hook BeforeRoomEntered roomType=Boss id=ENCOUNTER:THE_KIN_BOSS
+2026-04-19T17:25:13.0655230Z Hook AfterRoomEntered roomType=Boss
+2026-04-19T17:25:13.0657804Z SetScreen screen=Room:Boss trigger=AfterRoomEntered
+2026-04-19T17:25:13.0659131Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Boss
+2026-04-19T17:25:13.0753543Z WroteState revision=51 trigger=AfterRoomEntered screen=Room:Boss
+2026-04-19T17:25:13.0756198Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Boss
+2026-04-19T17:25:13.0815375Z WroteState revision=52 trigger=AfterRoomEntered screen=Room:Boss
+2026-04-19T17:25:13.0816895Z RequestWrite trigger=AfterRoomEntered-ClearEvent currentScreen=Room:Boss
+2026-04-19T17:25:13.0873987Z WroteState revision=53 trigger=AfterRoomEntered-ClearEvent screen=Room:Boss
+2026-04-19T17:25:13.0875887Z RequestWrite trigger=AfterRoomEntered-ClearShop currentScreen=Room:Boss
+2026-04-19T17:25:13.0939396Z WroteState revision=54 trigger=AfterRoomEntered-ClearShop screen=Room:Boss
+2026-04-19T17:25:13.0941015Z RequestWrite trigger=AfterRoomEntered-ClearRestSite currentScreen=Room:Boss
+2026-04-19T17:25:13.0999845Z WroteState revision=55 trigger=AfterRoomEntered-ClearRestSite screen=Room:Boss
+2026-04-19T17:25:13.1001372Z RequestWrite trigger=AfterRoomEntered-ClearTreasure currentScreen=Room:Boss
+2026-04-19T17:25:13.1061245Z WroteState revision=56 trigger=AfterRoomEntered-ClearTreasure screen=Room:Boss
+2026-04-19T17:25:13.1063193Z RequestWrite trigger=AfterRoomEntered currentScreen=Room:Boss
+2026-04-19T17:25:13.1118842Z WroteState revision=57 trigger=AfterRoomEntered screen=Room:Boss
+2026-04-19T17:25:13.1228344Z Hook BeforeCombatStart
+2026-04-19T17:25:13.1230067Z SetScreen screen=Combat trigger=BeforeCombatStart
+2026-04-19T17:25:13.1231377Z RequestWrite trigger=BeforeCombatStart currentScreen=Combat
+2026-04-19T17:25:13.1290461Z WroteState revision=58 trigger=BeforeCombatStart screen=Combat
+2026-04-19T17:25:13.1294184Z Hook BeforeCombatStart
+2026-04-19T17:25:13.1295780Z SetScreen screen=Combat trigger=BeforeCombatStart
+2026-04-19T17:25:13.1297768Z RequestWrite trigger=BeforeCombatStart currentScreen=Combat
+2026-04-19T17:25:13.1363928Z WroteState revision=59 trigger=BeforeCombatStart screen=Combat
+2026-04-19T17:25:14.5568851Z Hook AfterPlayerTurnStart gold=251 maxEnergy=3
+2026-04-19T17:25:14.5602619Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:25:14.5729071Z WroteState revision=60 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:25:14.5731491Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:25:14.5798748Z WroteState revision=61 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:25:58.1604155Z BridgeCommandReader dispatching id=825 type=PlayCard
+2026-04-19T17:25:58.1864431Z DispatchPlayCard handIndex=4 card=Thunderclap target=<none> ok=True
+2026-04-19T17:25:58.1866347Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:25:58.1933919Z WroteState revision=62 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:25:58.1944286Z BridgeCommandReader wrote result id=825 status=ok
+2026-04-19T17:25:58.7052966Z Hook AfterCardPlayed
+2026-04-19T17:25:58.7058865Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:25:58.7130632Z WroteState revision=63 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:25:58.7134155Z Hook AfterCardPlayedLate
+2026-04-19T17:25:58.7137193Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:25:58.7203797Z WroteState revision=64 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:26:12.8560788Z BridgeCommandReader dispatching id=826 type=PlayCard
+2026-04-19T17:26:12.8725741Z DispatchPlayCard handIndex=0 card=Twin Strike target=Kin Priest ok=True
+2026-04-19T17:26:12.8727962Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:26:12.8790266Z WroteState revision=65 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:26:12.8797509Z BridgeCommandReader wrote result id=826 status=ok
+2026-04-19T17:26:13.2663753Z Hook AfterCardPlayed
+2026-04-19T17:26:13.2668239Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:26:13.2742053Z WroteState revision=66 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:26:13.2743730Z Hook AfterCardPlayedLate
+2026-04-19T17:26:13.2746124Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:26:13.2804789Z WroteState revision=67 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:26:33.0852030Z BridgeCommandReader dispatching id=827 type=PlayCard
+2026-04-19T17:26:33.0950557Z DispatchPlayCard handIndex=2 card=Anger target=Kin Priest ok=True
+2026-04-19T17:26:33.0952450Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:26:33.1018490Z WroteState revision=68 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:26:33.1025564Z BridgeCommandReader wrote result id=827 status=ok
+2026-04-19T17:26:33.2792287Z Hook AfterCardPlayed
+2026-04-19T17:26:33.2796061Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:26:33.2868548Z WroteState revision=69 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:26:33.2870126Z Hook AfterCardPlayedLate
+2026-04-19T17:26:33.2872592Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:26:33.2936671Z WroteState revision=70 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:26:43.3474114Z BridgeCommandReader dispatching id=828 type=PlayCard
+2026-04-19T17:26:43.3666602Z DispatchPlayCard handIndex=1 card=Strike target=Kin Priest ok=True
+2026-04-19T17:26:43.3668536Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:26:43.3733549Z WroteState revision=71 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:26:43.3740532Z BridgeCommandReader wrote result id=828 status=ok
+2026-04-19T17:26:43.5649412Z Hook AfterCardPlayed
+2026-04-19T17:26:43.5653937Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:26:43.5727670Z WroteState revision=72 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:26:43.5729304Z Hook AfterCardPlayedLate
+2026-04-19T17:26:43.5731773Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:26:43.5800474Z WroteState revision=73 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:26:59.4549701Z BridgeCommandReader dispatching id=829 type=PlayCard
+2026-04-19T17:26:59.4664798Z DispatchPlayCard handIndex=0 card=Defend target=<none> ok=False
+2026-04-19T17:26:59.4667097Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:26:59.4779777Z WroteState revision=74 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:26:59.4789183Z BridgeCommandReader wrote result id=829 status=error
+2026-04-19T17:27:11.2329181Z BridgeCommandReader dispatching id=830 type=EndTurn
+2026-04-19T17:27:11.2529387Z Hook BeforeTurnEnd side=Player
+2026-04-19T17:27:11.2536411Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:27:11.2606754Z WroteState revision=75 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:27:11.2636317Z DispatchEndTurn invoked PlayerCmd.EndTurn
+2026-04-19T17:27:11.2638009Z RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+2026-04-19T17:27:11.2699269Z WroteState revision=76 trigger=PostDispatch:EndTurn screen=Combat
+2026-04-19T17:27:11.2706164Z BridgeCommandReader wrote result id=830 status=ok
+2026-04-19T17:27:15.2175700Z Hook BeforeTurnEnd side=Enemy
+2026-04-19T17:27:15.2183274Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:27:15.2251569Z WroteState revision=77 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:27:17.4834460Z Hook AfterPlayerTurnStart gold=251 maxEnergy=3
+2026-04-19T17:27:17.4838950Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:27:17.4905197Z WroteState revision=78 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:27:17.4907867Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:27:17.4973637Z WroteState revision=79 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:27:55.2568597Z BridgeCommandReader dispatching id=831 type=PlayCard
+2026-04-19T17:27:55.2862013Z DispatchPlayCard handIndex=3 card=Inflame target=<none> ok=True
+2026-04-19T17:27:55.2865174Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:27:55.2939076Z WroteState revision=80 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:27:55.2946814Z BridgeCommandReader wrote result id=831 status=ok
+2026-04-19T17:27:56.0171654Z Hook AfterCardPlayed
+2026-04-19T17:27:56.0177814Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:27:56.0254716Z WroteState revision=81 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:27:56.0256420Z Hook AfterCardPlayedLate
+2026-04-19T17:27:56.0258943Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:27:56.0318144Z WroteState revision=82 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:28:25.9930838Z BridgeCommandReader dispatching id=832 type=PlayCard
+2026-04-19T17:28:26.0061609Z DispatchPlayCard handIndex=0 card=Defend target=<none> ok=True
+2026-04-19T17:28:26.0063541Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:28:26.0140577Z WroteState revision=83 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:28:26.0149160Z BridgeCommandReader wrote result id=832 status=ok
+2026-04-19T17:28:26.1033311Z Hook AfterCardPlayed
+2026-04-19T17:28:26.1037690Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:28:26.1119213Z WroteState revision=84 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:28:26.1121369Z Hook AfterCardPlayedLate
+2026-04-19T17:28:26.1123896Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:28:26.1184803Z WroteState revision=85 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:28:39.8908468Z BridgeCommandReader dispatching id=833 type=PlayCard
+2026-04-19T17:28:39.9044616Z DispatchPlayCard handIndex=2 card=Breakthrough target=<none> ok=True
+2026-04-19T17:28:39.9046726Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:28:39.9117598Z WroteState revision=86 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:28:39.9125010Z BridgeCommandReader wrote result id=833 status=ok
+2026-04-19T17:28:40.1856453Z Hook AfterCardPlayed
+2026-04-19T17:28:40.1860837Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:28:40.1936053Z WroteState revision=87 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:28:40.1937772Z Hook AfterCardPlayedLate
+2026-04-19T17:28:40.1940132Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:28:40.2000925Z WroteState revision=88 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:28:53.8997316Z BridgeCommandReader dispatching id=834 type=EndTurn
+2026-04-19T17:28:53.9158774Z Hook BeforeTurnEnd side=Player
+2026-04-19T17:28:53.9167132Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:28:53.9287698Z WroteState revision=89 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:28:53.9291784Z DispatchEndTurn invoked PlayerCmd.EndTurn
+2026-04-19T17:28:53.9293382Z RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+2026-04-19T17:28:53.9369274Z WroteState revision=90 trigger=PostDispatch:EndTurn screen=Combat
+2026-04-19T17:28:53.9380154Z BridgeCommandReader wrote result id=834 status=ok
+2026-04-19T17:28:57.7658486Z Hook BeforeTurnEnd side=Enemy
+2026-04-19T17:28:57.7664481Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:28:57.7753586Z WroteState revision=91 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:28:59.1827714Z Hook AfterPlayerTurnStart gold=251 maxEnergy=3
+2026-04-19T17:28:59.1832099Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:28:59.1913890Z WroteState revision=92 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:28:59.1916737Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:28:59.1977511Z WroteState revision=93 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:30:05.7457501Z BridgeCommandReader dispatching id=835 type=PlayCard
+2026-04-19T17:30:05.7491147Z DispatchPlayCard handIndex=1 card=Primal Force target=<none> ok=True
+2026-04-19T17:30:05.7493153Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:30:05.7572142Z WroteState revision=94 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:30:05.7581720Z BridgeCommandReader wrote result id=835 status=ok
+2026-04-19T17:30:06.8811281Z Hook AfterCardPlayed
+2026-04-19T17:30:06.8820237Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:30:06.8898962Z WroteState revision=95 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:30:06.8900957Z Hook AfterCardPlayedLate
+2026-04-19T17:30:06.8903389Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:30:06.8968690Z WroteState revision=96 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:30:22.4695680Z BridgeCommandReader dispatching id=836 type=PlayCard
+2026-04-19T17:30:22.4828108Z DispatchPlayCard handIndex=0 card=Offering target=<none> ok=True
+2026-04-19T17:30:22.4830162Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:30:22.4899733Z WroteState revision=97 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:30:22.4907653Z BridgeCommandReader wrote result id=836 status=ok
+2026-04-19T17:30:23.8489249Z Hook AfterCardPlayed
+2026-04-19T17:30:23.8493277Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:30:23.8578241Z WroteState revision=98 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:30:23.8579965Z Hook AfterCardPlayedLate
+2026-04-19T17:30:23.8582325Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:30:23.8649450Z WroteState revision=99 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:31:07.5989750Z BridgeCommandReader dispatching id=837 type=PlayCard
+2026-04-19T17:31:07.6143900Z DispatchPlayCard handIndex=5 card=Primal Force target=<none> ok=True
+2026-04-19T17:31:07.6146165Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:31:07.6284565Z WroteState revision=100 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:31:07.6295006Z BridgeCommandReader wrote result id=837 status=ok
+2026-04-19T17:31:09.3641646Z Hook AfterCardPlayed
+2026-04-19T17:31:09.3651014Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:31:09.3720458Z WroteState revision=101 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:31:09.3722080Z Hook AfterCardPlayedLate
+2026-04-19T17:31:09.3727159Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:31:09.3788265Z WroteState revision=102 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:31:17.5663789Z BridgeCommandReader dispatching id=838 type=PlayCard
+2026-04-19T17:31:17.5973648Z DispatchPlayCard handIndex=0 card=Defend target=<none> ok=True
+2026-04-19T17:31:17.5975560Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:31:17.6042217Z WroteState revision=103 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:31:17.6051258Z BridgeCommandReader wrote result id=838 status=ok
+2026-04-19T17:31:17.6964549Z Hook AfterCardPlayed
+2026-04-19T17:31:17.6968333Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:31:17.7037488Z WroteState revision=104 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:31:17.7039052Z Hook AfterCardPlayedLate
+2026-04-19T17:31:17.7042564Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:31:17.7102810Z WroteState revision=105 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:31:30.2427634Z BridgeCommandReader dispatching id=839 type=PlayCard
+2026-04-19T17:31:30.2563309Z DispatchPlayCard handIndex=2 card=Defend target=<none> ok=True
+2026-04-19T17:31:30.2565594Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:31:30.2633264Z WroteState revision=106 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:31:30.2641515Z BridgeCommandReader wrote result id=839 status=ok
+2026-04-19T17:31:30.3554071Z Hook AfterCardPlayed
+2026-04-19T17:31:30.3557554Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:31:30.3630879Z WroteState revision=107 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:31:30.3632452Z Hook AfterCardPlayedLate
+2026-04-19T17:31:30.3634516Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:31:30.3695504Z WroteState revision=108 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:31:38.4947090Z BridgeCommandReader dispatching id=840 type=PlayCard
+2026-04-19T17:31:38.5069282Z DispatchPlayCard handIndex=0 card=Giant Rock target=Kin Priest ok=True
+2026-04-19T17:31:38.5071373Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:31:38.5142222Z WroteState revision=109 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:31:38.5149699Z BridgeCommandReader wrote result id=840 status=ok
+2026-04-19T17:31:38.6914014Z Hook AfterCardPlayed
+2026-04-19T17:31:38.6918008Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:31:38.6992524Z WroteState revision=110 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:31:38.6994132Z Hook AfterCardPlayedLate
+2026-04-19T17:31:38.6996434Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:31:38.7059920Z WroteState revision=111 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:31:58.3222868Z BridgeCommandReader dispatching id=841 type=PlayCard
+2026-04-19T17:31:58.3387213Z DispatchPlayCard handIndex=0 card=Giant Rock target=Kin Priest ok=True
+2026-04-19T17:31:58.3389666Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:31:58.3458675Z WroteState revision=112 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:31:58.3465918Z BridgeCommandReader wrote result id=841 status=ok
+2026-04-19T17:31:58.5216850Z Hook AfterCardPlayed
+2026-04-19T17:31:58.5221137Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:31:58.5294092Z WroteState revision=113 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:31:58.5295723Z Hook AfterCardPlayedLate
+2026-04-19T17:31:58.5298135Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:31:58.5358627Z WroteState revision=114 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:32:13.2227104Z BridgeCommandReader dispatching id=842 type=PlayCard
+2026-04-19T17:32:13.2379145Z DispatchPlayCard handIndex=0 card=Giant Rock target=Kin Priest ok=True
+2026-04-19T17:32:13.2381138Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:32:13.2444603Z WroteState revision=115 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:32:13.2451820Z BridgeCommandReader wrote result id=842 status=ok
+2026-04-19T17:32:13.4206611Z Hook AfterCardPlayed
+2026-04-19T17:32:13.4209966Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:32:13.4280579Z WroteState revision=116 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:32:13.4282170Z Hook AfterCardPlayedLate
+2026-04-19T17:32:13.4284496Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:32:13.4345087Z WroteState revision=117 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:32:29.0287527Z BridgeCommandReader dispatching id=843 type=EndTurn
+2026-04-19T17:32:29.0359192Z Hook BeforeTurnEnd side=Player
+2026-04-19T17:32:29.0362332Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:32:29.0428671Z WroteState revision=118 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:32:29.0432986Z DispatchEndTurn invoked PlayerCmd.EndTurn
+2026-04-19T17:32:29.0434595Z RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+2026-04-19T17:32:29.0493588Z WroteState revision=119 trigger=PostDispatch:EndTurn screen=Combat
+2026-04-19T17:32:29.0500987Z BridgeCommandReader wrote result id=843 status=ok
+2026-04-19T17:32:32.3531553Z Hook BeforeTurnEnd side=Enemy
+2026-04-19T17:32:32.3536195Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:32:32.3616473Z WroteState revision=120 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:32:33.7697489Z Hook AfterPlayerTurnStart gold=251 maxEnergy=3
+2026-04-19T17:32:33.7701818Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:32:33.7782761Z WroteState revision=121 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:32:33.7785937Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:32:33.7845506Z WroteState revision=122 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:33:21.1663941Z BridgeCommandReader dispatching id=844 type=UsePotion
+2026-04-19T17:33:21.1765108Z DispatchUsePotion slot=2 potion=BOTTLED_POTENTIAL target=The Ironclad
+2026-04-19T17:33:21.1767145Z RequestWrite trigger=PostDispatch:UsePotion currentScreen=Combat
+2026-04-19T17:33:21.1876388Z WroteState revision=123 trigger=PostDispatch:UsePotion screen=Combat
+2026-04-19T17:33:21.1887741Z BridgeCommandReader wrote result id=844 status=ok
+2026-04-19T17:34:21.7516121Z BridgeCommandReader dispatching id=845 type=UsePotion
+2026-04-19T17:34:21.7522904Z RequestWrite trigger=PostDispatch:UsePotion currentScreen=Combat
+2026-04-19T17:34:21.7594380Z WroteState revision=124 trigger=PostDispatch:UsePotion screen=Combat
+2026-04-19T17:34:21.7601752Z BridgeCommandReader wrote result id=845 status=error
+2026-04-19T17:34:41.6761455Z BridgeCommandReader dispatching id=846 type=PlayCard
+2026-04-19T17:34:41.6848608Z DispatchPlayCard handIndex=2 card=Bash+ target=<none> ok=False
+2026-04-19T17:34:41.6850422Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:34:41.6919175Z WroteState revision=125 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:34:41.6926379Z BridgeCommandReader wrote result id=846 status=error
+2026-04-19T17:35:01.2992278Z BridgeCommandReader dispatching id=847 type=PlayCard
+2026-04-19T17:35:01.3007089Z DispatchPlayCard handIndex=0 card=Defend target=Kin Follower ok=False
+2026-04-19T17:35:01.3008924Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:35:01.3074338Z WroteState revision=126 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:35:01.3081304Z BridgeCommandReader wrote result id=847 status=error
+2026-04-19T17:35:32.7011170Z BridgeCommandReader dispatching id=848 type=PlayCard
+2026-04-19T17:35:32.7308945Z DispatchPlayCard handIndex=0 card=Defend target=<none> ok=True
+2026-04-19T17:35:32.7310981Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:35:32.7435701Z WroteState revision=127 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:35:32.7447390Z BridgeCommandReader wrote result id=848 status=ok
+2026-04-19T17:35:32.8302008Z Hook AfterCardPlayed
+2026-04-19T17:35:32.8317773Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:35:32.8391949Z WroteState revision=128 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:35:32.8393655Z Hook AfterCardPlayedLate
+2026-04-19T17:35:32.8400288Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:35:32.8461470Z WroteState revision=129 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:35:42.7623340Z BridgeCommandReader dispatching id=849 type=PlayCard
+2026-04-19T17:35:42.7974925Z DispatchPlayCard handIndex=2 card=Defend target=<none> ok=True
+2026-04-19T17:35:42.7977614Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:35:42.8046656Z WroteState revision=130 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:35:42.8056751Z BridgeCommandReader wrote result id=849 status=ok
+2026-04-19T17:35:42.8966486Z Hook AfterCardPlayed
+2026-04-19T17:35:42.8970663Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:35:42.9039052Z WroteState revision=131 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:35:42.9040974Z Hook AfterCardPlayedLate
+2026-04-19T17:35:42.9043274Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:35:42.9111230Z WroteState revision=132 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:36:28.8590624Z BridgeCommandReader dispatching id=850 type=PlayCard
+2026-04-19T17:36:28.8638069Z DispatchPlayCard handIndex=0 card=Thunderclap target=<none> ok=True
+2026-04-19T17:36:28.8640320Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:36:28.8708733Z WroteState revision=133 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:36:28.8715701Z BridgeCommandReader wrote result id=850 status=ok
+2026-04-19T17:36:29.4627206Z Hook AfterCardPlayed
+2026-04-19T17:36:29.4631329Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:36:29.4711223Z WroteState revision=134 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:36:29.4713046Z Hook AfterCardPlayedLate
+2026-04-19T17:36:29.4715342Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:36:29.4774583Z WroteState revision=135 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:37:40.8066493Z BridgeCommandReader dispatching id=851 type=EndTurn
+2026-04-19T17:37:40.8197430Z Hook BeforeTurnEnd side=Player
+2026-04-19T17:37:40.8200480Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:37:40.8270756Z WroteState revision=136 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:37:40.8274307Z DispatchEndTurn invoked PlayerCmd.EndTurn
+2026-04-19T17:37:40.8275877Z RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+2026-04-19T17:37:40.8334447Z WroteState revision=137 trigger=PostDispatch:EndTurn screen=Combat
+2026-04-19T17:37:40.8342830Z BridgeCommandReader wrote result id=851 status=ok
+2026-04-19T17:37:43.8667076Z Hook BeforeTurnEnd side=Enemy
+2026-04-19T17:37:43.8670641Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:37:43.8744373Z WroteState revision=138 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:37:45.9033323Z Hook AfterPlayerTurnStart gold=251 maxEnergy=3
+2026-04-19T17:37:45.9039578Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:37:45.9118651Z WroteState revision=139 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:37:45.9121603Z RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+2026-04-19T17:37:45.9182575Z WroteState revision=140 trigger=AfterPlayerTurnStart screen=Combat
+2026-04-19T17:42:00.5049869Z BridgeCommandReader dispatching id=852 type=PlayCard
+2026-04-19T17:42:00.5168068Z DispatchPlayCard handIndex=0 card=Anger target=Kin Priest ok=True
+2026-04-19T17:42:00.5170163Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:42:00.5292769Z WroteState revision=141 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:42:00.5302605Z BridgeCommandReader wrote result id=852 status=ok
+2026-04-19T17:42:00.7003579Z Hook AfterCardPlayed
+2026-04-19T17:42:00.7013969Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:42:00.7092491Z WroteState revision=142 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:42:00.7094889Z Hook AfterCardPlayedLate
+2026-04-19T17:42:00.7103649Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:42:00.7165777Z WroteState revision=143 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:43:54.0473810Z BridgeCommandReader dispatching id=853 type=PlayCard
+2026-04-19T17:43:54.0526764Z DispatchPlayCard handIndex=0 card=Giant Rock target=Kin Priest ok=True
+2026-04-19T17:43:54.0529322Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:43:54.0642158Z WroteState revision=144 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:43:54.0652562Z BridgeCommandReader wrote result id=853 status=ok
+2026-04-19T17:43:54.2523147Z Hook AfterCardPlayed
+2026-04-19T17:43:54.2527483Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:43:54.2606831Z WroteState revision=145 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:43:54.2608708Z Hook AfterCardPlayedLate
+2026-04-19T17:43:54.2611098Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:43:54.2670032Z WroteState revision=146 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:45:12.6490013Z BridgeCommandReader dispatching id=854 type=PlayCard
+2026-04-19T17:45:12.6517042Z DispatchPlayCard handIndex=1 card=Defend target=<none> ok=True
+2026-04-19T17:45:12.6518973Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:45:12.6626736Z WroteState revision=147 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:45:12.6636243Z BridgeCommandReader wrote result id=854 status=ok
+2026-04-19T17:45:12.7509278Z Hook AfterCardPlayed
+2026-04-19T17:45:12.7520562Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:45:12.7590794Z WroteState revision=148 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:45:12.7592471Z Hook AfterCardPlayedLate
+2026-04-19T17:45:12.7598857Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:45:12.7665815Z WroteState revision=149 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:46:34.7573734Z BridgeCommandReader dispatching id=855 type=PlayCard
+2026-04-19T17:46:34.7843074Z DispatchPlayCard handIndex=0 card=Breakthrough target=<none> ok=True
+2026-04-19T17:46:34.7845131Z RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+2026-04-19T17:46:34.7928435Z WroteState revision=150 trigger=PostDispatch:PlayCard screen=Combat
+2026-04-19T17:46:34.7936527Z BridgeCommandReader wrote result id=855 status=ok
+2026-04-19T17:46:35.1322923Z Hook AfterCardPlayed
+2026-04-19T17:46:35.1326922Z RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+2026-04-19T17:46:35.1401034Z WroteState revision=151 trigger=AfterCardPlayed screen=Combat
+2026-04-19T17:46:35.1402669Z Hook AfterCardPlayedLate
+2026-04-19T17:46:35.1404918Z RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+2026-04-19T17:46:35.1463413Z WroteState revision=152 trigger=AfterCardPlayedLate screen=Combat
+2026-04-19T17:48:05.9374117Z BridgeCommandReader dispatching id=856 type=EndTurn
+2026-04-19T17:48:05.9492382Z Hook BeforeTurnEnd side=Player
+2026-04-19T17:48:05.9495380Z RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+2026-04-19T17:48:05.9600344Z WroteState revision=153 trigger=BeforeTurnEnd screen=Combat
+2026-04-19T17:48:05.9604595Z DispatchEndTurn invoked PlayerCmd.EndTurn
+2026-04-19T17:48:05.9606383Z RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+2026-04-19T17:48:05.9667187Z WroteState revision=154 trigger=PostDispatch:EndTurn screen=Combat
+2026-04-19T17:48:05.9676543Z BridgeCommandReader wrote result id=856 status=ok
+2026-04-19T17:48:07.0451186Z NMapScreen.Close postfix fired
+2026-04-19T17:48:07.0452873Z SetScreen screen=MapClosed trigger=MapScreenClose
+2026-04-19T17:48:07.0454162Z RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+2026-04-19T17:48:07.0521497Z WroteState revision=155 trigger=MapScreenClose screen=MapClosed
+2026-04-19T17:48:07.0620214Z NGameOverScreen _Ready postfix fired
+2026-04-19T17:48:07.0621903Z SetScreen screen=GameOver trigger=GameOverScreenReady
+2026-04-19T17:48:07.0623198Z RequestWrite trigger=GameOverScreenReady currentScreen=GameOver
+2026-04-19T17:48:07.0683154Z WroteState revision=156 trigger=GameOverScreenReady screen=GameOver
+2026-04-19T17:48:10.0775322Z GameOverScreen auto-dismissed via ReturnToMainMenu
+2026-04-19T17:48:10.9852235Z MainMenu _Ready postfix fired
+2026-04-19T17:48:10.9854359Z SetScreen screen=MainMenu trigger=MainMenuReady
+2026-04-19T17:48:10.9855663Z RequestWrite trigger=MainMenuReady currentScreen=MainMenu
+2026-04-19T17:48:10.9932895Z WroteState revision=157 trigger=MainMenuReady screen=MainMenu

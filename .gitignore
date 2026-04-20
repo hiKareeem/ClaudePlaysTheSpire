@@ -1,0 +1,21 @@
+.godot/
+bin/
+obj/
+/android/
+.git/
+.idea/
+.vs/
+publish/
+Properties/
+packages/
+.editorconfig
+*.user
+Directory.Build.props
+
+# Decompiled game code — do not redistribute
+_staging_mods/
+
+# Internal session artifacts
+docs/handoffs/
+docs/handoff-replies/
+reflect_reward_types.txt

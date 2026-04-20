@@ -1,0 +1,785 @@
+MegaDot v4.5.1.m.9.mono.custom_build - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 3080 Ti
+WARNING: PSO caching is not implemented yet in the Direct3D 12 driver.
+   at: pipeline_cache_create (drivers/d3d12/rendering_device_driver_d3d12.cpp:4467)
+
+FMOD Sound System: Successfully initialized
+[INFO] Found release_info.json at: E:\SteamLibrary\steamapps\common\Slay the Spire 2\release_info.json
+[INFO] [Sentry.NET] Initialized: env=development, release=v0.103.2
+[INFO] Steamworks: attempting initialization...
+[INFO] Steam is running: True
+[INFO] Steamworks initialization succeeded!
+[INFO] Steam is enabled, we will write saves to steam storage. Enabled for account: False, app: False 
+[INFO] Registered 11 migrations
+[INFO] Current save versions: PrefsSave v2; ProfileSave v2; SerializableProgress v21; RunHistory v9; SerializableRun v16; SettingsSave v5
+[INFO] Found mod manifest file E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\BetterSpire2.json
+[INFO] Found mod manifest file E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\UnifiedSavePath.json
+[INFO] Found mod manifest file E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\BaseLib\BaseLib.json
+[INFO] Found mod manifest file E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\HermesBridge\HermesBridge.json
+[INFO] Loading assembly DLL E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\BetterSpire2.dll
+[INFO] Calling initializer method of type BetterSpire2.ModEntry for BetterSpire2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+[INFO] Finished mod initialization for 'BetterSpire2' (BetterSpire2).
+[INFO] Loading assembly DLL E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\UnifiedSavePath.dll
+[INFO] Loading Godot PCK E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\UnifiedSavePath.pck
+[INFO] Calling initializer method of type UnifiedSavePath.UnifiedSavePathMod for UnifiedSavePath, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+[INFO] Finished mod initialization for 'Unified Save Path' (UnifiedSavePath).
+[INFO] Loading assembly DLL E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\BaseLib\BaseLib.dll
+[INFO] Loading Godot PCK E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\BaseLib\BaseLib.pck
+[INFO] Calling initializer method of type BaseLib.BaseLibMain for BaseLib, Version=3.0.6.0, Culture=neutral, PublicKeyToken=null
+[INFO] [BaseLib] Created node factory for Control.
+[INFO] [BaseLib] Created node factory for NCreatureVisuals.
+[INFO] [BaseLib] Created node factory for NRestSiteCharacter.
+[INFO] [BaseLib] Created node factory for NMerchantCharacter.
+[INFO] [BaseLib] Created node factory for NEnergyCounter.
+[INFO] [BaseLib] Registered config for mod BaseLib
+[INFO] [BaseLib] Performing CustomPile patch
+[INFO] [BaseLib] Starting PatchAll for assembly BaseLib, Version=3.0.6.0, Culture=neutral, PublicKeyToken=null
+[INFO] [BaseLib] Applied 131 patches successfully, 0 failed
+[INFO] Finished mod initialization for 'BaseLib' (BaseLib).
+[INFO] Loading assembly DLL E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\HermesBridge\HermesBridge.dll
+[INFO] Calling initializer method of type HermesBridge.HermesBridgeCode.MainFile for HermesBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+[INFO] [HermesBridge] [Trace] Initialize start
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=Initialize currentScreen=<null>
+[INFO] [HermesBridge] [Trace] WroteState revision=1 trigger=Initialize screen=<null>
+[INFO] [HermesBridge] [Trace] BridgeMainThreadDispatcher: using Harmony pump strategy (NRun._Process / NControllerManager._Process)
+[INFO] [HermesBridge] [Trace] BridgeCommandReader started; watching C:\Users\hi\AppData\Roaming\SlayTheSpire2\hermesbridge\commands.json
+[INFO] [HermesBridge] HermesBridge initialized. Export path: C:\Users\hi\AppData\Roaming\SlayTheSpire2\hermesbridge\state.json
+[INFO] Finished mod initialization for 'HermesBridge' (HermesBridge).
+[INFO]  --- RUNNING MODDED! --- Loaded 4 mods (4 total)
+[INFO] Syncing cloud save files to the local save directory
+[WARN] Asset not cached: res://scenes/cards/card.tscn
+[WARN] Asset not cached: res://scenes/cards/holders/grid_card_holder.tscn
+[INFO] AtlasManager: Loaded ui_atlas with 102 sprites
+[INFO] AtlasManager: Loaded compressed with 45 sprites
+[INFO] [BaseLib] Performing post-mod init patch
+[INFO] [BaseLib] Patching act types for custom encounters and events | DeprecatedAct | Glory | Hive | Overgrowth | Underdocks
+[INFO] [BaseLib] Generating interop methods and properties
+[INFO] [BaseLib] Registered 0 SavedSpireFields.
+[INFO] Loading locale path=res://localization/eng
+[INFO] Found loc table from mod: eng card_keywords.json. Merging with base loc table
+[INFO] Found loc table from mod: eng main_menu_ui.json. Merging with base loc table
+[INFO] Found loc table from mod: eng powers.json. Merging with base loc table
+[INFO] Found loc table from mod: eng settings_ui.json. Merging with base loc table
+[INFO] Found loc table from mod: eng static_hover_tips.json. Merging with base loc table
+[INFO] [BaseLib] Generated KeyGenerator for enum MegaCrit.Sts2.Core.Entities.Cards.CardKeyword with starting value 8 | IsFlag: False | Half-Size: 16
+[INFO] [HermesBridge] [Trace] BridgeSingleton ctor
+[INFO] ModelIdSerializationCache initialized. Categories: 19 Entries: 1613 Epochs: 57 Hash: 2044964936
+[Sentry.GDExtension] Initialized: env=playtesters, release=v0.103.2
+[INFO] Profile-scoped data path initialized: user://steam/76561198920102273/profile1
+[INFO] [Sentry.NET] Is running modded
+[INFO] [Sentry.NET] Shutting down because event reporting is disabled.
+[INFO] [Sentry.NET] Shutting down
+[Sentry.GDExtension] Shutting down
+[INFO] AtlasManager: Loaded controller_atlas with 112 sprites
+[INFO] Limiting background FPS to 30
+[INFO] Applying display settings...
+  FULLSCREEN: False
+  ASPECT_RATIO: (SixteenByNine)
+  TARGET_DISPLAY: (0)
+  WINDOW_SIZE: (1920, 1080)
+  POSITION: (2, 45)
+[INFO] [Display] Min size: (64, 64) Max size: (16384, 16384)
+[INFO] [Display] Attempting WINDOWED mode on Display 1 of 2 at position (2, 45)
+[INFO] Restored foreground FPS
+[INFO] [Display] SUCCESS: (1920, 1080) Windowed mode in Display 0: Position (3842, 45) ((2, 45))
+[INFO] [Display] New size: (1920, 1080) position: (3842, 45)
+[INFO] VSync: On
+[INFO] SteamStatsManager: Global stats received (found=True), architect damage = 149728769423
+[INFO] Wrote 2730 bytes to path=user://steam/76561198920102273/settings.save save_dir=user://steam/76561198920102273
+[INFO] Wrote 2730 bytes to settings.save in steam remote store
+[INFO] [HermesBridge] [Trace] BridgeMainThreadDispatcher.Pump first tick
+[INFO] === Godot OS Debug Information ===
+Timestamp: 04/19/2026 10:57:07
+OS: Windows
+OS Version: 10.0.26200
+Distribution Name: Windows
+Device Model: B650M AORUS ELITE AX
+Is Debug Build: False
+Is Sandboxed: False
+Executable Path: E:/SteamLibrary/steamapps/common/Slay the Spire 2/SlayTheSpire2.exe
+Data Directory: C:/Users/hi/AppData/Roaming
+User Data Directory: C:/Users/hi/AppData/Roaming/SlayTheSpire2
+Command Line Args: 
+User Command Line Args: 
+OS Locale: en_US
+OS Language: en
+Game Locale: en_US
+Is UserFS Persistent: True
+Is Stdout Verbose: False
+Is Low Processor Usage Mode: False
+Architecture: x86_64
+Engine Version: 4.5.1-m.9 (custom_build)
+Is Editor: False
+Release Version: v0.103.2
+Release Commit: 89765e1e
+Release Date: 04/16/2026 21:53:23
+Processor Count: 16
+Processor Name: AMD Ryzen 7 7800X3D 8-Core Processor
+Main assembly hash: 1832700724
+Rendering device name: NVIDIA GeForce RTX 3080 Ti
+  Graphics adapter 0: NVIDIA GeForce RTX 3080 Ti
+  version: 32.0.15.0
+  Graphics adapter 1: AMD Radeon(TM) Graphics
+  version: 31.0.22044.0
+  Graphics adapter 2: NVIDIA GeForce RTX 3080 Ti
+  version: 32.0.15.0
+  Graphics adapter 3: Microsoft Basic Render Driver
+  version: 10.0.26100.0
+Screen info (primary 0):
+  Index 0: Size: (3840, 2160) Orientation: Landscape Scale: 1 DPI: 144 Refresh Rate: 59.997
+  Index 1: Size: (3840, 2160) Orientation: Landscape Scale: 1 DPI: 144 Refresh Rate: 59.997
+Video Memory Used: 0.0B
+Memory Info:
+  physical: 63.1GB
+  free: 38.0GB
+  available: 67.1GB
+  stack: 8.0MB
+  Static Memory Usage: 0.0B
+  Static Memory Peak Usage: 0.0B
+Important Environment Variables:
+  PATH: C:\Program Files\Volta\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Tailscale\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Calibre2\;C:\Program Files\PowerShell\7\;C:\Program Files\Go\bin;C:\Users\hi\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\hi\AppData\Local\Programs\Python\Python311\;C:\Users\hi\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\hi\AppData\Local\Programs\Python\Python312\;C:\Users\hi\AppData\Local\Programs\Python\Launcher\;C:\Users\hi\.local\bin;C:\Users\hi\AppData\Local\Volta\bin;C:\Users\hi\AppData\Local\Microsoft\WindowsApps;C:\Users\hi\AppData\Local\Microsoft\WinGet\Links;C:\Users\hi\.bun\bin;C:\Program Files\JetBrains\JetBrains Rider 2025.3.1\bin;C:\Users\hi\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\hi\.dotnet\tools;C:\Users\hi\AppData\Local\GitHubDesktop\bin;C:\Users\hi\AppData\Local\Programs\Antigravity\bin;C:\Users\hi\AppData\Local\PowerToys\DSCModules\;C:\Users\hi\.fly\bin;C:\Users\hi\AppData\Local\Programs\Windsurf Next\bin;C:\Users\hi\AppData\Local\Pandoc\;C:\Users\hi\AppData\Local\plannotator;C:\Users\hi\go\bin;
+  GODOT_ROOT_DIR: 
+  HOME: 
+  DYLD_LIBRARY_PATH: 
+  LD_LIBRARY_PATH: 
+
+[INFO] Preloading 'MainMenuEssentials' assets... count=7 vfx=0
+[INFO] SteamStatsManager: User stats received
+[INFO] Preloading 'MainMenuEssentials' Complete: assets=7 time_elapsed=101ms
+[INFO] [Startup] Time to main menu (Godot ticks): 4160ms
+[WARN] Asset not cached: res://images/ui/top_panel/character_icon_ironclad.png
+[INFO] [HermesBridge] [Trace] MainMenu _Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MainMenu trigger=MainMenuReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MainMenuReady currentScreen=MainMenu
+[INFO] [HermesBridge] [Trace] WroteState revision=2 trigger=MainMenuReady screen=MainMenu
+[INFO] [Startup] Time to main menu: 4,276ms
+[INFO] [Startup] Resource stats (main menu loaded (essential)): StaticMem=0B, VRAM=273.6MB, Objects=8,150, Resources=470, Nodes=1,623, CachedAssets=10
+[INFO] AtlasManager: Loaded epoch_atlas with 57 sprites
+[INFO] AtlasManager: Loaded relic_atlas with 341 sprites
+[INFO] AtlasManager: Loaded relic_outline_atlas with 341 sprites
+[INFO] AtlasManager: Loaded power_atlas with 266 sprites
+[INFO] AtlasManager: Loaded card_atlas with 864 sprites
+[INFO] AtlasManager: Loaded potion_atlas with 63 sprites
+[INFO] AtlasManager: Loaded potion_outline_atlas with 63 sprites
+[INFO] AtlasManager: Loaded stats_screen_atlas with 16 sprites
+[INFO] AtlasManager: Loaded intent_atlas with 310 sprites
+[INFO] AtlasManager: Loaded era_atlas with 27 sprites
+[INFO] Unloading 3 missed cache assets
+[INFO] Preloading 'Common' assets... count=683 vfx=86
+[INFO] [Startup] Resource stats (main menu loaded (complete)): StaticMem=0B, VRAM=477.4MB, Objects=8,152, Resources=475, Nodes=1,621, CachedAssets=5
+[INFO] Preloading 'Common' Complete: assets=769 time_elapsed=3,381ms
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=531 status=error
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=532 type=ContinueRun
+[INFO] Continuing run with character: CHARACTER.IRONCLAD
+[INFO] [HermesBridge] [Trace] DispatchContinueRun invoked OnContinueButtonPressedAsync
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:ContinueRun currentScreen=MainMenu
+[INFO] [HermesBridge] [Trace] WroteState revision=3 trigger=PostDispatch:ContinueRun screen=MainMenu
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=532 status=ok
+[INFO] Preloading 'characters=IRONCLAD' assets... count=9 vfx=9
+[INFO] Preloading 'characters=IRONCLAD' Complete: assets=18 time_elapsed=827ms
+[INFO] Preloading 'Act=OVERGROWTH' assets... count=8 vfx=0
+[INFO] Preloading 'Act=OVERGROWTH' Complete: assets=8 time_elapsed=33ms
+[INFO] [HermesBridge] [Trace] MapScreen _Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=Map trigger=MapScreenReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenReady currentScreen=Map
+[INFO] [HermesBridge] [Trace] WroteState revision=4 trigger=MapScreenReady screen=Map
+[INFO] [HermesBridge] [Trace] NMapScreen.SetMap postfix fired (map=<ok>)
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenSetMap currentScreen=Map
+[INFO] [HermesBridge] [Trace] WroteState revision=5 trigger=MapScreenSetMap screen=Map
+[INFO] [HermesBridge] [Trace] NMapScreen.Close postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MapClosed trigger=MapScreenClose
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=6 trigger=MapScreenClose screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook BeforeRoomEntered roomType=Elite id=ENCOUNTER:PHROG_PARASITE_ELITE
+[INFO] Preloading 'Combat Room' assets... count=11 vfx=0
+[INFO] Preloading 'Combat Room' Complete: assets=11 time_elapsed=117ms
+[INFO] Creating NCombatRoom with mode=ActiveCombat encounter=PHROG_PARASITE_ELITE.
+[INFO] [HermesBridge] [Trace] Hook AfterRoomEntered roomType=Elite
+[INFO] [HermesBridge] [Trace] SetScreen screen=Room:Elite trigger=AfterRoomEntered
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Elite
+[INFO] [HermesBridge] [Trace] WroteState revision=7 trigger=AfterRoomEntered screen=Room:Elite
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Elite
+[INFO] [HermesBridge] [Trace] WroteState revision=8 trigger=AfterRoomEntered screen=Room:Elite
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered-ClearEvent currentScreen=Room:Elite
+[INFO] [HermesBridge] [Trace] WroteState revision=9 trigger=AfterRoomEntered-ClearEvent screen=Room:Elite
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered-ClearShop currentScreen=Room:Elite
+[INFO] [HermesBridge] [Trace] WroteState revision=10 trigger=AfterRoomEntered-ClearShop screen=Room:Elite
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered-ClearRestSite currentScreen=Room:Elite
+[INFO] [HermesBridge] [Trace] WroteState revision=11 trigger=AfterRoomEntered-ClearRestSite screen=Room:Elite
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Elite
+[INFO] [HermesBridge] [Trace] WroteState revision=12 trigger=AfterRoomEntered screen=Room:Elite
+[WARN] Asset not cached: res://images/powers/infested_power.png
+[INFO] [HermesBridge] [Trace] Hook BeforeCombatStart
+[INFO] [HermesBridge] [Trace] SetScreen screen=Combat trigger=BeforeCombatStart
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeCombatStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=13 trigger=BeforeCombatStart screen=Combat
+[INFO] [HermesBridge] [Trace] Hook BeforeCombatStart
+[INFO] [HermesBridge] [Trace] SetScreen screen=Combat trigger=BeforeCombatStart
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeCombatStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=14 trigger=BeforeCombatStart screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=15 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=16 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=533 type=PlayCard
+[INFO] Player 1 playing card SPITE (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Spite target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=17 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=533 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=18 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=19 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=534 type=PlayCard
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Strike target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=20 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=534 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=21 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=22 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=535 type=PlayCard
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Strike target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=23 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=535 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=24 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=25 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=536 type=PlayCard
+[INFO] Player 1 playing card DISMANTLE (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=1 card=Dismantle target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=26 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=536 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=27 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=28 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=537 type=EndTurn
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=29 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchEndTurn invoked PlayerCmd.EndTurn
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=30 trigger=PostDispatch:EndTurn screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=537 status=ok
+[INFO] Monster PHROG_PARASITE performing move INFECT_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=31 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=32 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=33 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=538 type=PlayCard
+[INFO] Player 1 playing card BASH (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=3 card=Bash target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=34 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=538 status=ok
+[WARN] Asset not cached: res://scenes/vfx/ui/vfx_debuff_applied.tscn
+[WARN] Asset not cached: res://images/powers/vulnerable_power.png
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=35 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=36 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=539 type=PlayCard
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Strike target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=37 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=539 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=38 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=39 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=540 type=EndTurn
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=40 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchEndTurn invoked PlayerCmd.EndTurn
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=41 trigger=PostDispatch:EndTurn screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=540 status=ok
+[INFO] Monster PHROG_PARASITE performing move LASH_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=42 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=43 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=44 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=541 type=PlayCard
+[INFO] Player 1 playing card BURNING_PACT (no target)
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=45 trigger=HandSelectRefresh screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Burning Pact target=<none> ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=46 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=541 status=ok
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=542 type=HandSelectCard
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=47 trigger=HandSelectRefresh screen=Combat
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=48 trigger=HandSelectExit screen=Combat
+[INFO] [HermesBridge] [Trace] NPlayerHandAfterSelected: cleared hand-select payload
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=49 trigger=HandSelectExit screen=Combat
+[INFO] Player 1 chose cards [GREED]
+[INFO] [HermesBridge] [Trace] DispatchHandSelectCard handIndex=1 card=Greed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:HandSelectCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=50 trigger=PostDispatch:HandSelectCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=542 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=51 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=52 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=543 type=PlayCard
+[INFO] Player 1 playing card ARMAMENTS (no target)
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Armaments target=<none> ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=53 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=543 status=ok
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=54 trigger=HandSelectRefresh screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=544 type=HandSelectCard
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=55 trigger=HandSelectRefresh screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchHandSelectCard handIndex=2 card=Defend
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:HandSelectCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=56 trigger=PostDispatch:HandSelectCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=544 status=ok
+[INFO] Limiting background FPS to 30
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=545 type=HandConfirmSelect
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=57 trigger=HandSelectExit screen=Combat
+[INFO] [HermesBridge] [Trace] NPlayerHandAfterSelected: cleared hand-select payload
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=58 trigger=HandSelectExit screen=Combat
+[INFO] Player 1 chose cards [DEFEND_IRONCLAD]
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=59 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=60 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchHandConfirmSelect invoked OnSelectModeConfirmButtonPressed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:HandConfirmSelect currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=61 trigger=PostDispatch:HandConfirmSelect screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=545 status=ok
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=546 type=PlayCard
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=0 card=Strike target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=62 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=546 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=63 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=64 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=547 type=EndTurn
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=65 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchEndTurn invoked PlayerCmd.EndTurn
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=66 trigger=PostDispatch:EndTurn screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=547 status=ok
+[INFO] Monster PHROG_PARASITE performing move INFECT_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=67 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=68 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=69 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=548 type=PlayCard
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=2 card=Strike target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=70 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=548 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=71 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=72 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=549 type=PlayCard
+[INFO] Player 1 playing card DISMANTLE (targeting Phrog Parasite (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=2 card=Dismantle target=Phrog Parasite ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=73 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=549 status=ok
+[WARN] Asset not cached: res://scenes/creature_visuals/wriggler.tscn
+[WARN] Asset not cached: res://images/atlases/intent_atlas.sprites/intent_stun.tres
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=74 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=75 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=550 type=PlayCard
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Wriggler (index 1))
+[INFO] [HermesBridge] [Trace] DispatchPlayCard handIndex=2 card=Strike target=Wriggler ok=True
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:PlayCard currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=76 trigger=PostDispatch:PlayCard screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=550 status=ok
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=77 trigger=AfterCardPlayed screen=Combat
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=78 trigger=AfterCardPlayedLate screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader dispatching id=551 type=EndTurn
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=79 trigger=BeforeTurnEnd screen=Combat
+[INFO] [HermesBridge] [Trace] DispatchEndTurn invoked PlayerCmd.EndTurn
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=PostDispatch:EndTurn currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=80 trigger=PostDispatch:EndTurn screen=Combat
+[INFO] [HermesBridge] [Trace] BridgeCommandReader wrote result id=551 status=ok
+[INFO] Monster WRIGGLER performing move SPAWNED_MOVE
+[INFO] Monster WRIGGLER performing move SPAWNED_MOVE
+[INFO] Monster WRIGGLER performing move SPAWNED_MOVE
+[INFO] Monster WRIGGLER performing move SPAWNED_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=81 trigger=BeforeTurnEnd screen=Combat
+[WARN] Asset not cached: res://images/atlases/intent_atlas.sprites/intent_buff.tres
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=82 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=Combat
+[INFO] [HermesBridge] [Trace] WroteState revision=83 trigger=AfterPlayerTurnStart screen=Combat
+[INFO] [HermesBridge] [Trace] NMapScreen.Open postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=Map trigger=MapScreenOpen
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenOpen currentScreen=Map
+[INFO] [HermesBridge] [Trace] WroteState revision=84 trigger=MapScreenOpen screen=Map
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenOpen currentScreen=Map
+[INFO] [HermesBridge] [Trace] WroteState revision=85 trigger=MapScreenOpen screen=Map
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] [HermesBridge] [Trace] NMapScreen.Close postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MapClosed trigger=MapScreenClose
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=86 trigger=MapScreenClose screen=MapClosed
+[INFO] Player 1 playing card DEFEND_IRONCLAD (no target)
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=87 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=88 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card DEFEND_IRONCLAD (no target)
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=89 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=90 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card DEFEND_IRONCLAD (no target)
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=91 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=92 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card SPITE (targeting Wriggler (index 1))
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=93 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=94 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=95 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] Monster WRIGGLER performing move WRIGGLE_MOVE
+[WARN] Asset not cached: res://scenes/vfx/ui/vfx_buff_applied.tscn
+[WARN] Asset not cached: res://images/powers/strength_power.png
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] Monster WRIGGLER performing move WRIGGLE_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=96 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=97 trigger=AfterPlayerTurnStart screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=98 trigger=AfterPlayerTurnStart screen=MapClosed
+[INFO] Player 1 playing card BURNING_PACT (no target)
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=99 trigger=HandSelectRefresh screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=100 trigger=HandSelectRefresh screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=101 trigger=HandSelectExit screen=MapClosed
+[INFO] [HermesBridge] [Trace] NPlayerHandAfterSelected: cleared hand-select payload
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=102 trigger=HandSelectExit screen=MapClosed
+[INFO] Player 1 chose cards [INFECTION]
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=103 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=104 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=105 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] Monster WRIGGLER performing move WRIGGLE_MOVE
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] Monster WRIGGLER performing move WRIGGLE_MOVE
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=106 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=107 trigger=AfterPlayerTurnStart screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=108 trigger=AfterPlayerTurnStart screen=MapClosed
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Player 1 playing card ARMAMENTS (no target)
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=109 trigger=HandSelectRefresh screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectRefresh currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=110 trigger=HandSelectRefresh screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=111 trigger=HandSelectExit screen=MapClosed
+[INFO] [HermesBridge] [Trace] NPlayerHandAfterSelected: cleared hand-select payload
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=HandSelectExit currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=112 trigger=HandSelectExit screen=MapClosed
+[INFO] Player 1 chose cards [DEFEND_IRONCLAD]
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=113 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=114 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card DEFEND_IRONCLAD (no target)
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=115 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=116 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card DEFEND_IRONCLAD (no target)
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=117 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=118 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card SPITE (targeting Wriggler (index 1))
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=119 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=120 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=121 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] Monster WRIGGLER performing move WRIGGLE_MOVE
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] Monster WRIGGLER performing move WRIGGLE_MOVE
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Enemy
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=122 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterPlayerTurnStart gold=585 maxEnergy=3
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=123 trigger=AfterPlayerTurnStart screen=MapClosed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterPlayerTurnStart currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=124 trigger=AfterPlayerTurnStart screen=MapClosed
+[INFO] Player 1 playing card STRIKE_IRONCLAD (targeting Wriggler (index 1))
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=125 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=126 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card DEFEND_IRONCLAD (no target)
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=127 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=128 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] Player 1 playing card DISMANTLE (targeting Wriggler (index 1))
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayed
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayed currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=129 trigger=AfterCardPlayed screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook AfterCardPlayedLate
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterCardPlayedLate currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=130 trigger=AfterCardPlayedLate screen=MapClosed
+[INFO] [HermesBridge] [Trace] Hook BeforeTurnEnd side=Player
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=BeforeTurnEnd currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=131 trigger=BeforeTurnEnd screen=MapClosed
+[INFO] Limiting background FPS to 30
+[INFO] Monster WRIGGLER performing move NASTY_BITE_MOVE
+[INFO] CHARACTER.IRONCLAD has lost to encounter ENCOUNTER.PHROG_PARASITE_ELITE. That's 9 losses
+[INFO] CHARACTER.IRONCLAD has died to a MONSTER.PHROG_PARASITE. That's 9 losses
+[INFO] Player already has Epoch: NEOW_EPOCH
+[INFO] Player already has Epoch: OROBAS_EPOCH
+[INFO] Player already has Epoch: DARV_EPOCH
+[INFO] Wrote 221660 bytes to path=user://steam/76561198920102273/profile1\saves\progress.save save_dir=user://steam/76561198920102273
+[INFO] Wrote 221660 bytes to profile1/saves/progress.save in steam remote store
+[INFO] Forgetting file profile1\saves\history/1774641560.run from cloud storage because we're past our quota. Bytes after forgetting: 2489204. Files after forgetting: 101
+[INFO] Forgetting file profile1\saves\history/1774662230.run from cloud storage because we're past our quota. Bytes after forgetting: 2463766. Files after forgetting: 100
+[INFO] Wrote 17402 bytes to path=user://steam/76561198920102273/profile1\saves\history\1776553536.run save_dir=user://steam/76561198920102273
+[INFO] Wrote 17402 bytes to profile1/saves/history/1776553536.run in steam remote store
+[INFO] Saved run history: 1776553536.run
+[INFO] Created Run History entry!
+[INFO] Skipping metrics upload, we're running modded.
+[INFO] [HermesBridge] [Trace] NMapScreen.Close postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MapClosed trigger=MapScreenClose
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=132 trigger=MapScreenClose screen=MapClosed
+[INFO] [HermesBridge] [Trace] NGameOverScreen _Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=GameOver trigger=GameOverScreenReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=GameOverScreenReady currentScreen=GameOver
+[INFO] [HermesBridge] [Trace] WroteState revision=133 trigger=GameOverScreenReady screen=GameOver
+[INFO] [HermesBridge] [Trace] GameOverScreen auto-dismissed via ReturnToMainMenu
+[INFO] Unloading 8 missed cache assets
+[INFO] Preloading 'Common' assets... count=125 vfx=1
+[WARN] Asset not cached: res://scenes/screens/main_menu.tscn
+[INFO] [Startup] Time to main menu (Godot ticks): 492804ms
+[INFO] [HermesBridge] [Trace] MainMenu _Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MainMenu trigger=MainMenuReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MainMenuReady currentScreen=MainMenu
+[INFO] [HermesBridge] [Trace] WroteState revision=134 trigger=MainMenuReady screen=MainMenu
+[INFO] Preloading 'Common' Complete: assets=125 time_elapsed=618ms
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[WARN] Asset not cached: res://scenes/screens/singleplayer_submenu.tscn
+[INFO] [HermesBridge] [Trace] SingleplayerSubmenu _Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=SingleplayerSubmenu trigger=SingleplayerSubmenuReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=SingleplayerSubmenuReady currentScreen=SingleplayerSubmenu
+[INFO] [HermesBridge] [Trace] WroteState revision=135 trigger=SingleplayerSubmenuReady screen=SingleplayerSubmenu
+[INFO] [HermesBridge] [Trace] NSingleplayerSubmenu.OnSubmenuOpened postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=SingleplayerSubmenu trigger=SingleplayerSubmenuOpened
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=SingleplayerSubmenuOpened currentScreen=SingleplayerSubmenu
+[INFO] [HermesBridge] [Trace] WroteState revision=136 trigger=SingleplayerSubmenuOpened screen=SingleplayerSubmenu
+[INFO] [HermesBridge] [Trace] NMainMenu.OpenSingleplayerSubmenu postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=SingleplayerSubmenu trigger=MainMenuOpenSingleplayerSubmenu
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MainMenuOpenSingleplayerSubmenu currentScreen=SingleplayerSubmenu
+[INFO] [HermesBridge] [Trace] WroteState revision=137 trigger=MainMenuOpenSingleplayerSubmenu screen=SingleplayerSubmenu
+[INFO] Max ascension changed to 0
+[INFO] Max ascension changed to 0
+[INFO] [StartRunLobby (1)] CHARACTER.IRONCLAD has not revealed the Ascension Epoch, disabling Ascension.
+[INFO] [HermesBridge] [Trace] NCharacterSelectScreen.OnSubmenuOpened postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=CharacterSelect trigger=CharacterSelectOpened
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=CharacterSelectOpened currentScreen=CharacterSelect
+[INFO] [HermesBridge] [Trace] WroteState revision=138 trigger=CharacterSelectOpened screen=CharacterSelect
+[INFO] [HermesBridge] [Trace] NSingleplayerSubmenu.OpenCharacterSelect postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=CharacterSelect trigger=SingleplayerOpenCharacterSelect
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=SingleplayerOpenCharacterSelect currentScreen=CharacterSelect
+[INFO] [HermesBridge] [Trace] WroteState revision=139 trigger=SingleplayerOpenCharacterSelect screen=CharacterSelect
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] [StartRunLobby (1)] Local player 1 is ready
+[INFO] Embarking on a singleplayer IRONCLAD run. Ascension: 0 Seed: Y6N6R2P07B
+[INFO] Preloading 'characters=IRONCLAD' assets... count=9 vfx=9
+[INFO] Preloading 'characters=IRONCLAD' Complete: assets=18 time_elapsed=784ms
+[INFO] Preloading 'Act=OVERGROWTH' assets... count=8 vfx=0
+[INFO] Preloading 'Act=OVERGROWTH' Complete: assets=8 time_elapsed=34ms
+[INFO] [HermesBridge] [Trace] MapScreen _Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=Map trigger=MapScreenReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenReady currentScreen=Map
+[INFO] [HermesBridge] [Trace] WroteState revision=140 trigger=MapScreenReady screen=Map
+[INFO] [HermesBridge] [Trace] NMapScreen.Close postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MapClosed trigger=MapScreenClose
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=141 trigger=MapScreenClose screen=MapClosed
+[INFO] Preloading 'Act=OVERGROWTH' assets... count=0 vfx=0
+[INFO] Preloading 'Act=OVERGROWTH' Complete: assets=0 time_elapsed=29ms
+[INFO] [HermesBridge] [Trace] NMapScreen.SetMap postfix fired (map=<ok>)
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenSetMap currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=142 trigger=MapScreenSetMap screen=MapClosed
+[INFO] [HermesBridge] [Trace] NMapScreen.Close postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=MapClosed trigger=MapScreenClose
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=MapScreenClose currentScreen=MapClosed
+[INFO] [HermesBridge] [Trace] WroteState revision=143 trigger=MapScreenClose screen=MapClosed
+[INFO] Wrote 221660 bytes to path=user://steam/76561198920102273/profile1\saves\progress.save save_dir=user://steam/76561198920102273
+[INFO] Wrote 221660 bytes to profile1/saves/progress.save in steam remote store
+[INFO] Wrote 43756 bytes to path=user://steam/76561198920102273/profile1\saves\current_run.save save_dir=user://steam/76561198920102273
+[INFO] Wrote 43756 bytes to profile1/saves/current_run.save in steam remote store
+[INFO] [HermesBridge] [Trace] Hook BeforeRoomEntered roomType=Event id=EVENT:NEOW
+[INFO] Preloading 'Event Room' assets... count=2 vfx=0
+[INFO] Preloading 'Event Room' Complete: assets=2 time_elapsed=146ms
+[INFO] [HermesBridge] [Trace] NEventRoom._Ready postfix fired
+[INFO] [HermesBridge] [Trace] SetScreen screen=Event trigger=EventRoomReady
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=EventRoomReady currentScreen=Event
+[INFO] [HermesBridge] [Trace] WroteState revision=144 trigger=EventRoomReady screen=Event
+[INFO] [HermesBridge] [Trace] PushEvent(EventRoomReady) skipped: no event on EventRoom
+[INFO] [HermesBridge] [Trace] Hook AfterRoomEntered roomType=Event
+[INFO] [HermesBridge] [Trace] SetScreen screen=Room:Event trigger=AfterRoomEntered
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Event
+[INFO] [HermesBridge] [Trace] WroteState revision=145 trigger=AfterRoomEntered screen=Room:Event
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Event
+[INFO] [HermesBridge] [Trace] WroteState revision=146 trigger=AfterRoomEntered screen=Room:Event
+[WARN] [BaseLib] GetRawText: Key 'NEOW.pages.INITIAL.description' not found in table 'ancients'
+[WARN] [BaseLib] GetRawText: Key 'NEOW.pages.INITIAL.description' not found in table 'ancients'
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Event
+[INFO] [HermesBridge] [Trace] WroteState revision=147 trigger=AfterRoomEntered screen=Room:Event
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered-ClearShop currentScreen=Room:Event
+[INFO] [HermesBridge] [Trace] WroteState revision=148 trigger=AfterRoomEntered-ClearShop screen=Room:Event
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered-ClearRestSite currentScreen=Room:Event
+[INFO] [HermesBridge] [Trace] WroteState revision=149 trigger=AfterRoomEntered-ClearRestSite screen=Room:Event
+[INFO] [HermesBridge] [Trace] RequestWrite trigger=AfterRoomEntered currentScreen=Room:Event
+[INFO] [HermesBridge] [Trace] WroteState revision=150 trigger=AfterRoomEntered screen=Room:Event
+[WARN] Asset not cached: res://scenes/vfx/vfx_cross_heal_fullscreen.tscn
+[INFO] [BaseLib] Checking for additional interactions with NEOW
+[WARN] Asset not cached: res://scenes/events/ancient_dialogue_line.tscn
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30
+[INFO] Restored foreground FPS
+[INFO] Limiting background FPS to 30

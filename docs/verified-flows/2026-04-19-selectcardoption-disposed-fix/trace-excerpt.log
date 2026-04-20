@@ -1,0 +1,26 @@
+2026-04-19T17:20:44.7075844Z NCardRewardSelectionScreen.AfterOverlayShown postfix fired
+2026-04-19T17:20:44.7077367Z SetScreen screen=CardReward trigger=CardRewardSelectionShown
+2026-04-19T17:20:44.7078664Z RequestWrite trigger=CardRewardSelectionShown currentScreen=CardReward
+2026-04-19T17:20:44.7137870Z WroteState revision=18 trigger=CardRewardSelectionShown screen=CardReward
+2026-04-19T17:20:44.7158717Z DispatchSelectReward setIdx=5 type=CardReward
+2026-04-19T17:20:44.7160570Z RequestWrite trigger=PostDispatch:SelectReward currentScreen=CardReward
+2026-04-19T17:20:44.7218500Z WroteState revision=19 trigger=PostDispatch:SelectReward screen=CardReward
+2026-04-19T17:20:44.7225522Z BridgeCommandReader wrote result id=817 status=ok
+2026-04-19T17:20:53.6041884Z BridgeCommandReader dispatching id=818 type=SelectCardOption
+2026-04-19T17:20:53.6217720Z NCardRewardSelectionScreen.AfterOverlayClosed postfix fired
+2026-04-19T17:20:53.6220529Z RequestWrite trigger=CardRewardSelectionClosed-ClearPayload currentScreen=CardReward
+2026-04-19T17:20:53.6339976Z WroteState revision=20 trigger=CardRewardSelectionClosed-ClearPayload screen=CardReward
+2026-04-19T17:20:53.6341492Z SetScreen screen=CardRewardClosed trigger=CardRewardSelectionClosed
+2026-04-19T17:20:53.6342781Z RequestWrite trigger=CardRewardSelectionClosed currentScreen=CardRewardClosed
+2026-04-19T17:20:53.6411840Z WroteState revision=21 trigger=CardRewardSelectionClosed screen=CardRewardClosed
+2026-04-19T17:20:53.6414541Z NRewardsScreen.AfterOverlayShown postfix fired
+2026-04-19T17:20:53.6416047Z SetScreen screen=Rewards trigger=RewardsScreenShown
+2026-04-19T17:20:53.6417322Z RequestWrite trigger=RewardsScreenShown currentScreen=Rewards
+2026-04-19T17:20:53.6482463Z WroteState revision=22 trigger=RewardsScreenShown screen=Rewards
+2026-04-19T17:20:53.6486830Z Hook AfterRewardTaken rewardType=CardReward
+2026-04-19T17:20:53.6494462Z RequestWrite trigger=AfterRewardTaken currentScreen=Rewards
+2026-04-19T17:20:53.6561578Z WroteState revision=23 trigger=AfterRewardTaken screen=Rewards
+2026-04-19T17:20:53.6564514Z DispatchSelectCardOption idx=0 card=Primal Force
+2026-04-19T17:20:53.6566611Z RequestWrite trigger=PostDispatch:SelectCardOption currentScreen=Rewards
+2026-04-19T17:20:53.6626050Z WroteState revision=24 trigger=PostDispatch:SelectCardOption screen=Rewards
+2026-04-19T17:20:53.6637956Z BridgeCommandReader wrote result id=818 status=ok

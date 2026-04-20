@@ -1,0 +1,967 @@
+{
+  "schemaVersion": 1,
+  "modVersion": "0.1.0",
+  "timestampUtc": "2026-04-19T16:31:11.8348413Z",
+  "revision": 22,
+  "source": {
+    "modId": "HermesBridge",
+    "trigger": "PostDispatch:Proceed"
+  },
+  "screen": {
+    "name": "Map"
+  },
+  "rewards": null,
+  "cardRewardOptions": null,
+  "combat": null,
+  "run": {
+    "gameMode": "Standard",
+    "ascensionLevel": 0,
+    "totalFloor": 10,
+    "actFloor": 10,
+    "currentActIndex": 0,
+    "actId": "ACT:OVERGROWTH",
+    "currentRoom": {
+      "id": "\u003Cnull\u003E",
+      "roomType": "Treasure"
+    },
+    "restSite": null,
+    "currentHp": 42,
+    "maxHp": 80,
+    "block": 0,
+    "gold": 276,
+    "maxPotionCount": 3,
+    "character": "CHARACTER:IRONCLAD",
+    "relics": [
+      {
+        "id": "RELIC:BURNING_BLOOD",
+        "title": "Burning Blood",
+        "rarity": "Starter"
+      },
+      {
+        "id": "RELIC:ARCANE_SCROLL",
+        "title": "Arcane Scroll",
+        "rarity": "Ancient"
+      },
+      {
+        "id": "RELIC:LETTER_OPENER",
+        "title": "Letter Opener",
+        "rarity": "Uncommon"
+      }
+    ],
+    "potions": [
+      {
+        "id": "POTION:ENERGY_POTION",
+        "title": "Energy Potion",
+        "rarity": "Common",
+        "targetType": "AnyPlayer"
+      },
+      {
+        "id": "POTION:FYSH_OIL",
+        "title": "Fysh Oil",
+        "rarity": "Uncommon",
+        "targetType": "AnyPlayer"
+      },
+      null
+    ],
+    "deck": [
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:BASH",
+        "title": "Bash\u002B",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 2,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": true,
+        "isUpgradable": false,
+        "currentUpgradeLevel": 1,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:OFFERING",
+        "title": "Offering",
+        "type": "Skill",
+        "rarity": "Rare",
+        "energyCost": 0,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:TWIN_STRIKE",
+        "title": "Twin Strike",
+        "type": "Attack",
+        "rarity": "Common",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:RUPTURE",
+        "title": "Rupture",
+        "type": "Power",
+        "rarity": "Uncommon",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:INFLAME",
+        "title": "Inflame",
+        "type": "Power",
+        "rarity": "Uncommon",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      },
+      {
+        "id": "CARD:THUNDERCLAP",
+        "title": "Thunderclap",
+        "type": "Attack",
+        "rarity": "Common",
+        "energyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck"
+      }
+    ],
+    "deckSize": 15
+  },
+  "event": null,
+  "shop": null,
+  "restSite": null,
+  "treasure": {
+    "id": "\u003Cnull\u003E",
+    "hasChestBeenOpened": true,
+    "isRelicCollectionOpen": true,
+    "relicChoices": [
+      {
+        "index": 0,
+        "relic": {
+          "id": "RELIC:LETTER_OPENER",
+          "title": "Letter Opener",
+          "rarity": "Uncommon"
+        }
+      }
+    ]
+  },
+  "map": {
+    "rowCount": 16,
+    "colCount": 7,
+    "currentCoord": {
+      "col": 2,
+      "row": 9
+    },
+    "bossCoord": {
+      "col": 3,
+      "row": 16
+    },
+    "available": [
+      {
+        "col": 2,
+        "row": 10,
+        "pointType": "Shop",
+        "state": "Travelable"
+      }
+    ],
+    "visited": [
+      {
+        "col": 3,
+        "row": 0
+      },
+      {
+        "col": 3,
+        "row": 1
+      },
+      {
+        "col": 4,
+        "row": 2
+      },
+      {
+        "col": 4,
+        "row": 3
+      },
+      {
+        "col": 3,
+        "row": 4
+      },
+      {
+        "col": 3,
+        "row": 5
+      },
+      {
+        "col": 2,
+        "row": 6
+      },
+      {
+        "col": 2,
+        "row": 7
+      },
+      {
+        "col": 2,
+        "row": 8
+      },
+      {
+        "col": 2,
+        "row": 9
+      }
+    ],
+    "grid": [
+      {
+        "col": 0,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 4,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 1,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 1,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 2,
+        "pointType": "Shop",
+        "children": [
+          {
+            "col": 0,
+            "row": 3
+          },
+          {
+            "col": 2,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 5,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 3,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 6,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 2,
+            "row": 7
+          },
+          {
+            "col": 3,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 7,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 8,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 2,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 9,
+        "pointType": "Treasure",
+        "children": [
+          {
+            "col": 2,
+            "row": 10
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 10,
+        "pointType": "Shop",
+        "children": [
+          {
+            "col": 2,
+            "row": 11
+          },
+          {
+            "col": 3,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 11,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 12,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 3,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 3,
+            "row": 2
+          },
+          {
+            "col": 4,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 2,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 3,
+            "row": 5
+          },
+          {
+            "col": 4,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 5,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 7,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 2,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 10,
+        "pointType": "Shop",
+        "children": [
+          {
+            "col": 3,
+            "row": 11
+          },
+          {
+            "col": 4,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 11,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 3,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 12,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 3,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 13,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 2,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 4,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 4
+          },
+          {
+            "col": 3,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 5,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 4,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 6,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 5,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 8,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 4,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 9,
+        "pointType": "Treasure",
+        "children": [
+          {
+            "col": 3,
+            "row": 10
+          },
+          {
+            "col": 4,
+            "row": 10
+          },
+          {
+            "col": 5,
+            "row": 10
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 10,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 5,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 11,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 5,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 14,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 15
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 5,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 7,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 5,
+            "row": 8
+          },
+          {
+            "col": 4,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 8,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 4,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 10,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 5,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 11,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 12,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 6,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 14,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 5,
+            "row": 15
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 15,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 3,
+            "row": 16
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 2,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 3,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 6,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 5,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 6,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 5,
+            "row": 7
+          },
+          {
+            "col": 6,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 7,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 5,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 13,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 6,
+            "row": 14
+          },
+          {
+            "col": 5,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 14,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 15
+          }
+        ]
+      }
+    ]
+  },
+  "cardGrid": null,
+  "chooseACardScreen": null,
+  "handSelect": null
+}
