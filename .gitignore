@@ -19,3 +19,6 @@ _staging_mods/
 docs/handoffs/
 docs/handoff-replies/
 reflect_reward_types.txt
+
+# Release artifacts (upload to GitHub Releases, don't commit)
+HermesBridge-v*.zip

@@ -196,6 +196,19 @@ Key principles (from `docs/bridge-protocol-notes.md`, expanded):
   write often still shows `screen=Combat, currentSide=Player`. Wait for
   a **newer revision**, don't assume the first post-command state is
   settled.
+- **Other known refresh lags.** Similar one-tick-late behavior has been
+  observed for:
+  - **Post-Smith deck contents.** After `SelectCardsInGrid` at a rest
+    site, the upgraded card may not appear in `run.deck` until the
+    next `Proceed` lands you on the map. The smith commit itself is
+    fine; just don't assert on deck state between commit and map.
+  - **Potion / block / power stat application.** `UsePotion` can return
+    `ok=true` without `combat.player.block` or the relevant power
+    reflecting the effect for a tick. Re-read after the next revision
+    bump before deciding your next card.
+  Treat any "command succeeded but state looks unchanged" as a
+  refresh-lag candidate before flagging it as a stall — but still log
+  it if the lag exceeds one revision.
 - **Reward `index` is `rewardIndex` not array position.** `rewards[i].index`
   is the `RewardsSetIndex` the game uses internally. Use that value as
   the `rewardIndex` param, not `i`.
@@ -215,6 +228,26 @@ Key principles (from `docs/bridge-protocol-notes.md`, expanded):
 - **Potion inventory may be full.** Selecting a potion reward when
   `run.potions[]` has no null slots silently no-ops (bug V). Check
   capacity before `SelectReward` on a potion.
+- **Potion `slotIndex` is positional, not a compacted array index.**
+  `run.potions[]` preserves empty slots as `null` entries. Slot 0 may
+  hold Weak Potion, slot 1 may be `null`, slot 2 may hold Fortifier.
+  When issuing `UsePotion` / `DiscardPotion`, pass the **slot number**
+  (the index into `run.potions[]` including nulls), not the position
+  among non-null potions.
+- **Hand indices shift after every `PlayCard`.** The hand array is
+  re-packed each play. Do not cache `handIndex` across multiple plays
+  in a turn. Re-read `state.combat.hand.cards[]` after each card and
+  look up the next card fresh. This is another reason the per-tick
+  loop lives in you, not in a script.
+- **Card data is nested under `.card` in grids and reward overlays.**
+  `cardRewardOptions.cards[i].card.title` (not `.cards[i].title`).
+  Same for `cardGrid.cards[i].card.title`. Hand cards, by contrast, are
+  flat: `combat.hand.cards[i].title`. Don't assume a uniform shape.
+- **Rewards → Map often needs two `Proceed`s.** The flow is
+  `Rewards → RewardsClosed → Map` (or `CardRewardClosed → Rewards →
+  RewardsClosed → Map` after picking a card). Issue `Proceed`, re-read
+  state, and issue `Proceed` again if the transitional closed-screen
+  appears. Don't assume one `Proceed` lands you on the map.
 - **`StartRun` wants the bare character id.** `"NECROBINDER"`,
   `"IRONCLAD"`, `"SILENT"`, `"DEFECT"`, `"REGENT"` — not
   `"CHARACTER:NECROBINDER"`.
