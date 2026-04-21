@@ -13,6 +13,14 @@
 #   # ...decide...
 #   $r = Send-BridgeCommand @{ type='PlayCard'; handIndex=0 }
 #   ...
+#
+# DRIVER GOTCHA: pwsh -Command "..." silently strips bare `$` characters
+# from its argument, which mangles state references like $s.combat.energy
+# into .combat.energy. If you (or your agent) need to interpolate state
+# variables across calls, use a script file (`pwsh -File foo.ps1` or
+# `pwsh -c ". .\autopilot-lib.ps1; ..."` with the body wrapped in a
+# string literal) rather than building a `-Command` argument with
+# variables. This has bitten multiple drivers.
 #   Write-SessionLog -Character 'NECROBINDER' -HaltReason 'DEATH floor=11' -FinalState $r.state
 #
 # See SKILL.md at repo root for the full spec.
@@ -20,11 +28,13 @@
 Set-StrictMode -Version Latest
 
 # ---------------- Paths ----------------
-$script:IpcDir    = Join-Path $env:APPDATA 'SlayTheSpire2\hermesbridge'
-$script:StateFile = Join-Path $script:IpcDir 'state.json'
-$script:CmdsFile  = Join-Path $script:IpcDir 'commands.json'
-$script:ResFile   = Join-Path $script:IpcDir 'result.json'
-$script:TraceFile = Join-Path $script:IpcDir 'trace.log'
+$script:IpcDir      = Join-Path $env:APPDATA 'SlayTheSpire2\hermesbridge'
+$script:StateFile   = Join-Path $script:IpcDir 'state.json'
+$script:CmdsFile    = Join-Path $script:IpcDir 'commands.json'
+$script:ResFile     = Join-Path $script:IpcDir 'result.json'
+$script:TraceFile   = Join-Path $script:IpcDir 'trace.log'
+$script:OverlayFile = Join-Path $script:IpcDir 'overlay.txt'
+$script:OverlayLog  = Join-Path $script:IpcDir 'overlay.log'
 
 $script:RepoRoot = $PSScriptRoot
 $script:LogDir   = Join-Path $script:RepoRoot 'docs'
@@ -70,11 +80,13 @@ function Reset-Session {
 
 function Get-IpcPaths {
     [pscustomobject]@{
-        IpcDir    = $script:IpcDir
-        StateFile = $script:StateFile
-        CmdsFile  = $script:CmdsFile
-        ResFile   = $script:ResFile
-        TraceFile = $script:TraceFile
+        IpcDir      = $script:IpcDir
+        StateFile   = $script:StateFile
+        CmdsFile    = $script:CmdsFile
+        ResFile     = $script:ResFile
+        TraceFile   = $script:TraceFile
+        OverlayFile = $script:OverlayFile
+        OverlayLog  = $script:OverlayLog
     }
 }
 
@@ -267,7 +279,123 @@ function Write-SessionLog {
     return $logFile
 }
 
+# ---------------- Overlay (for OBS / post-hoc SRT) ----------------
+# overlay.txt = single line, overwritten each call. Point an OBS "Text (GDI+)"
+#   source at it with "Read from file" enabled to render live subtitles.
+# overlay.log = append-only, tab-separated, ISO timestamp + line. Feed to
+#   New-OverlaySrt after a session to produce an .srt for post-production.
+
+function Set-OverlayText {
+    <#
+    .SYNOPSIS
+    Write a one-line action justification for the stream overlay.
+    Appends to overlay.log with a UTC ISO timestamp for SRT generation.
+    .PARAMETER Text
+    The justification. Keep under ~120 chars — longer lines wrap or clip.
+    .PARAMETER Prefix
+    Optional unicode glyph. Suggested: spades for PlayCard, diamonds
+    for rewards, clubs for map, hearts for potions, flag for combat end.
+    #>
+    param(
+        [Parameter(Mandatory)][string]$Text,
+        [string]$Prefix = ''
+    )
+    $line = if ($Prefix) { "$Prefix $Text" } else { $Text }
+    $isoTs = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
+    Set-Content -Path $script:OverlayFile -Value $line -Encoding UTF8 -NoNewline
+    Add-Content -Path $script:OverlayLog -Value "$isoTs`t$line" -Encoding UTF8
+}
+
+function Clear-Overlay {
+    <#
+    .SYNOPSIS
+    Blank the live overlay file. Does not touch overlay.log.
+    #>
+    Set-Content -Path $script:OverlayFile -Value '' -Encoding UTF8 -NoNewline
+}
+
+function New-OverlaySrt {
+    <#
+    .SYNOPSIS
+    Convert overlay.log to a .srt subtitle file aligned to a recording.
+    .DESCRIPTION
+    overlay.log contains UTC timestamps plus one-line justifications.
+    Pass -RecordingStartUtc matching the start of your OBS recording;
+    each overlay line becomes a cue, ending at the next line's timestamp
+    (or +MaxCueSec if it is the last line).
+    .PARAMETER RecordingStartUtc
+    The UTC DateTime your OBS recording began. Anything before this is
+    discarded; anything after is offset relative to it.
+    .PARAMETER OutputPath
+    Where to write the .srt. Default: overlay-<yyyyMMdd-HHmmss>.srt next
+    to overlay.log.
+    .PARAMETER MinCueSec
+    Minimum cue duration floor. Default 1.5s so quick back-to-back plays
+    don't flash unreadably.
+    .PARAMETER MaxCueSec
+    Maximum cue duration ceiling. Default 6s so the last line of a combat
+    doesn't linger through the next map.
+    #>
+    param(
+        [Parameter(Mandatory)][datetime]$RecordingStartUtc,
+        [string]$OutputPath,
+        [double]$MinCueSec = 1.5,
+        [double]$MaxCueSec = 6.0
+    )
+
+    if (-not (Test-Path $script:OverlayLog)) {
+        throw "No overlay.log at $script:OverlayLog"
+    }
+
+    if (-not $OutputPath) {
+        $stamp = (Get-Date -Format 'yyyyMMdd-HHmmss')
+        $OutputPath = Join-Path (Split-Path $script:OverlayLog -Parent) "overlay-$stamp.srt"
+    }
+
+    $startUtc = $RecordingStartUtc.ToUniversalTime()
+    $lines = Get-Content $script:OverlayLog -Encoding UTF8 | Where-Object { $_ -match "`t" }
+
+    $cues = @()
+    foreach ($l in $lines) {
+        $parts = $l -split "`t", 2
+        $ts = [datetime]::Parse($parts[0]).ToUniversalTime()
+        if ($ts -lt $startUtc) { continue }
+        $cues += [pscustomobject]@{
+            OffsetSec = ($ts - $startUtc).TotalSeconds
+            Text      = $parts[1]
+        }
+    }
+
+    if ($cues.Count -eq 0) {
+        Write-Warning "No overlay.log entries after $RecordingStartUtc — nothing to write."
+        return
+    }
+
+    function _fmt([double]$sec) {
+        if ($sec -lt 0) { $sec = 0 }
+        $ts = [timespan]::FromSeconds($sec)
+        '{0:00}:{1:00}:{2:00},{3:000}' -f $ts.Hours, $ts.Minutes, $ts.Seconds, $ts.Milliseconds
+    }
+
+    $sb = New-Object System.Text.StringBuilder
+    for ($i = 0; $i -lt $cues.Count; $i++) {
+        $start = $cues[$i].OffsetSec
+        $rawEnd = if ($i -lt $cues.Count - 1) { $cues[$i+1].OffsetSec } else { $start + $MaxCueSec }
+        $dur = [Math]::Min([Math]::Max($rawEnd - $start, $MinCueSec), $MaxCueSec)
+        $end = $start + $dur
+        [void]$sb.AppendLine(($i + 1))
+        [void]$sb.AppendLine((_fmt $start) + ' --> ' + (_fmt $end))
+        [void]$sb.AppendLine($cues[$i].Text)
+        [void]$sb.AppendLine()
+    }
+
+    Set-Content -Path $OutputPath -Value $sb.ToString() -Encoding UTF8
+    Write-Host "Wrote $($cues.Count) cues to $OutputPath" -ForegroundColor Green
+    return $OutputPath
+}
+
 Write-Host "autopilot-lib loaded. Primitives available:" -ForegroundColor Green
 Write-Host "  Read-State, Wait-Revision, Send-BridgeCommand, Clear-Ipc" -ForegroundColor Gray
 Write-Host "  Log-Finding, Get-Findings, Write-SessionLog, Reset-Session" -ForegroundColor Gray
+Write-Host "  Set-OverlayText, Clear-Overlay, New-OverlaySrt" -ForegroundColor Gray
 Write-Host "  Get-IpcPaths" -ForegroundColor Gray

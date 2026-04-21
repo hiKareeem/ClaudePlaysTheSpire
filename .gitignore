@@ -11,6 +11,9 @@ packages/
 .editorconfig
 *.user
 Directory.Build.props
+.opencode/
+opencode.json
+oh-my-openagent.json
 
 # Decompiled game code — do not redistribute
 _staging_mods/
@@ -19,6 +22,8 @@ _staging_mods/
 docs/handoffs/
 docs/handoff-replies/
 reflect_reward_types.txt
+tmp-*.ps1
 
-# Release artifacts (upload to GitHub Releases, don't commit)
+# Release artifacts (upload to GitHub Releases / NexusMods, don't commit)
 HermesBridge-v*.zip
+_nexus_staging/

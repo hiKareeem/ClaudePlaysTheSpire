@@ -1,4 +1,4 @@
-# Session bug log — 2026-04-20 (Ironclad run, Floor 1 → Floor 11)
+# Session bug log — 2026-04-20 (Ironclad run, Floor 1 → Floor 13 DEATH)
 
 Live-run findings accumulated during the current Ironclad session. Letters
 reflect observation order; gaps (A–I, K, L, N, O, R, S, Z, AA, AC, AE) were
@@ -344,9 +344,81 @@ Enemies use `slotName` (string), not `index` (int). Target index is likely the a
 
 ---
 
+## Ironclad run — autonomous (session 3)
+
+Third autopilot session. Ironclad died Floor 13 to Phrog Parasite.
+
+### Run progress
+
+| Floor | Type | Outcome | HP | Gold | Notes |
+|-------|------|---------|----|------|-------|
+| 0 | Neow | optionIndex=0 (Lava Rock) | 80/80 | 99 | Boss relics drop 2 |
+| 1 | Monster (Shrinker Beetle 38/38) | Victory R4 | 65/80 | 117 | Took Perfected Strike |
+| 2 | Monster (Leaf Slime x3) | Victory R4 | 53/80 | 137 | Took One-Two Punch (Rare) |
+| 3 | Event (Room Full of Cheese) | Gorge: picked Thunderclap+Pommel Strike | 59/80 | 137 | CMD_ERROR on SelectCardsInGrid but cards added (see CARDGRID_RACE) |
+| 4 | Monster (Nibbit 44/44) | Victory R2 | 52/80 | 147 | Took Twin Strike |
+| 5 | Monster (2 Nibbits) | Victory R4 | 40→46 (heal) | 161 | Took Taunt |
+| 6 | RestSite | Smith: upgraded Bash→Bash+ | 46/80 | 161 | |
+| 7 | Monster (Vine Shambler 61/61) | Victory R3 | 26→32 (heal) | 173 | Took Setup Strike |
+| 8 | Monster (Beetle+Wurm) | Victory R5 | 11→17 (heal) | 187 | Took Anger |
+| 9 | Treasure | Festive Popper (9 dmg to ALL at combat start) | 17/80 | 236 | |
+| 10 | Monster→11 (Fogmog 65/74) | Victory R3 | 9→15 (heal) | 253 | Took Rupture |
+| 12 | Monster (3 Raiders) | Victory R3 | 10→16 (heal) | 271 | Took Sword Boomerang |
+| 13 | Monster (Phrog Parasite 53/62) | **DEATH** R2 | 16→0 | 271 | Infested power clogged draw; took fatal dmg |
+
+### Final deck (20 cards)
+5x Strike, 4x Defend, Bash+, Perfected Strike, One-Two Punch, Thunderclap, Pommel Strike, Iron Wave, Twin Strike, Taunt, Setup Strike, Anger, Rupture, Sword Boomerang
+
+### New findings from Ironclad run
+
+#### CARDGRID_RACE — SelectCardsInGrid multi-select race condition
+- **Observed**: `SelectCardsInGrid cardIndices=@(2,6)` (picking 2 cards at cheese event) threw `InvalidOperationException: task already completed`. Cards WERE added to deck (10→12).
+- **Likely cause**: Multi-select confirm fires the completion callback on first card, second card selection races against it.
+- **Workaround**: Command error is cosmetic — the action completes. Just re-read state to verify.
+- **Severity**: low (no data loss).
+
+#### TARGET_NONE — AllEnemies and Skill cards must NOT have targetIndex
+- **Observed**: Thunderclap (AllEnemies), One-Two Punch (Skill), powers, and Defend all fail or no-op if `targetIndex` is included.
+- **Rule**: Only single-target Attack cards need `targetIndex` (array position of enemy). Omit for: AllEnemies, Self, Skills, Powers, untargeted cards.
+- **Severity**: mechanics (not a bug, but controllers must know this).
+
+#### RUPTURE_HP — Rupture card costs 5 HP to play
+- **Observed**: Rupture (Ironclad Power, "1E, whenever you lose HP gain 1 Str") costs 5 HP when played. Description doesn't make this obvious.
+- **Lesson**: Always read the full card description, not just the first line. HP costs are real damage.
+- **Severity**: mechanics.
+
+#### POTION_FULL — Full potion inventory blocks reward selection
+- **Observed**: Cannot `SelectReward` for a potion when inventory is full. `SkipReward` also wouldn't dismiss it.
+- **Workaround**: `DiscardPotion slotIndex=N` (not potionIndex) to free a slot, then `SelectReward rewardIndex=N`.
+- **Cross-ref**: Related to bug **V** above (full-inventory no-op). The workaround works but is non-obvious.
+
+#### COMBAT_STATE_LAG — Persistent state refresh lag
+- **Observed**: After `PlayCard`, `EndTurn`, and `UsePotion`, state.json may not reflect the true game state for 500ms-2s.
+- **Impact**: Energy, block, HP, hand contents, enemy HP can all be stale.
+- **Workaround**: Always re-read state before next action. Wait 1-2s after EndTurn.
+- **Cross-ref**: Already documented in runbook and bridge-protocol-notes.
+
+#### HAND_SHIFT — Hand indices shift after every PlayCard
+- **Observed**: Playing card at index 2 removes it, shifting all higher indices down by 1.
+- **Impact**: A cached hand state is invalid after any card play.
+- **Workaround**: Re-read hand state before every PlayCard. Never cache hand indices.
+- **Severity**: mechanics (game behavior, not a bridge bug).
+
+#### SHRINKER_BEETLE — Buffs allies with Strength via DebuffIntent
+- **Observed**: Shrinker beetle applies Strength buff to allies. Its DebuffIntent also reduces incoming damage (Setup Strike 7→4 dmg).
+- **Lesson**: Some enemies have damage reduction or buff allies. Check enemy powers before committing attacks.
+
+### Strategic lessons for future runs
+
+1. **HP conservation early**: Ironclad's Burning Blood heals 6 after combat, but only if alive. Don't take unnecessary damage. Block is essential.
+2. **Status card management**: Infested and similar powers add status cards that clog draw. Rupture+Anger synergy needs careful HP management.
+3. **Card evaluation**: Prioritize AOE (Thunderclap, Festive Popper) for multi-enemy fights. Single-target damage for bosses.
+4. **Festive Popper value**: 9 dmg to ALL at combat start is excellent — reduces enemy HP before turn 1.
+5. **One-Two Punch**: Doubles next Attack. Pairs well with high-damage single attacks, or AOE for double application.
+6. **Bash+**: 3 Vulnerable is extremely strong — +50% damage for 3 turns. Always upgrade Bash if possible.
+
 ## Resume here
 
-1. Fix combat driver: enemy targeting (array index), card priority (attacks first), wait for combat state
-2. Start a fresh Necrobinder run
-3. Drive further into Act 1
-4. After successful run: triage bugs, GitHub release prep
+1. Start a Silent run
+2. Drive further into Act 1
+3. After successful run: triage bugs, GitHub release prep

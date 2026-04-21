@@ -7,7 +7,7 @@ typically an LLM agent — observe and drive the game autonomously.
 
 The repo ships two things:
 
-- **The mod** (`HermesBridge.dll`) — drop-in under `%APPDATA%\SlayTheSpire2\mods\`.
+- **The mod** (`HermesBridge.dll`) — drop-in under `<Steam>\steamapps\common\Slay the Spire 2\mods\`.
 - **The autopilot SKILL** (`SKILL.md`) — an instruction document you give your
   coding agent so it can drive the game via the bridge without writing
   wrapper scripts that fight the stateful nature of the game.
@@ -149,6 +149,7 @@ Compress-Archive -Path $mods -DestinationPath .\HermesBridge-v0.1.0.zip -Force
 | `HermesBridge.json` | Mod manifest read by BaseLib. |
 | `Sts2PathDiscovery.props` | Auto-detects the Steam install of StS2 for building. |
 | `autopilot-lib.ps1` | IPC helper library (PowerShell). |
+| `tools/` | Small read-only inspector scripts (`read-state.ps1`, `list-cards.ps1`, `send-cmd.ps1`, etc.) that format common state probes as compact text and sidestep the `pwsh -Command $`-stripping footgun. |
 | `SKILL.md` | Agent instruction document for autonomous play. |
 | `docs/` | Protocol notes, runbook, example run, card/relic/potion references. |
 | `tests/` | Small test project. |
@@ -159,6 +160,28 @@ Compress-Archive -Path $mods -DestinationPath .\HermesBridge-v0.1.0.zip -Force
 - [Alchyr](https://github.com/Alchyr) for **BaseLib** and the StS2 mod
   template that this project is built on.
 - Mega Crit for Slay the Spire 2.
+
+## Prior art
+
+[STS2MCP](https://github.com/Gennadiyev/STS2MCP) by Gennadiyev is a more
+mature project that solves a similar problem with a different architecture:
+a localhost HTTP REST API (port 15526) plus an optional Python MCP server,
+including beta multiplayer co-op support. If you want HTTP/MCP transport,
+multiplayer, or a project with established traction, look there first.
+
+HermesBridge differs in two ways that may or may not matter to you:
+
+- **Transport:** file-based IPC (`state.json` / `commands.json` /
+  `result.json` in `%APPDATA%`) instead of HTTP. No ports, no firewall
+  prompts, works in any sandbox that can read/write a directory.
+- **Agent SKILL:** [`SKILL.md`](SKILL.md) is a behavioral specification
+  for the agent, not a docs dump. It explicitly forbids common failure
+  modes (writing wrapper scripts, batching commands, encoding strategy
+  in PowerShell loops) that prior driving sessions have surfaced. This
+  has measurably improved per-tick driving on frontier models.
+
+The two projects are not in competition; they target overlapping use
+cases with different priorities.
 
 ## License
 
