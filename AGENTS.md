@@ -27,7 +27,7 @@ Before driving a run, read in this order:
 4. skim latest relevant files in `docs/verified-flows/`
 5. skim `docs/gauntlet-findings.md`
 
-For Twitch stream / gauntlet runs, also read `docs/next-agent-prompt.md` — character rotation, overlay discipline, and per-session logging protocol.
+For Twitch stream / gauntlet runs, also read `docs/next-agent-prompt.md` — character rotation and per-session logging protocol.
 
 ## MemPalace retrieval protocol
 Before responding to a game situation with tactical consequences, query MemPalace when any of the following is true:

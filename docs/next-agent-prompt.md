@@ -14,19 +14,6 @@ Play in this order. On death (or full-act win), swap to the next character, then
 
 Loop indefinitely. Stop only when a character completes an act with a win, or the user intervenes.
 
-## Overlay discipline (CRITICAL)
-
-This has been the top failure mode in prior sessions. Agents read overlay docs once, then stop calling `Set-OverlayText` after their first context compression.
-
-Rules:
-
-- Every turn, set overlay text reflecting current state and intent (HP, energy, what you're about to do and why).
-- After ANY context compression event, immediately re-read `AGENTS.md` and `SKILL.md` §Overlay before your next command.
-- Use `Clear-Overlay` between major screen transitions (combat end, map open, event resolve).
-- If you notice overlay hasn't updated in >3 commands, that is a regression — fix it immediately and note it in the session log.
-
-See `SKILL.md` lines ~492–494 and ~560–583 for `Set-OverlayText`, `Clear-Overlay`, `New-OverlaySrt` usage.
-
 ## Runtime verification tasks (from prior session fixes)
 
 Two bridge fixes shipped unverified at runtime. Verify them opportunistically during the gauntlet:
@@ -68,8 +55,8 @@ Between every character swap (death or win), append to `docs/gauntlet-findings.m
 ## Startup sequence
 
 1. Read `AGENTS.md`.
-2. Read `SKILL.md` in full (especially §Overlay).
+2. Read `SKILL.md` in full.
 3. Read `docs/bridge-protocol-notes.md`.
 4. Read `docs/hermes-sts2-runbook.md`.
 5. Skim `docs/gauntlet-findings.md` for prior failure patterns.
-6. Set initial overlay. Start Ironclad run.
+6. Start Ironclad run.

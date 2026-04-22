@@ -17,6 +17,7 @@
 | 5   | Silent      | LOSS   | F3    | Nibbit                  | 3 HP at Aggressive turn, couldn't survive                          |
 | 6   | Regent      | LOSS   | F6    | Bygone Effigy (Elite)   | Out of block at 3 HP vs 23 dmg attack                             |
 | 7   | Regent      | LOSS   | F8    | Phrog Parasite (Elite)  | INFESTED_POWER(4) poison killed at 1 HP EoT                       |
+| 8   | Ironclad    | LOSS   | A2F15 | The Insatiable (A2 Boss)| HP 31→0; Sandpit ramping damage + Str scaling overwhelmed block    |
 
 ### Per-run logs
 - `docs/verified-flows/2026-04-21-run2-necrobinder-kin-loss/`
@@ -226,3 +227,57 @@ Smith: `screenType=NDeckUpgradeSelectScreen`, `.cards[]` with `{index, card:{tit
 5. **EndTurn after combat ends** — returns CMD_ERROR 'no current player' (benign)
 6. **handSelect cards lack `.title`** — in SimpleSelect mode, cards only have `handIndex`, making title-based selection impossible
 7. **SkipReward requires rewardIndex** — bare SkipReward without rewardIndex loops infinitely
+
+---
+
+## Run 8 — Ironclad (Act 2 Boss Death)
+
+**Date**: 2026-04-22  
+**Result**: LOSS at Act 2 Floor 15 (The Insatiable, 321 HP)  
+**Final HP**: 0/80 at death, 31/80 entering fatal turn  
+**Death cause**: The Insatiable's Sandpit power ramps damage (8×2 → 10×2 → 28 → 20), combined with Str scaling (gained +2 Str on Buff turns). Low HP from brutal mid-Act fights (Louse Progenitor, Mytes, Bowlbug Beetle) left no buffer.
+
+### Deck (33 cards at death)
+5 Strike, 4 Defend, Bash+, PS+, Pommel Strike+, Cruelty+, Twin Strike×2, Iron Wave, Hemokinesis, Uppercut, Thunderclap, Juggling, Pillage, Taunt, Molten Fist, Battle Trance, Hellraiser, Shrug It Off, Whirlwind, Dark Embrace, Colossus++, Fiend Fire, Inflame
+
+### Relics (8)
+Burning Blood, Large Capsule, Prayer Wheel, Horn Cleat, Nunchaku, Seal of Gold, Potion Belt, Art of War
+
+### Path taken (Act 2)
+r1c2 Monster → r2c1 Event (Symbiote, transformed Armaments → Whirlwind) → r3c1 Event (Merchant???) → r4c1 Monster (Thieving Hopper) → r5c0 Monster (Bowlbug Rock+Silk+Beetle) → r6c0 Event (Ranwid, traded Block Potion → Potion Belt) → r7c0 Monster (Louse Progenitor) → r8c0 Treasure (Art of War) → r9c0 Monster (2 Mytes) → r10c0 Shop (auto-exited) → r11c1 RestSite (Heal 24) → r12c0 Monster (2 Chompers) → r13c0 Monster (Hunter Killer) → r14c1 RestSite (Heal 24) → r15c3 Boss (The Insatiable)
+
+### Notable combats
+- **Louse Progenitor** (136 HP, Curl Up x14): Nearly died at 10/80 HP. Block Potion saved. PS+ 54 dmg with Cruelty amp.
+- **Bowlbug Rock+Silk+Slumbering Beetle**: Beetle woke despite avoidance strategy. 45 dmg taken. HP dropped to 25.
+- **2 Mytes**: Toxic status spam nearly killed at 3/80. Colossus++ + Thunderclap kept alive. Seal of Gold refunded Toxic exhaust energy.
+- **Hunter Killer** (121 HP): Tender debuff (-1 Str/Dex per card played). Inflame + Bash+ + PS+ killed at Str 2.
+
+### Key mechanics discovered
+
+1. **The Insatiable (Act 2 Boss)**: 321 HP. Sandpit power (increments, unclear exact mechanic — appears to amplify attack damage and generate Frantic Escape status cards). Gains Str on Buff turns. Spams 6+ status cards per turn. Frantic Escape status: INCREASES Sandpit — DO NOT PLAY.
+2. **Cruelty+ (upgraded)**: 50% additional damage to Vuln enemies (vs 25% base). Additive with Vuln 50% = 2.0x total.
+3. **Hellraiser**: Auto-plays Strike-tagged cards on draw (both turn-start and card-effect draws like Battle Trance). Massive value in Strike-heavy deck.
+4. **Inflame**: +2 Str for combat. Excellent with multi-attack cards (Twin Strike, Whirlwind).
+5. **Fiend Fire**: Exhausts hand, 7 dmg per exhausted card (NOT counting itself — only other hand cards). At 4 other cards = 28 dmg. Exhausts self after.
+6. **Tender (enemy debuff)**: -1 Str and -1 Dex PER CARD PLAYED this turn. Cumulative within the turn. Resets next turn. Front-load high-Str attacks.
+7. **Sandpit (The Insatiable power)**: ⚠️ COUNTDOWN TIMER — when it reaches 0, you die. Frantic Escape status cards ADD to Sandpit counter (extend your life). **ALWAYS play Frantic Escape.** Not playing them is what killed this run. Sandpit does NOT ramp damage directly.
+8. **Flutter (Thieving Hopper)**: 50% less damage from attacks. Cancels Vuln 50% exactly. With Cruelty, net = +50% damage.
+9. **Hard to Kill**: Caps damage per instance at the stack count (x9 = max 9 dmg per hit). Multi-hit cards help bypass.
+10. **Curl Up**: Enemy gains block on first damage instance (once per combat). Burn it early with a weak attack.
+11. **Slippery (Inklets)**: First HP-loss instance capped to 1 dmg. Consumed after first hit. Subsequent hits deal full damage.
+12. **Colossus++**: 8 block + 50% less damage from Vuln enemies that turn. Excellent defensive tool paired with Thunderclap.
+13. **Dark Embrace**: Draw 1 when any card is exhausted. Synergizes with Molten Fist, Fiend Fire, Toxic exhausts.
+14. **Toxic status (Mytes)**: 5 dmg EACH at end of turn if still in hand. Costs 1E to exhaust. Enemies spam 2/turn. Seal of Gold may refund the energy.
+
+### Verified items
+- **Rw7** ✅ (SkipAllRewards auto-closes panel — verified 6+ times across multiple reward shapes)
+- **Ev1** ✅ (Event option preview text surfaced correctly — Sapphire Seed)
+- **Au1** 🐛 (Armaments upgrade display-only — card damage values don't reflect the upgrade)
+
+### Bridge quirks rediscovered
+- Self-target cards (Defend, Cruelty, etc): omit `targetIndex` entirely (not -1, not 0)
+- Hand reindexes after EVERY card play — must re-read before next play
+- Seal of Gold energy display is inconsistent (sometimes shows 3/3 after playing cards)
+- Nunchaku (every 10 attacks = 1 energy) contributes to confusing energy displays
+- Shop: Proceed auto-exits. Need different command to browse/purchase.
+- Fiend Fire: only counts other hand cards toward damage, not itself

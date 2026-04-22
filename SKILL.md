@@ -489,9 +489,6 @@ primitives it exposes:
 | `Get-Findings` | Return current list of findings. |
 | `Write-SessionLog -Character X -HaltReason Y -FinalState $s` | Append a per-run section to `docs/autopilot-session-<date>.md`, including trace.log tail. |
 | `Reset-Session [-StartingId N]` | Reset counters between runs. Uses `Max(requestedId, currentNextId)` — safe. |
-| `Set-OverlayText "..."` | Write a one-line action justification to `overlay.txt` (live OBS source) and append to `overlay.log` (timestamped, for later SRT). |
-| `Clear-Overlay` | Blank the live overlay. Does not touch the log. |
-| `New-OverlaySrt -RecordingStartUtc <datetime>` | After a session, convert `overlay.log` to an `.srt` aligned to an OBS recording's start. |
 | `Get-IpcPaths` | Inspect the paths the library is using. |
 
 ### The shape of a correct tool call
@@ -541,9 +538,12 @@ that has to survive shell parsing. Prefer these over inline one-liners.
 
 | Tool | What it prints |
 |---|---|
-| `tools/read-state.ps1 [-Filter screen\|combat\|full]` | Compact state summary. Default shows run/hp/gold/relics/potions/map/rewards. `screen` just shows the current screen + revision. `combat` shows hand/enemies/energy. `full` dumps raw JSON. |
-| `tools/read-combat.ps1` | Just the combat fields. |
+| `tools/read-state.ps1 [-Filter screen\|combat\|full]` | Compact state summary. Default shows run/hp/gold/relics/potions/treasure/map/rewards. `screen` just shows the current screen + revision. `combat` shows hand/enemies/energy. `full` dumps raw JSON. |
+| `tools/read-combat.ps1` | Full combat view: round/energy, player + powers, hand with descriptions, enemies with intents + powers, allies, pile counts, potions. |
 | `tools/read-map.ps1` | Available map nodes and their pointTypes. |
+| `tools/read-shop.ps1` | Dumps `state.shop` as JSON. |
+| `tools/read-treasure.ps1` | Dumps `state.treasure` (chest state + relic choices). |
+| `tools/peek-handselect.ps1` | Inspect `handSelect` / `cardGrid` sub-screen payload shape when you're stuck. |
 | `tools/list-cards.ps1` | `cardRewardOptions.cards[].card.title` for the current card-reward overlay. |
 | `tools/list-event.ps1` | `event.options[]` for the current event. |
 | `tools/list-grid.ps1` | `cardGrid.cards[].card.title`. |
@@ -556,31 +556,6 @@ in your head.
 
 Any script starting with `tmp-` is gitignored and treated as scratch —
 write your own if you need to, but don't check them in.
-
-### Overlay narration (for live stream / recorded runs)
-
-Before each `Send-BridgeCommand` for a **player-visible action** — `PlayCard`,
-`EndTurn`, `UsePotion`, `SelectReward` / `SkipReward` / `SelectCardOption`,
-`SelectMapNode`, `SelectEventOption`, `SelectRestOption`, `Purchase`,
-`LeaveShop`, `OpenChest`, `SelectTreasureRelic` — call `Set-OverlayText`
-with a one-line justification.
-
-Rules:
-
-- One line, under ~120 chars, plain English. No code, no JSON, no id
-  numbers.
-- Say **what** and **why** in one clause each. Example:
-  `Set-OverlayText "Strike into Cultist — kill before ritual buff stacks"`
-- Skip the overlay for internal/transitional commands: `Read-State`,
-  `Proceed` through `RewardsClosed` / `MapClosed`, `HandCancelSelect`,
-  polling calls. Narrating those produces dead air.
-- If you halt or stall, call `Set-OverlayText` with a brief status
-  (e.g. `"Halted: stall at Combat floor 14"`) so the VOD ends cleanly.
-
-The overlay serves two consumers: an OBS Text source reading `overlay.txt`
-live, and `New-OverlaySrt` which turns `overlay.log` into a subtitle
-track post-run. You don't need to know which is in use — just narrate
-the decisions you were going to make anyway.
 
 ### First-turn bootstrap (example tool calls, not a script)
 

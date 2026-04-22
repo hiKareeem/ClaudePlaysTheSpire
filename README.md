@@ -15,7 +15,7 @@ The repo ships two things:
 A full autonomous Act 1 run driven by Claude Opus 4.7 via this setup is
 documented in [`docs/example-run-necrobinder.md`](docs/example-run-necrobinder.md).
 
-> **Status:** v0.1.0, experimental. The bridge has been validated end-to-end
+> **Status:** v0.1.1, experimental. The bridge has been validated end-to-end
 > for Necrobinder. Other characters likely work but are less exercised.
 > The autopilot SKILL has only been validated on frontier-tier coding models
 > (Claude Opus 4.7-class); smaller models have reliably failed the same way.
@@ -132,11 +132,41 @@ The `AfterTargets="PostBuildEvent"` copy step drops
 `HermesBridge.dll` + `HermesBridge.json` into
 `<Sts2Path>\mods\HermesBridge\` automatically.
 
-To produce a release zip:
+To produce a release zip (unified bundle — same artifact for GitHub Releases
+and NexusMods). Layout: `HermesBridge/` (DLL + manifest) at the root alongside
+`README.md`, `LICENSE`, `SKILL.md`, `CHANGELOG.md`, `autopilot-lib.ps1`,
+`tools/`, and `docs/` (protocol notes, runbook, example run, curated card /
+relic / potion references). Users drop `HermesBridge/` into the game's `mods/`
+folder; agents get the rest in-place without cloning the repo.
 
 ```powershell
-$mods = "E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\HermesBridge"
-Compress-Archive -Path $mods -DestinationPath .\HermesBridge-v0.1.0.zip -Force
+$root    = $PSScriptRoot  # repo root
+$version = '0.1.1'
+$mods    = "E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\HermesBridge"
+$stage   = Join-Path $root "_nexus_staging\HermesBridge-v$version"
+
+if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
+New-Item -ItemType Directory -Path $stage,"$stage\HermesBridge","$stage\tools","$stage\docs" -Force | Out-Null
+
+# Mod payload (build first so these are fresh)
+Copy-Item "$mods\HermesBridge.dll","$mods\HermesBridge.json" "$stage\HermesBridge\"
+
+# Root-level agent files
+Copy-Item "$root\README.md","$root\LICENSE","$root\SKILL.md","$root\CHANGELOG.md","$root\autopilot-lib.ps1" $stage
+
+# All tools
+Copy-Item "$root\tools\*.ps1" "$stage\tools\"
+
+# Docs: agent-essentials + curated references
+$docs = @(
+  'bridge-protocol-notes.md','hermes-sts2-runbook.md','example-run-necrobinder.md',
+  'cards-*.md','reference-*.md','buffs.md','debuffs.md','potions.md','relics.md'
+)
+foreach ($d in $docs) { Copy-Item "$root\docs\$d" "$stage\docs\" }
+
+$zip = Join-Path $root "HermesBridge-v$version.zip"
+if (Test-Path $zip) { Remove-Item $zip -Force }
+Compress-Archive -Path "$stage\*" -DestinationPath $zip -Force
 ```
 
 ## Repo layout

@@ -128,3 +128,26 @@ $di = PileCount (Val $c 'discardPile' $null)
 $ex = PileCount (Val $c 'exhaustPile' $null)
 Write-Host ""
 Write-Host ("Piles  Draw:{0}  Discard:{1}  Exhaust:{2}" -f $dc, $di, $ex)
+
+# POTIONS (positional; nulls = empty slots). Fire with:
+#   send-cmd UsePotion { slotIndex, [targetIndex | targetSelf=true] }
+#   send-cmd DiscardPotion { slotIndex }
+$potions = $null
+if ($s.run) { $potions = Val $s.run 'potions' $null }
+if ($potions) {
+    Write-Host ""
+    Write-Host ("POTIONS ({0} slots):" -f $potions.Count)
+    for ($i = 0; $i -lt $potions.Count; $i++) {
+        $pt = $potions[$i]
+        if (-not $pt) { Write-Host ("  [{0}] (empty)" -f $i); continue }
+        $pttitle = Val $pt 'title' (Val $pt 'id' '?')
+        $flags = @()
+        $ptt = Val $pt 'targetType' ''
+        if ($ptt) { $flags += "tgt=$ptt" }
+        $canUse = Val $pt 'canUse' $null
+        if ($null -ne $canUse) { if ($canUse) { $flags += 'canUse' } else { $flags += 'NOUSE' } }
+        Write-Host ("  [{0}] {1}  {2}" -f $i, $pttitle, ($flags -join ' '))
+        $pdesc = Val $pt 'description' ''
+        if ($pdesc) { Write-Host ("       {0}" -f $pdesc) }
+    }
+}

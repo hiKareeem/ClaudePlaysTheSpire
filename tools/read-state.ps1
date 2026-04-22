@@ -55,9 +55,38 @@ if ($state.run) {
     if ($state.run.potions) {
         for ($i = 0; $i -lt $state.run.potions.Count; $i++) {
             $p = $state.run.potions[$i]
-            if ($p) { Write-Output "potion[$i] $($p.title)" } else { Write-Output "potion[$i] (empty)" }
+            if ($p) {
+                $ptt = if ($p.PSObject.Properties['targetType']) { $p.targetType } else { '' }
+                $suf = if ($ptt) { " tgt=$ptt" } else { '' }
+                Write-Output "potion[$i] $($p.title)$suf"
+            } else {
+                Write-Output "potion[$i] (empty)"
+            }
         }
     }
+}
+if ($state.treasure) {
+    Write-Output "--- treasure ---"
+    $t = $state.treasure
+    $opened = if ($t.PSObject.Properties['hasChestBeenOpened']) { $t.hasChestBeenOpened } else { $false }
+    $pickerOpen = if ($t.PSObject.Properties['isRelicCollectionOpen']) { $t.isRelicCollectionOpen } else { $false }
+    Write-Output "  opened=$opened  relicPicker=$pickerOpen"
+    if ($t.relicChoices) {
+        for ($i = 0; $i -lt $t.relicChoices.Count; $i++) {
+            $rc = $t.relicChoices[$i]
+            $rname = if ($rc.relic) { $rc.relic.title } else { '?' }
+            $ridx = if ($rc.PSObject.Properties['index']) { $rc.index } else { $i }
+            Write-Output "  relic[$ridx] $rname"
+        }
+        Write-Output "  (SelectTreasureRelic {index} or Proceed to skip)"
+    } elseif (-not $opened) {
+        Write-Output "  (OpenChest to open)"
+    } else {
+        Write-Output "  (Proceed to leave)"
+    }
+}
+if ($state.shop) {
+    Write-Output "--- shop (see tools/read-shop.ps1 for details) ---"
 }
 if ($state.map -and $state.map.currentCoord) {
     Write-Output "map: at (col=$($state.map.currentCoord.col) row=$($state.map.currentCoord.row))"

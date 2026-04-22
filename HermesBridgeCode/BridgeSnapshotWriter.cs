@@ -138,7 +138,7 @@ internal static class BridgeSnapshotWriter
             var payload = new
             {
                 schemaVersion = 1,
-                modVersion = "0.1.0",
+                modVersion = "0.1.1",
                 timestampUtc = DateTime.UtcNow,
                 revision = ++_revision,
                 source = new { modId = MainFile.ModId, trigger },
