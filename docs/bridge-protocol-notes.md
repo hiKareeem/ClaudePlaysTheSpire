@@ -77,13 +77,15 @@
 - `state.combat.player.powers[]` — each has `id`, `title`, `amount`, `type` (Buff/Debuff), `isVisible`.
 - `state.combat.enemies[]` — each has `id`, `name` (not `title`!), `currentHp`, `maxHp`, `block`, `combatId`, `slotName`, `powers[]`, `intents[]`, `nextMoveId`.
 - `state.combat.enemies[].intents[]` — array because enemies can telegraph multiple actions; each has `kind`, `intentType`, `title`, `prefix`, `damage` (nullable), `repeats` (nullable).
-- `state.rewards[]` — entries have `kind` ("Gold" / "Card" / "Relic" / ...), `index` (use as `rewardIndex`), and kind-specific fields (`amount`, `cards[]`, `canSkip`, `canReroll`).
+- `state.rewards[]` — entries have `kind` ("Gold" / "Card" / "Relic" / "Potion" / ...), `position` (0-based array index, always unique, use as `rewardPosition` — **preferred**), `index` (game `RewardsSetIndex`, NOT guaranteed unique when multiple rewards come from the same set, e.g. event-procured potions; legacy `rewardIndex` param), and kind-specific fields (`amount`, `cards[]`, `canSkip`, `canReroll`).
 
 ## Command parameter gotchas
 - `PlayCard`: `handIndex` (required), `targetIndex` optional. For self-target/untargeted cards (Defend, powers), omit `targetIndex` entirely. Supplying a bogus `targetIndex` on a self-target card can cause `TryManualPlay returned false`.
 - `SelectRestOption`: requires numeric **`optionIndex`**, not `optionId` (the string is informational only).
 - `UsePotion`: `slotIndex` required. For self-affecting potions, either `targetSelf: true` or omit target. For targeted potions (attack potions), use `targetIndex`.
 - `SelectMapNode`: `col` and `row` both required. Only nodes in `state.map.available[]` will succeed; others return error.
+- `SelectReward` / `SkipReward`: accept `rewardPosition` (preferred — array index, always unique) OR `rewardIndex` (legacy — game `RewardsSetIndex`, NOT guaranteed unique). When `rewardIndex` matches multiple rewards the dispatcher picks the first and logs ambiguity to trace.log. For non-card reward kinds (Gold/Potion/Relic), `SelectReward` now awaits the game's `OnSelectWrapper` and returns `status:"error"` if the claim was refused (e.g. potion inventory full) — the error message includes a type-specific hint. `CardReward` stays async: `SelectReward` returns `ok` after opening the sub-screen, and the meaningful commit is `SelectCardOption`.
+- `SkipAllRewards`: after skipping every reward, auto-invokes `NRewardsScreen.OnProceedButtonPressed(null)` when the panel is still visible, so the screen transitions directly to `RewardsClosed` with no follow-up `Proceed` required.
 - Nested `command` object is required, and JSON key order should be `id` then `command` (some writers rely on order for atomicity).
 
 ## Refresh-lag quirks (observed, not yet fixed)

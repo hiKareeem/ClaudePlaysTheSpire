@@ -33,6 +33,12 @@ Input:
 Output:
 - `result.json`: `{ "id", "status", "message", "timestampUtc", "revision" }`
 
+Authoritative command list: `HermesBridgeCode/BridgeCommandDispatcher.cs` (search `case "..."`).
+Commonly-guessed-wrong names — do NOT use these, they return `unknown command type`:
+- `SelectGold`, `SelectPotionReward`, `SelectRelicReward`, `SelectCardReward` — all rewards use the unified `SelectReward` / `SkipReward` / `SkipAllRewards` surface. The dispatcher branches on the reward's runtime type. Addressing: prefer `rewardPosition` (array index, always unique) over `rewardIndex` (game `RewardsSetIndex`, not guaranteed unique for multi-reward events).
+- `SelectCardReward` vs `SelectCardOption`: after `SelectReward` on a card reward, the follow-up is `SelectCardOption {cardIndex}` (positional 0/1/2).
+- `SelectEventOption` / `SelectRestOption` / `SelectCardsInGrid` use `optionIndex` / `optionIndex` / `cardIndices` respectively — not `index`, `optionId`, or `indices`.
+
 ## Verified stable actions
 - Continue run
 - Start run (`StartRun`) direct from the bridge
@@ -163,8 +169,8 @@ a "choose a card in hand" secondary effect.
 Clear-Ipc
 Send-BridgeCommand @{ type = 'CommandType'; param = 'value' }
 Start-Sleep -Milliseconds 500
-Wait-StateChange -TimeoutMs 5000
-Get-State
+Wait-Revision -TimeoutSec 5
+Read-State
 ```
 
 Key rules:

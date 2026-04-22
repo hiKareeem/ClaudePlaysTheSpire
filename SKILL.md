@@ -209,25 +209,48 @@ Key principles (from `docs/bridge-protocol-notes.md`, expanded):
   Treat any "command succeeded but state looks unchanged" as a
   refresh-lag candidate before flagging it as a stall — but still log
   it if the lag exceeds one revision.
-- **Reward `index` is `rewardIndex` not array position.** `rewards[i].index`
-  is the `RewardsSetIndex` the game uses internally. Use that value as
-  the `rewardIndex` param, not `i`.
-- **Enemy target is the array position in `combat.enemies[]`, not a
-  field on the enemy.** There is no `enemy.index`. Filter out dead
-  enemies (`currentHp <= 0`) and use the index into the filtered-or-raw
-  array per the dispatcher's expectation (grep `targetIndex` in
-  `BridgeCommandDispatcher.cs`).
-- **Card reward is two-step.** `SelectReward rewardIndex=N` opens the
-  3-card overlay (screen transitions to `CardReward`). Then
+- **Reward addressing: prefer `rewardPosition` over `rewardIndex`.**
+  `rewards[i].position` is the array index (always unique, 0-based).
+  `rewards[i].index` is the game-internal `RewardsSetIndex` and is
+  **not guaranteed unique** — e.g. both potions from Whispering
+  Hollow's Exchange Gold share `index=2`. `SelectReward` /
+  `SkipReward` accept either param; when `rewardIndex` matches
+  multiple rewards the dispatcher picks the first and logs
+  ambiguity. Always pass `rewardPosition` when you care which
+  specific reward is being resolved.
+- **Card reward is two-step.** `SelectReward rewardPosition=N` opens
+  the 3-card overlay (screen transitions to `CardReward`). Then
   `SelectCardOption cardIndex=K` (0/1/2) picks. You can also
   `SkipReward` before the overlay, or `SkipAllRewards` to drop
   everything.
+- **Reward commands are unified across kinds.** Gold / Potion / Relic /
+  Card all use the same three commands: `SelectReward`,
+  `SkipReward`, `SkipAllRewards`. There is **no** `SelectGold`,
+  `SelectPotionReward`, `SelectRelicReward`, or `SelectCardReward`
+  — guessing those returns `unknown command type`. The dispatcher
+  branches internally on the reward's runtime type.
+- **Reward-select is now synchronous for non-card kinds.** For
+  `PotionReward` / `GoldReward` / `RelicReward`, `SelectReward` blocks
+  on the game's `Reward.OnSelectWrapper()` and returns `status:"error"`
+  if the game refused the claim (e.g. potion inventory full). The
+  error message includes the reward type, position, and a type-specific
+  hint (for `PotionReward`: "likely full potion inventory — DiscardPotion
+  first or Skip"). `CardReward` stays async because the sub-screen is
+  the real commit point. The bridge no longer silently returns `ok`
+  when the game refused a reward (bug Rw1, fixed 2026-04-22).
+- **`SkipAllRewards` auto-closes the panel.** Empties the reward list
+  via `OnSkipped` on each entry, then invokes
+  `NRewardsScreen.OnProceedButtonPressed(null)` if the panel is still
+  visible — no follow-up `Proceed` needed. Screen transitions directly
+  to `RewardsClosed` (bug Rw3, fixed 2026-04-22).
 - **Self-target cards reject `targetIndex`.** Defend, any Power card,
   Bodyguard, Afterlife, etc. Omit the param entirely; a bogus target
   causes `TryManualPlay returned false`.
 - **Potion inventory may be full.** Selecting a potion reward when
-  `run.potions[]` has no null slots silently no-ops (bug V). Check
-  capacity before `SelectReward` on a potion.
+  `run.potions[]` has no null slots now returns `status:"error"` with
+  a `DiscardPotion first or Skip` hint (see Rw1 above; previously this
+  was bug V's silent no-op). Check capacity, or call `DiscardPotion
+  slotIndex=N` to free a slot before retrying.
 - **Potion `slotIndex` is positional, not a compacted array index.**
   `run.potions[]` preserves empty slots as `null` entries. Slot 0 may
   hold Weak Potion, slot 1 may be `null`, slot 2 may hold Fortifier.
@@ -298,11 +321,11 @@ This is what you'll need to finish a run.
 | `ReturnToMenu` | — | From GameOver (usually auto). |
 | `PlayCard` | `handIndex`; `targetIndex` if card targets an enemy | OMIT `targetIndex` on self/untargeted. |
 | `EndTurn` | — | Optionally `expectedRevision`/`expectedScreen`/`expectedCurrentSide`/`expectedRoundNumber` for guarded replay safety. |
-| `UsePotion` | `slotIndex`; `targetIndex` for attack potions | `targetSelf:true` or omit for self. |
+| `UsePotion` | `slotIndex`; `targetIndex` for attack potions | `targetSelf:true` or omit for self. **Fire Potion, Explosive Potion, and any damage potion require `targetIndex`** — without it the command returns `ok` but stalls awaiting a UI target pick and no damage fires. After `UsePotion`, always re-read hand: Skill Potion silently adds a random Skill card, and the only way you'll know is the hand delta. |
 | `DiscardPotion` | `slotIndex` | |
-| `SelectReward` | `rewardIndex` (= `rewards[i].index`) | |
-| `SkipReward` | `rewardIndex` | |
-| `SkipAllRewards` | — | |
+| `SelectReward` | `rewardPosition` (preferred, = `rewards[i].position`) OR `rewardIndex` (legacy, = `rewards[i].index` / `RewardsSetIndex`) | `index` is **not** unique when multiple rewards come from the same set (e.g. event-procured potions) — pass `rewardPosition` in those cases. Returns `error` if the game refuses the claim (e.g. potion inventory full). |
+| `SkipReward` | `rewardPosition` (preferred) OR `rewardIndex` (legacy) | Works for Gold / Potion / Relic / Card. No per-kind variants exist. |
+| `SkipAllRewards` | — | Skips everything currently visible AND auto-closes the panel (screen → `RewardsClosed`). No follow-up `Proceed` needed. |
 | `SelectCardOption` | `cardIndex` (0/1/2 in overlay) | Param name is `cardIndex`, NOT `index`. |
 | `SelectMapNode` | `col`, `row` | Must be in `state.map.available[]`. |
 | `Proceed` | — | Safe escape from rewards, events, stuck CardGridSelection. |
@@ -342,9 +365,18 @@ schema is in `BridgeStateExtractor.cs`. `docs/bridge-protocol-notes.md`
 - `combat.enemies[i].intents[].label` / `.description` — human-readable
   telegraphed action including block/buff amounts (added 2026-04-20,
   see INTENTBLOCK in session-bugs).
+- `combat.enemies[i].powers[]` — **read these before every card play.**
+  Each power has `title`, `amount`, and `description`. Ritual, Thorns,
+  Artifact, Barricade, Metallicize, Curl Up, etc. radically change
+  correct play. `tools/read-combat.ps1` now prints them inline with
+  their descriptions — use it rather than ConvertTo-Json for
+  combat-turn inspection.
 - `combat.energy`, `combat.maxEnergy`.
-- `rewards[]` — entries with `kind`, `index`, `canSkip`, `canReroll`,
-  etc. `index` is what goes into `rewardIndex`.
+- `rewards[]` — entries with `kind`, `position` (array index, always
+  unique, use as `rewardPosition`), `index` (game `RewardsSetIndex`,
+  NOT guaranteed unique, use as legacy `rewardIndex`), `canSkip`,
+  `canReroll`, and kind-specific fields. Prefer `position` for
+  addressing.
 - `map.available[]` — only nodes in this list are travelable. Use
   their `col`/`row`/`pointType` for `SelectMapNode`.
 - `handSelect.active` — if `true`, you are in a sub-screen; only

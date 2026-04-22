@@ -244,30 +244,72 @@ internal static class BridgeCommandDispatcher
     /// <summary>
     /// Accepts a reward from the post-combat rewards screen.
     /// Args:
-    ///   rewardIndex (int, required): the <c>index</c> field from the corresponding
-    ///   entry in state.json's <c>rewards</c> array. This is the game's
-    ///   <c>RewardsSetIndex</c> (a stable per-reward identifier within the set, NOT
-    ///   the array position) so commands remain stable as rewards are consumed.
+    ///   rewardPosition (int, preferred): 0-based array index into state.json's
+    ///     <c>rewards</c> array. Stable within a single screen session; the
+    ///     unambiguous addressing mode.
+    ///   rewardIndex (int, legacy): the <c>index</c> field (RewardsSetIndex) on a
+    ///     reward. Prior to bug Rw2 this was documented as a stable per-reward
+    ///     identifier, but in practice event-procured potion pairs share the same
+    ///     RewardsSetIndex, so this mode cannot address duplicate entries. If both
+    ///     rewardPosition and rewardIndex are provided, rewardPosition wins.
     ///
-    /// For gold / potion / relic rewards this fully resolves the reward. For card
-    /// rewards it opens the card-selection sub-screen; Hermes must follow up with
-    /// a <c>SelectCardOption</c> command once the sub-screen is visible in state.
+    /// For gold / potion / relic rewards this fully resolves the reward
+    /// synchronously and surfaces <c>OnSelectWrapper</c>'s success/failure result:
+    /// a <c>false</c> return (e.g. PotionReward with full inventory) now yields an
+    /// <c>error</c> status instead of silent success (bug Rw1). For card rewards
+    /// the call remains async — the sub-screen must open before
+    /// <c>SelectCardOption</c> can follow up.
     /// </summary>
     private static (string status, string message) DispatchSelectReward(JsonElement command)
     {
         var rewards = RewardsScreenSetRewardsPatch.LastRewards;
         if (rewards is null || rewards.Count == 0) return ("error", "no active rewards screen");
 
-        if (!command.TryGetProperty("rewardIndex", out var idxEl) || idxEl.ValueKind != JsonValueKind.Number)
+        Reward? reward = null;
+        int resolvedPos = -1;
+        int resolvedSetIdx = -1;
+
+        if (command.TryGetProperty("rewardPosition", out var posEl) && posEl.ValueKind == JsonValueKind.Number)
         {
-            return ("error", "SelectReward requires numeric 'rewardIndex'");
+            var pos = posEl.GetInt32();
+            if (pos < 0 || pos >= rewards.Count)
+            {
+                return ("error", $"rewardPosition {pos} out of range (rewards count {rewards.Count})");
+            }
+            reward = rewards[pos];
+            resolvedPos = pos;
+            resolvedSetIdx = reward?.RewardsSetIndex ?? -1;
         }
-        var idx = idxEl.GetInt32();
-        var reward = rewards.FirstOrDefault(r => r.RewardsSetIndex == idx);
+        else if (command.TryGetProperty("rewardIndex", out var idxEl) && idxEl.ValueKind == JsonValueKind.Number)
+        {
+            var idx = idxEl.GetInt32();
+            // Warn if the legacy addressing is ambiguous.
+            var matches = rewards.Where(r => r.RewardsSetIndex == idx).ToList();
+            if (matches.Count == 0)
+            {
+                var available = string.Join(",", rewards.Select(r => r.RewardsSetIndex));
+                return ("error", $"no reward with RewardsSetIndex={idx} (available: [{available}])");
+            }
+            if (matches.Count > 1)
+            {
+                var positions = string.Join(",", rewards
+                    .Select((r, i) => (r, i))
+                    .Where(t => t.r.RewardsSetIndex == idx)
+                    .Select(t => t.i));
+                BridgeTrace.Log($"SelectReward bug Rw2: ambiguous rewardIndex={idx} matches positions [{positions}]; picking first");
+            }
+            reward = matches[0];
+            resolvedPos = rewards.Select((r, i) => (r, i)).First(t => ReferenceEquals(t.r, reward)).i;
+            resolvedSetIdx = idx;
+        }
+        else
+        {
+            return ("error", "SelectReward requires numeric 'rewardPosition' or 'rewardIndex'");
+        }
+
         if (reward is null)
         {
-            var available = string.Join(",", rewards.Select(r => r.RewardsSetIndex));
-            return ("error", $"no reward with RewardsSetIndex={idx} (available: [{available}])");
+            return ("error", "SelectReward resolved to null reward");
         }
 
         try
@@ -275,36 +317,66 @@ internal static class BridgeCommandDispatcher
             // One-shot diagnostic for SpecialCardReward (bug U investigation).
             try { BugUDiagnostic.OnSelectReward(reward); } catch (Exception exDiag) { BridgeTrace.Log($"BugU[diag] OnSelectReward threw: {exDiag.Message}"); }
 
-            // Fire-and-forget: we don't await the Task<?> because dispatch runs on
-            // the main (Godot) thread and awaiting would block the pump. The game's
-            // own state hooks will push the post-select state to state.json.
+            var rewardTypeName = reward.GetType().Name;
             var task = reward.OnSelectWrapper();
-            // Attach a continuation so we can log the completion / fault, which helps
-            // distinguish "OnSelect returned false silently" from "threw". Fire-and-forget.
+
+            if (reward is CardReward)
+            {
+                // CardReward opens a sub-screen; awaiting would block the UI pump.
+                // Attach a logging continuation and report ok; the sub-screen's
+                // own state hooks surface the result, and SelectCardOption is the
+                // meaningful next step.
+                try
+                {
+                    task.ContinueWith(t =>
+                    {
+                        if (t.IsFaulted)
+                        {
+                            var inner = t.Exception?.GetBaseException();
+                            BridgeTrace.Log($"SelectReward.OnSelectWrapper FAULTED ({rewardTypeName}): {inner?.GetType().Name}: {inner?.Message}");
+                        }
+                        else if (t.IsCanceled) { BridgeTrace.Log($"SelectReward.OnSelectWrapper CANCELED ({rewardTypeName})"); }
+                        else { BridgeTrace.Log($"SelectReward.OnSelectWrapper completed ({rewardTypeName}) result={t.Result}"); }
+                    }, System.Threading.Tasks.TaskScheduler.Current);
+                }
+                catch (Exception exCont) { BridgeTrace.Log($"SelectReward continuation attach threw: {exCont.Message}"); }
+
+                RewardsScreenSetRewardsPatch.RefreshVisibleRewards("SelectRewardRefreshVisible");
+                BridgeTrace.Log($"DispatchSelectReward pos={resolvedPos} setIdx={resolvedSetIdx} type={rewardTypeName} (async sub-screen)");
+                return ("ok", $"opened {rewardTypeName} sub-screen (position={resolvedPos}, RewardsSetIndex={resolvedSetIdx})");
+            }
+
+            // Gold / Potion / Relic / other synchronous rewards: block on the
+            // result so OnSelectWrapper's bool return (false = refused, e.g.
+            // PotionReward with full inventory) becomes a visible error
+            // instead of a silent ok (bug Rw1).
+            bool claimed;
             try
             {
-                var rewardTypeName = reward.GetType().Name;
-                task.ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                    {
-                        var inner = t.Exception?.GetBaseException();
-                        BridgeTrace.Log($"SelectReward.OnSelectWrapper FAULTED ({rewardTypeName}): {inner?.GetType().Name}: {inner?.Message}");
-                    }
-                    else if (t.IsCanceled)
-                    {
-                        BridgeTrace.Log($"SelectReward.OnSelectWrapper CANCELED ({rewardTypeName})");
-                    }
-                    else
-                    {
-                        BridgeTrace.Log($"SelectReward.OnSelectWrapper completed ({rewardTypeName}) result={t.Result}");
-                    }
-                }, System.Threading.Tasks.TaskScheduler.Current);
+                claimed = task.GetAwaiter().GetResult();
             }
-            catch (Exception exCont) { BridgeTrace.Log($"SelectReward continuation attach threw: {exCont.Message}"); }
+            catch (Exception exAwait)
+            {
+                var inner = exAwait is AggregateException ae && ae.InnerException is not null ? ae.InnerException : exAwait;
+                RewardsScreenSetRewardsPatch.RefreshVisibleRewards("SelectRewardRefreshVisible");
+                BridgeTrace.Log($"DispatchSelectReward pos={resolvedPos} setIdx={resolvedSetIdx} type={rewardTypeName} THREW: {inner.GetType().Name}: {inner.Message}");
+                return ("error", $"Reward.OnSelect threw: {inner.Message}");
+            }
+
             RewardsScreenSetRewardsPatch.RefreshVisibleRewards("SelectRewardRefreshVisible");
-            BridgeTrace.Log($"DispatchSelectReward setIdx={idx} type={reward.GetType().Name}");
-            return ("ok", $"selected {reward.GetType().Name} (RewardsSetIndex={idx})");
+            if (!claimed)
+            {
+                BridgeTrace.Log($"DispatchSelectReward pos={resolvedPos} setIdx={resolvedSetIdx} type={rewardTypeName} REFUSED (OnSelectWrapper returned false)");
+                var hint = reward switch
+                {
+                    PotionReward => "; likely full potion inventory — DiscardPotion first or Skip",
+                    _ => "",
+                };
+                return ("error", $"reward refused ({rewardTypeName} position={resolvedPos} RewardsSetIndex={resolvedSetIdx}){hint}");
+            }
+
+            BridgeTrace.Log($"DispatchSelectReward pos={resolvedPos} setIdx={resolvedSetIdx} type={rewardTypeName} claimed");
+            return ("ok", $"selected {rewardTypeName} (position={resolvedPos}, RewardsSetIndex={resolvedSetIdx})");
         }
         catch (Exception ex)
         {
@@ -325,57 +397,104 @@ internal static class BridgeCommandDispatcher
         var rewards = RewardsScreenSetRewardsPatch.LastRewards;
         if (rewards is null || rewards.Count == 0) return ("error", "no active rewards screen");
 
-        if (!command.TryGetProperty("rewardIndex", out var idxEl) || idxEl.ValueKind != JsonValueKind.Number)
+        // Dual addressing (bug Rw2): prefer 'rewardPosition' (array index — always
+        // unique) over legacy 'rewardIndex' (RewardsSetIndex — not guaranteed
+        // unique, e.g. event-procured potions often share indices).
+        Reward? reward = null;
+        int resolvedPos = -1;
+        int resolvedSetIdx = -1;
+
+        if (command.TryGetProperty("rewardPosition", out var posEl) && posEl.ValueKind == JsonValueKind.Number)
         {
-            return ("error", "SkipReward requires numeric 'rewardIndex'");
+            var pos = posEl.GetInt32();
+            if (pos < 0 || pos >= rewards.Count)
+            {
+                return ("error", $"rewardPosition {pos} out of range (count {rewards.Count})");
+            }
+            reward = rewards[pos];
+            resolvedPos = pos;
+            resolvedSetIdx = reward.RewardsSetIndex;
         }
-        var idx = idxEl.GetInt32();
-        var reward = rewards.FirstOrDefault(r => r.RewardsSetIndex == idx);
-        if (reward is null)
+        else if (command.TryGetProperty("rewardIndex", out var idxEl) && idxEl.ValueKind == JsonValueKind.Number)
         {
-            var available = string.Join(",", rewards.Select(r => r.RewardsSetIndex));
-            return ("error", $"no reward with RewardsSetIndex={idx} (available: [{available}])");
+            var idx = idxEl.GetInt32();
+            var matches = rewards.Where(r => r.RewardsSetIndex == idx).ToList();
+            if (matches.Count == 0)
+            {
+                var available = string.Join(",", rewards.Select(r => r.RewardsSetIndex));
+                return ("error", $"no reward with RewardsSetIndex={idx} (available: [{available}])");
+            }
+            if (matches.Count > 1)
+            {
+                BridgeTrace.Log($"DispatchSkipReward: ambiguous rewardIndex={idx} matches {matches.Count}; using first. Prefer 'rewardPosition'.");
+            }
+            reward = matches[0];
+            resolvedPos = rewards.Select((r, i) => (r, i)).First(t => ReferenceEquals(t.r, reward)).i;
+            resolvedSetIdx = idx;
+        }
+        else
+        {
+            return ("error", "SkipReward requires numeric 'rewardPosition' or 'rewardIndex'");
         }
 
         try
         {
             reward.OnSkipped();
+            CleanupSkippedReward(reward, "SkipRewardRemove");
 
-            // CardReward-aware cleanup: OnSkipped is a no-op for CardReward removal, so we
-            // mirror what the vanilla NRewardsScreen skip flow does.
-            if (reward is CardReward)
-            {
-                try
-                {
-                    var overlay = CardRewardRefreshOptionsPatch.LastScreen;
-                    if (overlay != null)
-                    {
-                        NOverlayStack.Instance?.Remove(overlay);
-                    }
-                }
-                catch (Exception exOverlay)
-                {
-                    BridgeTrace.Log($"DispatchSkipReward overlay-close threw: {exOverlay.Message}");
-                }
-
-                try
-                {
-                    reward.ParentRewardSet?.RemoveReward(reward);
-                }
-                catch (Exception exParent)
-                {
-                    BridgeTrace.Log($"DispatchSkipReward ParentRewardSet.RemoveReward threw: {exParent.Message}");
-                }
-
-                RewardsScreenSetRewardsPatch.RemoveReward(reward, "SkipRewardRemove");
-            }
-
-            BridgeTrace.Log($"DispatchSkipReward setIdx={idx} type={reward.GetType().Name}");
-            return ("ok", $"skipped {reward.GetType().Name} (RewardsSetIndex={idx})");
+            BridgeTrace.Log($"DispatchSkipReward pos={resolvedPos} setIdx={resolvedSetIdx} type={reward.GetType().Name}");
+            return ("ok", $"skipped {reward.GetType().Name} (position={resolvedPos}, RewardsSetIndex={resolvedSetIdx})");
         }
         catch (Exception ex)
         {
             return ("error", $"Reward.OnSkipped threw: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Post-OnSkipped cleanup for rewards whose OnSkipped implementation does NOT
+    /// remove them from the parent set / visible list (true for PotionReward,
+    /// RelicReward, GoldReward, and CardReward in vanilla STS2). We mirror the
+    /// NRewardsScreen skip-button flow:
+    ///   1. If it's a CardReward, close the card-selection overlay.
+    ///   2. Remove from ParentRewardSet.
+    ///   3. Remove from our tracked LastRewards + refresh snapshot.
+    /// Each step is guarded so a single failure still allows the others to run.
+    /// </summary>
+    private static void CleanupSkippedReward(Reward reward, string trigger)
+    {
+        if (reward is CardReward)
+        {
+            try
+            {
+                var overlay = CardRewardRefreshOptionsPatch.LastScreen;
+                if (overlay != null)
+                {
+                    NOverlayStack.Instance?.Remove(overlay);
+                }
+            }
+            catch (Exception exOverlay)
+            {
+                BridgeTrace.Log($"{trigger} overlay-close threw: {exOverlay.Message}");
+            }
+        }
+
+        try
+        {
+            reward.ParentRewardSet?.RemoveReward(reward);
+        }
+        catch (Exception exParent)
+        {
+            BridgeTrace.Log($"{trigger} ParentRewardSet.RemoveReward threw: {exParent.Message}");
+        }
+
+        try
+        {
+            RewardsScreenSetRewardsPatch.RemoveReward(reward, trigger);
+        }
+        catch (Exception exLast)
+        {
+            BridgeTrace.Log($"{trigger} LastRewards refresh threw: {exLast.Message}");
         }
     }
 
@@ -389,14 +508,55 @@ internal static class BridgeCommandDispatcher
         var rewards = RewardsScreenSetRewardsPatch.LastRewards;
         if (rewards is null || rewards.Count == 0) return ("error", "no active rewards screen");
 
+        // Snapshot the list since CleanupSkippedReward mutates LastRewards via
+        // RewardsScreenSetRewardsPatch.RemoveReward on each iteration.
+        var snapshot = rewards.ToList();
         int skipped = 0;
-        foreach (var r in rewards)
+        foreach (var r in snapshot)
         {
-            try { r.OnSkipped(); skipped++; }
+            try
+            {
+                r.OnSkipped();
+                CleanupSkippedReward(r, "SkipAllRewardsRemove");
+                skipped++;
+            }
             catch (Exception ex) { BridgeTrace.Log($"SkipAllRewards: {r.GetType().Name} threw: {ex.Message}"); }
         }
-        BridgeTrace.Log($"DispatchSkipAllRewards skipped={skipped}/{rewards.Count}");
-        return ("ok", $"skipped {skipped}/{rewards.Count} rewards");
+        BridgeTrace.Log($"DispatchSkipAllRewards skipped={skipped}/{snapshot.Count}");
+
+        // Bug Rw3: after OnSkipped + ParentRewardSet removal on every entry,
+        // LastRewards is empty but the NRewardsScreen panel itself can remain
+        // visible (its close path lives on the Proceed button, not on
+        // reward-set depletion). Mirror DispatchProceed's rewards branch so
+        // callers don't need a follow-up Proceed call.
+        var remaining = RewardsScreenSetRewardsPatch.LastRewards;
+        var panel = RewardsScreenSetRewardsPatch.LastScreen;
+        if ((remaining is null || remaining.Count == 0)
+            && panel is not null
+            && Godot.GodotObject.IsInstanceValid(panel)
+            && panel.Visible)
+        {
+            try
+            {
+                var m = panel.GetType().GetMethod("OnProceedButtonPressed",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (m is null)
+                {
+                    BridgeTrace.Log("DispatchSkipAllRewards: could not resolve NRewardsScreen.OnProceedButtonPressed; panel left visible");
+                }
+                else
+                {
+                    m.Invoke(panel, new object?[] { null });
+                    BridgeTrace.Log("DispatchSkipAllRewards: closed panel via NRewardsScreen.OnProceedButtonPressed");
+                }
+            }
+            catch (Exception exClose)
+            {
+                BridgeTrace.Log($"DispatchSkipAllRewards: OnProceedButtonPressed threw: {exClose.Message}");
+            }
+        }
+
+        return ("ok", $"skipped {skipped}/{snapshot.Count} rewards");
     }
 
     /// <summary>
@@ -2034,10 +2194,46 @@ internal static class BridgeCommandDispatcher
                 null,
                 System.Type.EmptyTypes,
                 null);
+            var tryInvoke = (string name) =>
+            {
+                var mi = screenType.GetMethod(
+                    name,
+                    System.Reflection.BindingFlags.Instance |
+                    System.Reflection.BindingFlags.Public |
+                    System.Reflection.BindingFlags.NonPublic);
+                if (mi is null) return false;
+                var ps = mi.GetParameters();
+                object[] args;
+                if (ps.Length == 0) args = System.Array.Empty<object>();
+                else if (ps.Length == 1) args = new object[] { null };
+                else return false;
+                try
+                {
+                    mi.Invoke(screen, args);
+                    BridgeTrace.Log($"SelectCardsInGrid: {name} invoked on {screenType.Name}");
+                    return true;
+                }
+                catch (Exception fx)
+                {
+                    var inner = fx is System.Reflection.TargetInvocationException tie && tie.InnerException != null ? tie.InnerException : fx;
+                    BridgeTrace.Log($"SelectCardsInGrid: {name} on {screenType.Name} threw: {inner.GetType().Name}: {inner.Message}");
+                    return false;
+                }
+            };
             if (check is not null)
             {
                 check.Invoke(screen, null);
                 BridgeTrace.Log($"SelectCardsInGrid: CheckIfSelectionComplete invoked on {screenType.Name}");
+                // NDeckCardSelectScreen.CheckIfSelectionComplete IS the commit:
+                // per IL, it calls TaskCompletionSource.SetResult and removes
+                // the overlay when _selectedCards.Count >= MinSelect. Do NOT
+                // call ConfirmSelection afterward — ConfirmSelection is just
+                // `=> CheckIfSelectionComplete()` (7-byte wrapper), so a second
+                // invocation double-SetResults and throws InvalidOperationException.
+                // Side effects of the commit (e.g. Transform applying new cards
+                // into run.deck) may not be reflected in state.json until a
+                // later hook; that is a separate refresh-lag concern handled
+                // by DeckChangedPatches and CardGridSelectionExit.
             }
             else
             {
@@ -2050,32 +2246,6 @@ internal static class BridgeCommandDispatcher
                 // NButton arg — most implementations either ignore it or
                 // only use it to source the caller; we'll see in trace if
                 // that early-returns.
-                var tryInvoke = (string name) =>
-                {
-                    var mi = screenType.GetMethod(
-                        name,
-                        System.Reflection.BindingFlags.Instance |
-                        System.Reflection.BindingFlags.Public |
-                        System.Reflection.BindingFlags.NonPublic);
-                    if (mi is null) return false;
-                    var ps = mi.GetParameters();
-                    object[] args;
-                    if (ps.Length == 0) args = System.Array.Empty<object>();
-                    else if (ps.Length == 1) args = new object[] { null };
-                    else return false;
-                    try
-                    {
-                        mi.Invoke(screen, args);
-                        BridgeTrace.Log($"SelectCardsInGrid: {name} invoked on {screenType.Name}");
-                        return true;
-                    }
-                    catch (Exception fx)
-                    {
-                        var inner = fx is System.Reflection.TargetInvocationException tie && tie.InnerException != null ? tie.InnerException : fx;
-                        BridgeTrace.Log($"SelectCardsInGrid: {name} on {screenType.Name} threw: {inner.GetType().Name}: {inner.Message}");
-                        return false;
-                    }
-                };
                 var invoked = tryInvoke("CompleteSelection") || tryInvoke("ConfirmSelection");
                 if (!invoked)
                     BridgeTrace.Log($"SelectCardsInGrid: no CheckIfSelectionComplete/CompleteSelection/ConfirmSelection on {screenType.Name} (auto-complete assumed)");

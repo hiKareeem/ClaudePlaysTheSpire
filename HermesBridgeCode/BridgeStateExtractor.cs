@@ -1290,8 +1290,10 @@ internal static class BridgeStateExtractor
         if (rewards is null) return list;
         try
         {
+            int position = 0;
             foreach (var r in rewards)
             {
+                int pos = position++;
                 try
                 {
                     switch (r)
@@ -1300,6 +1302,7 @@ internal static class BridgeStateExtractor
                             list.Add(new
                             {
                                 kind = "Card",
+                                position = pos,
                                 index = cr.RewardsSetIndex,
                                 canSkip = cr.CanSkip,
                                 canReroll = cr.CanReroll,
@@ -1316,6 +1319,7 @@ internal static class BridgeStateExtractor
                             list.Add(new
                             {
                                 kind = "Relic",
+                                position = pos,
                                 index = rr.RewardsSetIndex,
                                 rarity = rewardRarity,
                                 relic = rewardRelic is not null ? ExtractRelic(rewardRelic) : null,
@@ -1325,6 +1329,7 @@ internal static class BridgeStateExtractor
                             list.Add(new
                             {
                                 kind = "Potion",
+                                position = pos,
                                 index = pr.RewardsSetIndex,
                                 potion = pr.Potion is not null ? ExtractPotion(pr.Potion) : null,
                             });
@@ -1333,6 +1338,7 @@ internal static class BridgeStateExtractor
                             list.Add(new
                             {
                                 kind = "Gold",
+                                position = pos,
                                 index = gr.RewardsSetIndex,
                                 amount = gr.Amount,
                             });
@@ -1341,6 +1347,7 @@ internal static class BridgeStateExtractor
                             list.Add(new
                             {
                                 kind = r.GetType().Name,
+                                position = pos,
                                 index = r.RewardsSetIndex,
                             });
                             break;
@@ -1348,7 +1355,7 @@ internal static class BridgeStateExtractor
                 }
                 catch (Exception ex)
                 {
-                    list.Add(new { kind = r?.GetType().Name ?? "Unknown", error = ex.Message });
+                    list.Add(new { kind = r?.GetType().Name ?? "Unknown", position = pos, error = ex.Message });
                 }
             }
         }

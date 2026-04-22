@@ -1,4 +1,4 @@
-# autopilot-lib.ps1 — HermesBridge-StS2 IPC helper library
+﻿# autopilot-lib.ps1 — HermesBridge-StS2 IPC helper library
 #
 # This is a LIBRARY, not a runner. It defines primitives for an agent
 # (human or LLM) to drive the bridge tick-by-tick. It contains NO
