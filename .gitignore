@@ -34,4 +34,13 @@ _check_*.ps1
 _status_*.ps1
 _status.ps1
 _scratch_*.ps1
+_scratch_*.json
+_scratch_*.txt
 scratch_*.ps1
+
+# MemPalace per-project files (issue #185)
+mempalace.yaml
+entities.json
+chroma.sqlite3
+# ChromaDB HNSW segment folders (UUID-named, created next to chroma.sqlite3)
+[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]/

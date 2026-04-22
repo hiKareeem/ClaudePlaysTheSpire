@@ -506,11 +506,27 @@ internal static class BridgeCommandDispatcher
     private static (string status, string message) DispatchSkipAllRewards(JsonElement command)
     {
         var rewards = RewardsScreenSetRewardsPatch.LastRewards;
-        if (rewards is null || rewards.Count == 0) return ("error", "no active rewards screen");
+
+        // Rw7: if the rewards list is already empty but the NRewardsScreen panel
+        // is still visible (prior individual SelectReward / SkipReward drained
+        // the list without firing the panel-close path), run the Proceed mirror
+        // below instead of erroring. This turns SkipAllRewards into a safe
+        // "close rewards panel if it's hanging around" call for autonomous
+        // agents that don't want to track which emptying path they took.
+        var panelStillVisible = RewardsScreenSetRewardsPatch.LastScreen is not null
+            && Godot.GodotObject.IsInstanceValid(RewardsScreenSetRewardsPatch.LastScreen)
+            && RewardsScreenSetRewardsPatch.LastScreen.Visible;
+
+        if (rewards is null || rewards.Count == 0)
+        {
+            if (!panelStillVisible) return ("error", "no active rewards screen");
+            // Fall through to the panel-close block below with an empty snapshot.
+            BridgeTrace.Log("DispatchSkipAllRewards: rewards empty but panel visible (Rw7 path) - closing");
+        }
 
         // Snapshot the list since CleanupSkippedReward mutates LastRewards via
         // RewardsScreenSetRewardsPatch.RemoveReward on each iteration.
-        var snapshot = rewards.ToList();
+        var snapshot = rewards is null ? new System.Collections.Generic.List<Reward>() : rewards.ToList();
         int skipped = 0;
         foreach (var r in snapshot)
         {
@@ -1950,12 +1966,17 @@ internal static class BridgeCommandDispatcher
         {
             // No explicit target supplied. For potions whose targeting type accepts
             // the player (e.g. AnyPlayer potions like Swift Potion / Strength Potion
-            // when used on self), EnqueueManualUse(null) silently stalls awaiting a
+            // when used on self, OR self-only potions like Distilled Chaos with
+            // TargetType=Self), EnqueueManualUse(null) silently stalls awaiting a
             // UI target pick. Default to the player's creature so the action resolves
             // immediately. Potions with TargetType == None ignore the argument.
+            //
+            // Pw1 fix: Distilled Chaos (TargetType=Self) was silently stalling because
+            // the "Player" substring match didn't cover "Self". Now both are handled.
             var ttName = string.Empty;
             try { ttName = potion.TargetType.ToString() ?? string.Empty; } catch { }
-            if (ttName.IndexOf("Player", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (ttName.IndexOf("Player", StringComparison.OrdinalIgnoreCase) >= 0
+                || ttName.Equals("Self", StringComparison.OrdinalIgnoreCase))
             {
                 target = player.Creature;
             }

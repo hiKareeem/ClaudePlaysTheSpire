@@ -134,8 +134,41 @@ internal static class BridgeCommandReader
                     var (status, message) = BridgeCommandDispatcher.Dispatch(capturedType, cmdDoc.RootElement);
                     // Force a state snapshot after every dispatch so callers see the post-command
                     // world without having to wait for the next natural hook. Cheap & idempotent.
-                    try { BridgeSnapshotWriter.RequestWrite($"PostDispatch:{capturedType}"); }
-                    catch (Exception wex) { BridgeTrace.Log($"post-dispatch RequestWrite threw: {wex.Message}"); }
+                    //
+                    // EXCEPTION: PlayCard. TryManualPlay returns synchronously when the play is
+                    // queued, but the card does not actually leave Hand.Cards until a later
+                    // main-loop tick (AfterCardPlayed / AfterCardPlayedLate, typically ~500-700ms
+                    // later). A PostDispatch:PlayCard snapshot here captures pre-settled state:
+                    // the just-played card is still in the hand array, with stale handIndex
+                    // values. Clients using Wait-Revision then see this stale snapshot as the
+                    // "post-command" state and issue a follow-up PlayCard against a handIndex
+                    // that is about to become out-of-range. On ok==true we let the natural
+                    // AfterCardPlayed hook produce the first post-dispatch revision bump; on
+                    // error (no hook fires), result.json still delivers the error synchronously
+                    // and Wait-Revision will (eventually) bump on the next unrelated tick.
+                    //
+                    // Rw6 EXCEPTION-TO-THE-EXCEPTION: if a hand-select modal is active (e.g.
+                    // the player just cast a previous card like Armaments that opened an
+                    // UpgradeSelect, or a discard-N-cards prompt is up), the game's combat
+                    // action queue is BLOCKED waiting for the modal to resolve. In that state
+                    // AfterCardPlayed will never fire for this PlayCard (TryManualPlay may even
+                    // return true and silently enqueue against a blocked queue), so skipping
+                    // the PostDispatch write would leave Wait-Revision spinning for the full
+                    // 30s timeout before returning stalled=true with unchanged state. In that
+                    // case we DO emit a PostDispatch write so clients can observe the modal
+                    // and recover (clients should pre-check state.handSelect.active before
+                    // calling PlayCard, but this guard prevents the 30s hang if they don't).
+                    bool skipPostDispatchWrite = capturedType == "PlayCard" && status == "ok"
+                        && !Patches.NPlayerHandSelectPatchState.Active;
+                    if (!skipPostDispatchWrite)
+                    {
+                        try { BridgeSnapshotWriter.RequestWrite($"PostDispatch:{capturedType}"); }
+                        catch (Exception wex) { BridgeTrace.Log($"post-dispatch RequestWrite threw: {wex.Message}"); }
+                    }
+                    else
+                    {
+                        BridgeTrace.Log($"PostDispatch write skipped for PlayCard (awaiting AfterCardPlayed for settled hand; handSelect.Active={Patches.NPlayerHandSelectPatchState.Active})");
+                    }
                     WriteResult(capturedId, status, message);
                 }
                 catch (Exception ex)

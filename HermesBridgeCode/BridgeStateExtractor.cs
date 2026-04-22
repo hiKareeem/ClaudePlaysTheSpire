@@ -1604,9 +1604,99 @@ internal static class BridgeStateExtractor
                 wasChosen = TryBool(() => option.WasChosen),
                 isProceed = TryBool(() => option.IsProceed),
                 relic = relic is not null ? ExtractRelic(relic) : null,
+                preview = BuildEventOptionPreview(option),
             };
         }
         catch (Exception ex) { return new { index, error = ex.Message }; }
+    }
+
+    // Ev1: reflective preview of Card / Gold / HpLoss / HpGain / Potion / MaxHp
+    // outcomes exposed on EventOption or its subclasses. The game's concrete
+    // option types (e.g. GoldOption, CardOption, HpLossOption) vary by event so
+    // we inspect by field/property name rather than binding to a fixed type.
+    private static object? BuildEventOptionPreview(EventOption option)
+    {
+        if (option is null) return null;
+        try
+        {
+            var preview = new System.Collections.Generic.Dictionary<string, object?>();
+            var t = option.GetType();
+            const System.Reflection.BindingFlags flags = System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic
+                | System.Reflection.BindingFlags.Instance
+                | System.Reflection.BindingFlags.FlattenHierarchy;
+
+            // Map field/property suffixes we care about to preview keys.
+            static string? NameMatches(string n)
+            {
+                // Normalize to lowercase for suffix match
+                var ln = n.ToLowerInvariant();
+                if (ln.EndsWith("goldchange") || ln == "gold" || ln.EndsWith("goldamount") || ln.EndsWith("goldgain") || ln.EndsWith("goldloss")) return "gold";
+                if (ln.EndsWith("hploss") || ln.EndsWith("hpdamage") || ln.EndsWith("damage") && !ln.Contains("card")) return "hpLoss";
+                if (ln.EndsWith("hpgain") || ln.EndsWith("heal") || ln.EndsWith("healamount")) return "hpGain";
+                if (ln.EndsWith("maxhpchange") || ln.EndsWith("maxhp") || ln.EndsWith("maxhpgain") || ln.EndsWith("maxhploss")) return "maxHpChange";
+                if (ln.EndsWith("potion") && !ln.Contains("count")) return "potion";
+                if (ln.EndsWith("potionid")) return "potionId";
+                if (ln.EndsWith("card") && !ln.Contains("reward")) return "card";
+                if (ln.EndsWith("cardid")) return "cardId";
+                if (ln.EndsWith("cardchoices") || ln.EndsWith("cardoptions")) return "cardChoices";
+                return null;
+            }
+
+            void TryAdd(string key, object? raw)
+            {
+                if (raw is null) return;
+                if (preview.ContainsKey(key)) return; // first hit wins
+                // Unwrap common containers
+                if (raw is int i) { preview[key] = i; return; }
+                if (raw is long l) { preview[key] = l; return; }
+                if (raw is bool b) { preview[key] = b; return; }
+                if (raw is string s) { preview[key] = s; return; }
+                // CardModel / PotionModel / RelicModel — try to summarize via title/id
+                var rawT = raw.GetType();
+                var titleProp = rawT.GetProperty("Title", flags) ?? rawT.GetProperty("Name", flags);
+                var idProp = rawT.GetProperty("Id", flags) ?? rawT.GetProperty("ID", flags);
+                string? title = null, id = null;
+                try
+                {
+                    var tv = titleProp?.GetValue(raw);
+                    if (tv is MegaCrit.Sts2.Core.Localization.LocString ls) title = SafeLocString(ls);
+                    else if (tv is not null) title = tv.ToString();
+                }
+                catch { }
+                try { id = idProp?.GetValue(raw)?.ToString(); } catch { }
+                if (title is null && id is null)
+                {
+                    preview[key] = rawT.Name;
+                }
+                else
+                {
+                    preview[key] = new { id, title };
+                }
+            }
+
+            foreach (var f in t.GetFields(flags))
+            {
+                var key = NameMatches(f.Name);
+                if (key is null) continue;
+                try { TryAdd(key, f.GetValue(option)); } catch { }
+            }
+            foreach (var p in t.GetProperties(flags))
+            {
+                if (p.GetIndexParameters().Length > 0) continue;
+                var key = NameMatches(p.Name);
+                if (key is null) continue;
+                try { TryAdd(key, p.GetValue(option)); } catch { }
+            }
+
+            if (preview.Count == 0) return null;
+            return preview;
+        }
+        catch (Exception ex)
+        {
+            BridgeTrace.Log($"BuildEventOptionPreview threw: {ex.Message}");
+            return null;
+        }
     }
 
     private static readonly HashSet<string> _bugEvDiagnosticSeen = new();

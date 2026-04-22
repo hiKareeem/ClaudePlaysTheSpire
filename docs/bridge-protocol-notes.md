@@ -35,6 +35,7 @@
 - `Room:Event`
 - `Room:Shop`
 - `Combat`
+- `PostCombat`
 - `GameOver`
 
 ## Observed triggers worth trusting
@@ -50,6 +51,7 @@
 - `AfterPlayerTurnStart`
 - `AfterCardPlayed`
 - `AfterCardPlayedLate`
+- `AfterCombatEnd`
 - `BeforeTurnEnd`
 - `PostDispatch:<CommandType>`
 
@@ -63,6 +65,7 @@
 - Reward consumption is now confirmed live: after `AfterRewardTaken`, gold and potion rewards are pruned immediately from `state.rewards[]`, and after `SelectCardOption` the rewards list can legitimately become `[]` while remaining on `screen=Rewards` until the overlay fully exits.
 - Shop purchase flow is confirmed live: `Purchase` updates both `shop.playerGold` and `run.gold`, nulls out bought card entries in-place, and `LeaveShop` returns cleanly to `screen=Map` with populated `map.available[]`.
 - Map travel remains asynchronous after `SelectMapNode`: a controller may briefly see `Map` or `MapClosed` before `AfterRoomEntered` / `BeforeCombatStart` establishes the next room. Treat `MapClosed` as a transitional screen, not a terminal navigation state.
+- **Combat lifecycle**: `state.combat` is populated while a fight is active and is explicitly set to `null` by the `AfterCombatEnd` hook (one revision, `trigger=AfterCombatEnd`, `screen=PostCombat`). The very next write is typically `screen=Rewards` with `rewards[]` populated. Clients walking `state.combat.*` must null-guard; in PowerShell strict mode, reading `.state.combat.enemies` on `$null` throws `PropertyNotFoundException`. The disappearance is the signal that combat ended — use `screen.name == "PostCombat"` (or the combat→null transition) rather than polling for empty `enemies[]`.
 - `EndTurn` is now live-validated with stale-state guardrails: the bridge accepts optional `expectedRevision`, `expectedScreen`, `expectedCurrentSide`, and `expectedRoundNumber` fields and returns an explicit mismatch error instead of misleading `ok` when a stale turn-end command is replayed.
 - Important timing nuance: the immediate `PostDispatch:EndTurn` snapshot can still show `screen=Combat` and `currentSide=Player`. Controllers must wait for a newer revision reflecting enemy-turn / next settled ownership changes rather than assuming the first post-dispatch write already reflects the turn handoff.
 - Relaunch nuance: if `commands.json` still contains an old command when the game boots, `BridgeCommandReader` may process that stale payload once during startup before the controller takes over. Controllers should clear or overwrite `commands.json` intentionally at session start.
@@ -80,9 +83,9 @@
 - `state.rewards[]` — entries have `kind` ("Gold" / "Card" / "Relic" / "Potion" / ...), `position` (0-based array index, always unique, use as `rewardPosition` — **preferred**), `index` (game `RewardsSetIndex`, NOT guaranteed unique when multiple rewards come from the same set, e.g. event-procured potions; legacy `rewardIndex` param), and kind-specific fields (`amount`, `cards[]`, `canSkip`, `canReroll`).
 
 ## Command parameter gotchas
-- `PlayCard`: `handIndex` (required), `targetIndex` optional. For self-target/untargeted cards (Defend, powers), omit `targetIndex` entirely. Supplying a bogus `targetIndex` on a self-target card can cause `TryManualPlay returned false`.
+- `PlayCard`: `handIndex` (required), `targetIndex` optional. For self-target/untargeted cards (Defend, powers), omit `targetIndex` entirely. Supplying a bogus `targetIndex` on a self-target card can cause `TryManualPlay returned false`. **Settled-hand timing:** on success the reader *skips* the immediate `PostDispatch:PlayCard` snapshot and lets the natural `AfterCardPlayed` / `AfterCardPlayedLate` hooks fire the next state write (~500-700ms later). This means `Send-BridgeCommand` / `Wait-Revision` return state that already reflects the card leaving the hand and the hand being re-packed — trust `.state.combat.hand.cards[].handIndex` from the response. On PlayCard *error* the PostDispatch snapshot still fires so clients don't stall. **Rw6 exception**: if a hand-select modal is active at dispatch time (`handSelect.active=true`), the combat queue is blocked and `AfterCardPlayed` will never fire. The reader detects this and falls back to the PostDispatch write so callers don't hang 30s — but the play still won't land until the modal resolves. Always pre-check `state.handSelect.active` before `PlayCard`.
 - `SelectRestOption`: requires numeric **`optionIndex`**, not `optionId` (the string is informational only).
-- `UsePotion`: `slotIndex` required. For self-affecting potions, either `targetSelf: true` or omit target. For targeted potions (attack potions), use `targetIndex`.
+- `UsePotion`: `slotIndex` required. For self-affecting potions, either `targetSelf: true` or omit target. For targeted potions (attack potions), use `targetIndex`. The dispatcher auto-resolves the player creature when the potion's `TargetType` is `Player` **or `Self`** (bug Pw1 fixed 2026-04-22 — Distilled Chaos and other `Self` potions previously stalled silently because only the `Player` substring matched).
 - `SelectMapNode`: `col` and `row` both required. Only nodes in `state.map.available[]` will succeed; others return error.
 - `SelectReward` / `SkipReward`: accept `rewardPosition` (preferred — array index, always unique) OR `rewardIndex` (legacy — game `RewardsSetIndex`, NOT guaranteed unique). When `rewardIndex` matches multiple rewards the dispatcher picks the first and logs ambiguity to trace.log. For non-card reward kinds (Gold/Potion/Relic), `SelectReward` now awaits the game's `OnSelectWrapper` and returns `status:"error"` if the claim was refused (e.g. potion inventory full) — the error message includes a type-specific hint. `CardReward` stays async: `SelectReward` returns `ok` after opening the sub-screen, and the meaningful commit is `SelectCardOption`.
 - `SkipAllRewards`: after skipping every reward, auto-invokes `NRewardsScreen.OnProceedButtonPressed(null)` when the panel is still visible, so the screen transitions directly to `RewardsClosed` with no follow-up `Proceed` required.

@@ -261,7 +261,42 @@ Key principles (from `docs/bridge-protocol-notes.md`, expanded):
   re-packed each play. Do not cache `handIndex` across multiple plays
   in a turn. Re-read `state.combat.hand.cards[]` after each card and
   look up the next card fresh. This is another reason the per-tick
-  loop lives in you, not in a script.
+  loop lives in you, not in a script. Since the PlayCard settled-hand
+  fix (see below), `Send-BridgeCommand` for `PlayCard` waits for the
+  natural `AfterCardPlayed` hook before returning, so the returned
+  `.state` already reflects the repacked hand — trust it and read
+  `handIndex` from there.
+- **`PlayCard` now returns settled state.** Previously, an immediate
+  `PostDispatch:PlayCard` snapshot captured the hand *before* the card
+  had actually been removed (the card-leaves-hand pipeline runs on a
+  later main-loop tick, ~500-700ms later). Clients using
+  `Wait-Revision` / `Send-BridgeCommand` would then receive stale
+  state: the just-played card still in the array with a stale
+  `handIndex`. A follow-up `PlayCard` against that `handIndex`
+  frequently hit `"handIndex N out of range (hand size M)"`. Fixed by
+  skipping the PostDispatch snapshot for successful PlayCard dispatches
+  — the first revision bump after PlayCard is now the real
+  `AfterCardPlayed` hook, with a settled hand. On PlayCard *error* the
+  PostDispatch snapshot still fires so callers don't stall. No caller
+  code changes required; just be aware PlayCard takes ~700ms to round
+  trip now (was ~100ms, but that earlier timing was meaningless
+  because the state was stale).
+- **`PlayCard` during an open hand-select modal doesn't stall.** If
+  `handSelect.active=true` when you issue `PlayCard`, the game's combat
+  action queue is blocked waiting for the modal to resolve — the play
+  gets silently enqueued against a blocked queue and `AfterCardPlayed`
+  will never fire. The bridge detects this at dispatch time (bug Rw6
+  fixed 2026-04-22) and falls back to emitting the `PostDispatch:PlayCard`
+  snapshot anyway so `Send-BridgeCommand` returns promptly instead of
+  hanging for the full revision-wait timeout. But: the play still
+  didn't actually land. **Always pre-check `state.handSelect.active`
+  before calling `PlayCard`** — if true, resolve the modal first
+  (`HandSelectCard` / `HandConfirmSelect` / `HandCancelSelect`).
+- **`handSelect.cards[]` has its own shape.** It is NOT a mirror of
+  `combat.hand.cards[]` and does NOT expose `.title` at the top level.
+  Inspect the payload shape directly (via `read-state.ps1` or a
+  dump) before trying to render it; the `handIndex` values are
+  authoritative for `HandSelectCard` regardless.
 - **Card data is nested under `.card` in grids and reward overlays.**
   `cardRewardOptions.cards[i].card.title` (not `.cards[i].title`).
   Same for `cardGrid.cards[i].card.title`. Hand cards, by contrast, are
@@ -321,7 +356,7 @@ This is what you'll need to finish a run.
 | `ReturnToMenu` | — | From GameOver (usually auto). |
 | `PlayCard` | `handIndex`; `targetIndex` if card targets an enemy | OMIT `targetIndex` on self/untargeted. |
 | `EndTurn` | — | Optionally `expectedRevision`/`expectedScreen`/`expectedCurrentSide`/`expectedRoundNumber` for guarded replay safety. |
-| `UsePotion` | `slotIndex`; `targetIndex` for attack potions | `targetSelf:true` or omit for self. **Fire Potion, Explosive Potion, and any damage potion require `targetIndex`** — without it the command returns `ok` but stalls awaiting a UI target pick and no damage fires. After `UsePotion`, always re-read hand: Skill Potion silently adds a random Skill card, and the only way you'll know is the hand delta. |
+| `UsePotion` | `slotIndex`; `targetIndex` for attack potions | `targetSelf:true` or omit for self. **Fire Potion, Explosive Potion, and any damage potion require `targetIndex`** — without it the command returns `ok` but stalls awaiting a UI target pick and no damage fires. Self-targeted potions (TargetType `Player` **or `Self`** — e.g. Distilled Chaos) now resolve the player as the target automatically (bug Pw1 fixed 2026-04-22; previously only the `Player` substring matched, so `Self` potions silently stalled). After `UsePotion`, always re-read hand: Skill Potion silently adds a random Skill card, Distilled Chaos auto-plays the top N of your draw pile (may open a HandSelect modal mid-sequence if one of those cards is e.g. Armaments — see HandSelect below). |
 | `DiscardPotion` | `slotIndex` | |
 | `SelectReward` | `rewardPosition` (preferred, = `rewards[i].position`) OR `rewardIndex` (legacy, = `rewards[i].index` / `RewardsSetIndex`) | `index` is **not** unique when multiple rewards come from the same set (e.g. event-procured potions) — pass `rewardPosition` in those cases. Returns `error` if the game refuses the claim (e.g. potion inventory full). |
 | `SkipReward` | `rewardPosition` (preferred) OR `rewardIndex` (legacy) | Works for Gold / Potion / Relic / Card. No per-kind variants exist. |
@@ -333,8 +368,8 @@ This is what you'll need to finish a run.
 | `SelectRestOption` | `optionIndex` | |
 | `SelectCardsInGrid` | `cardIndices` (array of ints) | NOT `indices`. |
 | `ChooseACard` | `cardIndex` | |
-| `HandSelectCard` | `handIndex` | Active when `handSelect.active=true`. |
-| `HandConfirmSelect` / `HandCancelSelect` | — | |
+| `HandSelectCard` | `handIndex` | Active when `handSelect.active=true`. **Modes differ**: in `SimpleSelect` (e.g. Brand's exhaust-a-card, discard-N prompts) picking a card **auto-commits** — the modal closes on the spot; a subsequent `HandConfirmSelect` returns `error: hand is not in card selection mode`. In `UpgradeSelect` (e.g. Armaments) the pick only *selects*; the modal stays open until you send `HandConfirmSelect` (or `HandCancelSelect`). Check `handSelect.mode` before deciding whether to follow up with Confirm. |
+| `HandConfirmSelect` / `HandCancelSelect` | — | Required only for `UpgradeSelect` mode; no-op/error otherwise (see above). |
 | `Purchase` | `category` ("character"/"colorless"/"potion"/"relic"), `index` | |
 | `PurchaseCardRemoval` | — | |
 | `LeaveShop` | — | |
