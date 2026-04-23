@@ -1,46 +1,33 @@
-# Slay the Spire 2 — Card Reference Index
+# Reference Index
 
-Source: slaythespire.wiki.gg/wiki/Slay_the_Spire_2:Cards_List
-Scraped: 2026-04-20 | 576 cards total
+This directory holds two layers of agent reference:
 
-## Card Files by Character
+## 1. Mechanical ground truth — [`data/eng/`](data/eng/)
 
-| File | Character | Cards |
-|------|-----------|-------|
-| [cards-ironclad.md](cards-ironclad.md) | Ironclad (Red) | ~95 |
-| [cards-silent.md](cards-silent.md) | Silent (Green) | ~93 |
-| [cards-defect.md](cards-defect.md) | Defect (Blue) | ~95 |
-| [cards-necrobinder.md](cards-necrobinder.md) | Necrobinder (Purple) | ~98 |
-| [cards-regent.md](cards-regent.md) | Regent (Gold) | ~95 |
-| [cards-colorless.md](cards-colorless.md) | Colorless | ~72 |
-| [cards-special.md](cards-special.md) | Curses/Statuses/Tokens/Events/Quests | ~55 |
+Structured JSON vendored from [spire-codex](https://github.com/ptrlrd/spire-codex) (see [`data/ATTRIBUTION.md`](data/ATTRIBUTION.md)). Authoritative for every stat: costs, damage, HP, intents, scaling, descriptions, upgrades, powers applied, keywords.
 
-## Other References
+Read [`data/README.md`](data/README.md) for a file-by-file schema guide.
+
+## 2. Curated strategy & runbook
+
+Hand-authored agent guidance. Use these for decisions, synergies, edge cases, and in-run confirmed behavior — not for looking up numbers.
 
 | File | Content |
-|------|---------|
-| [reference-ironclad.md](reference-ironclad.md) | In-run confirmed Ironclad notes (hand-curated) |
-| [reference-relics.md](reference-relics.md) | Relics reference |
-| [reference-potions.md](reference-potions.md) | Potions reference |
+|---|---|
+| [`reference-ironclad.md`](reference-ironclad.md) | In-run confirmed Ironclad card/mechanic notes |
+| [`reference-relics.md`](reference-relics.md) | Relic strategy notes |
+| [`reference-potions.md`](reference-potions.md) | Potion usage notes |
+| [`example-run-necrobinder.md`](example-run-necrobinder.md) | Annotated Necrobinder playthrough |
+| [`bridge-protocol-notes.md`](bridge-protocol-notes.md) | HermesBridge RPC protocol quirks |
+| [`hermes-sts2-runbook.md`](hermes-sts2-runbook.md) | Run operation runbook |
+| [`gauntlet-findings.md`](gauntlet-findings.md) | Gauntlet test observations |
 
-## Card Format
+## Rule of thumb
 
-Each card entry:
-```
-- **Name** [Type] — Description. | Upgraded: Upgraded description.
-```
+**Numbers → JSON. Decisions → markdown.**
 
-Cards are grouped by rarity: Basic > Common > Uncommon > Rare > Ancient.
+If JSON and curated markdown disagree on a stat, JSON wins (it is regenerated from the game DLL). If they disagree on strategy, markdown wins — strategy files record in-run observed behavior that may differ from raw data.
 
-## Rarity Tiers
-- **Basic** — Starter cards
-- **Common** — Most frequently offered
-- **Uncommon** — Mid-tier, offered less often
-- **Rare** — Powerful, offered rarely
-- **Ancient** — Top-tier, extremely rare
+## History
 
-## Notes
-- Energy costs are NOT included (wiki list page does not expose them; check individual card pages or in-game state.json)
-- Some wiki descriptions contain rendering artifacts where Energy/Gold icons were (blank spaces or missing values)
-- Token card descriptions are abbreviated; see in-game behavior for full mechanics
-- For confirmed in-run behavior and edge cases, prefer reference-ironclad.md over cards-ironclad.md
+The previous `cards-*.md`, `relics.md`, `potions.md`, `buffs.md`, `debuffs.md` files were wiki-scraped stat dumps (slaythespire.wiki.gg, 2026-04-20). They have been superseded by `data/eng/` JSON, which is complete, structured, and sourced from the decompiled game DLL rather than wiki edits. Stub files remain at the old paths and point here.

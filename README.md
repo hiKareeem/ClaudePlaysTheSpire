@@ -164,6 +164,11 @@ $docs = @(
 )
 foreach ($d in $docs) { Copy-Item "$root\docs\$d" "$stage\docs\" }
 
+# Mechanical ground truth (spire-codex JSON snapshot)
+New-Item -ItemType Directory -Force "$stage\docs\data\eng" | Out-Null
+Copy-Item "$root\docs\data\ATTRIBUTION.md","$root\docs\data\README.md" "$stage\docs\data\"
+Copy-Item "$root\docs\data\eng\*.json" "$stage\docs\data\eng\"
+
 $zip = Join-Path $root "HermesBridge-v$version.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path "$stage\*" -DestinationPath $zip -Force

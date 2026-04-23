@@ -46,9 +46,12 @@ Use retrieved notes to inform decisions, but verify against current `state.json`
 
 ## Verified local knowledge to prefer
 When relevant, prefer these repo artifacts over generic recollection:
+- `docs/data/eng/*.json` for authoritative mechanical stats (costs, damage, HP, intents, scaling, descriptions). See `docs/data/README.md` and `docs/data/ATTRIBUTION.md`.
 - `docs/verified-flows/` for prior run evidence
 - `docs/gauntlet-findings.md` for cross-run patterns
 - `docs/reference-ironclad.md`, `docs/reference-relics.md`, `docs/reference-potions.md` for hand-curated tactical notes
+
+Rule: **numbers → JSON; decisions → curated markdown**. JSON wins on stats disagreements (regenerated from the decompiled DLL); markdown wins on strategy disagreements (records in-run observed behavior).
 
 ## context-mode usage guidance
 - Use context-mode tools for large-output searches, aggregation, and summarization when available.

@@ -12,21 +12,7 @@ Play in this order. On death (or full-act win), swap to the next character, then
 4. Defect
 5. Necrobinder
 
-Loop indefinitely. Stop only when a character completes an act with a win, or the user intervenes.
-
-## Runtime verification tasks (from prior session fixes)
-
-Two bridge fixes shipped unverified at runtime. Verify them opportunistically during the gauntlet:
-
-1. **Rw7 — sticky rewards panel**
-   - Fix at `HermesBridgeCode/BridgeCommandDispatcher.cs` DispatchSkipAllRewards (~line 506).
-   - Repro: after `SelectReward` or `SkipReward` on the final reward, panel used to remain `Visible` with empty list. New code calls the close path when list is empty but panel visible.
-   - Log whether the panel closes cleanly on the last reward of any combat.
-
-2. **Ev1 — event option preview**
-   - Fix at `HermesBridgeCode/BridgeStateExtractor.cs` ExtractEventOption + BuildEventOptionPreview (~lines 1610–1700).
-   - Now reflects over EventOption subclass fields for gold / hpLoss / hpGain / maxHpChange / potion / card outcomes.
-   - Log any event where the preview field is missing, malformed, or wrong compared to the actual outcome.
+Loop indefinitely. Stop only when a character completes act III with a win, or the user intervenes.
 
 ## State-schema reminders (verified in prior session)
 
@@ -41,7 +27,6 @@ Two bridge fixes shipped unverified at runtime. Verify them opportunistically du
 Between every character swap (death or win), append to `docs/gauntlet-findings.md`:
 
 - Character, act/floor reached, HP at death, killing enemy (or win details).
-- Any Rw7 / Ev1 observations (confirm working, or repro the bug).
 - New bugs, schema deviations, command quirks.
 - Do not compress findings that contradict prior entries — keep both.
 
