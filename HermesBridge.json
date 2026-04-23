@@ -3,7 +3,7 @@
   "name": "HermesBridge",
   "author": "Kareem",
   "description": "Structured state export bridge for Slay the Spire 2 automation",
-  "version": "v0.1.0",
+  "version": "v0.1.2",
   "has_pck": false,
   "has_dll": true,
   "dependencies": ["BaseLib"],

@@ -24,11 +24,18 @@ Loop indefinitely. Stop only when a character completes act III with a win, or t
 
 ## Session log protocol
 
-Between every character swap (death or win), append to `docs/gauntlet-findings.md`:
+Two artifacts per run — both required:
 
-- Character, act/floor reached, HP at death, killing enemy (or win details).
-- New bugs, schema deviations, command quirks.
-- Do not compress findings that contradict prior entries — keep both.
+1. **Live log** during the run: `docs/autopilot-session-<YYYY-MM-DD>.md`, written via `Write-SessionLog` at run end (see SKILL.md §Session log format). Captures IPC stability findings, stalls, unknown screens.
+
+2. **Between runs** (character swap on death or win): append a compact summary to `docs/gauntlet-findings.md`:
+   - Character, act/floor reached, HP at death, killing enemy (or win details).
+   - New bugs, schema deviations, command quirks.
+   - Do not compress findings that contradict prior entries — keep both.
+
+3. **If the run produced reproducible evidence of a bridge bug or a fix confirmation** (e.g. Rw7/Ev1 verification), also create a `docs/verified-flows/<YYYY-MM-DD>-<slug>/README.md` subdir with state.json excerpts and trace.log tails. This is the permanent record agents retrieve before tactical decisions.
+
+Do **not** write to `docs/sessions/` — that directory is legacy; new session artifacts go to the three targets above.
 
 ## Hard rules (from AGENTS.md)
 

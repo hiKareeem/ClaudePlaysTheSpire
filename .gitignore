@@ -27,6 +27,7 @@ tmp-*.ps1
 # Release artifacts (upload to GitHub Releases / NexusMods, don't commit)
 HermesBridge-v*.zip
 _nexus_staging/
+_stage_v*/
 
 # Scratch patterns agents keep creating (gitignored, safe to delete anytime)
 _temp_*.ps1

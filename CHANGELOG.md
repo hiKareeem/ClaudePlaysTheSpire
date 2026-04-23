@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.1.2 — 2026-04-23
+
+Documentation and reference-material release. No code changes.
+
+### Reference
+
+- **Mechanical ground truth from spire-codex.** Vendored a snapshot of [ptrlrd/spire-codex](https://github.com/ptrlrd/spire-codex) English JSON data (commit `85f852e`) under `docs/data/eng/` — 22 files covering cards, relics, potions, powers, monsters, events, encounters, acts, characters, enchantments, achievements, ascensions, keywords, and more. Sourced from decompiled `sts2.dll` rather than wiki edits; authoritative for costs, damage, HP, intents, scaling, upgrade deltas, and resolved descriptions. See `docs/data/ATTRIBUTION.md` and `docs/data/README.md`.
+- **Wiki-scraped stat dumps retired.** `cards-*.md`, `relics.md`, `potions.md`, `buffs.md`, `debuffs.md` replaced with stub files pointing at the JSON for stats and at `reference-*.md` for strategy. Net: -1,482 markdown lines, +complete JSON coverage.
+- **Navigation rewritten.** `docs/cards-index.md` now the reference hub with the `numbers → JSON, decisions → markdown` rule.
+- **AGENTS.md updated** to list `docs/data/eng/*.json` as the first preferred source for mechanical stats.
+
+### Protocol
+
+- **Session-log workflow clarified.** `docs/next-agent-prompt.md` now requires three artifacts per run: live `autopilot-session-<YYYY-MM-DD>.md` (via `Write-SessionLog`), `gauntlet-findings.md` summary between character swaps, and a `verified-flows/<date>-<slug>/` subdir for reproducible bug/fix evidence. Prompted by the 2026-04-22 Twitch gauntlet where Rw7/Ev1 verification was captured in gauntlet-findings only, skipping the live log and per-flow evidence trail.
+- **`docs/sessions/` marked legacy.** Added a README explaining it is no longer canonical; corrected stale reward-addressing guidance in `session-ironclad-run2-2026-04-22.md` to reference `rewardPosition` (the v0.1.1 fix) instead of `rewards[i].index`.
+- **Rw7/Ev1 v0.1.1 fixes confirmed.** New `docs/verified-flows/2026-04-22-rw7-ev1-confirmed/README.md` records the Twitch gauntlet verification across the 5-character rotation.
+
+### Packaging
+
+- **Manifest version corrected.** `HermesBridge.json` was still at `v0.1.0` after the v0.1.1 release — now bumped to `v0.1.2`.
+- **Release zip bundler (`README.md`)** now also ships `docs/data/` (attribution, README, 22 JSON files).
+
 ## v0.1.1 — 2026-04-22
 
 ### Bridge fixes

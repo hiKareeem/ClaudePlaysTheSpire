@@ -150,7 +150,7 @@
 - **Brand "exhaust 1 card"** triggers HandConfirmSelect with mode=SimpleSelect.
 - **Potion reward skip broken**: Must accept potions to proceed (auto-skip when full, game proceeds to Map).
 - **Happy Flower**: May give bonus energy at unexpected times (round 1?). Verify energy before playing.
-- **Reward selection**: Use `rewards[i].index` (not array position `i`).
+- **Reward selection**: Use `rewards[i].position` (array index, always unique). ~~`rewards[i].index`~~ is the game's `RewardsSetIndex` and is NOT guaranteed unique across multiple rewards from the same set (e.g. event-granted potions); `rewardPosition` is preferred. See `docs/bridge-protocol-notes.md` and v0.1.1 CHANGELOG for the fix.
 - **Reward kind field**: `kind` (not `type`): Gold, Potion, Relic, Card.
 - **Card rewards**: Cards nested under `cardRewardOptions.cards[].card`.
 - **Powers on enemies**: Use `.title` (not `.name`).
