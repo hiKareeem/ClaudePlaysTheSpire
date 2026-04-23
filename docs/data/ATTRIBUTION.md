@@ -21,9 +21,9 @@ Spire Codex reverse-engineers Slay the Spire 2 by:
 
 See upstream `README.md` for full pipeline detail.
 
-## Licensing Note
+## Licensing
 
-Spire Codex does not ship an explicit LICENSE file at the time of this snapshot, but the project advertises itself as an open-source, free API database (per [spire-codex.com/about](https://spire-codex.com/about)). This snapshot is included here under that stated openness, with prominent attribution and a link back to the source. Any party with an objection should open an issue and we will remove or replace.
+Spire Codex does not ship an explicit LICENSE file. Permission to vendor and redistribute this data within HermesBridge was granted directly by the project author (peter / ptrlrd) on 2026-04-23 via Discord, in response to a project-info request for the Spire Codex showcase page. The project advertises itself as an open-source, free API database (per [spire-codex.com/about](https://spire-codex.com/about)).
 
 Game data itself is ultimately owned by Mega Crit Games (Slay the Spire 2, Steam App ID 2868840). This data is included solely as reference material to support modding and accessibility tooling for the game.
 
