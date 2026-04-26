@@ -1,0 +1,37 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "_comment_purpose": "Reference opencode.json for SpireBench trial-v0 (A0-zero-shot). Place at the user's opencode config path BEFORE starting a trial run, with the maintainer's normal config backed up. See docs/benchmark/protocol.md §Operator responsibilities.",
+  "_comment_what_is_disabled": [
+    "ALL MCP servers — mempalace, context7, sequential-thinking, vscode-mcp, VibeUE, anything else.",
+    "Web fetch tool — not configured here; OpenCode honors the agent contract via tools/permissions.",
+    "Sub-agent spawning (task tool) — see permissions block below.",
+    "All persistent memory and cross-session state."
+  ],
+  "_comment_what_is_required": [
+    "PowerShell shell access (the bridge IPC is PowerShell-driven on Windows).",
+    "File read/edit within the repo working directory (so the agent can read SKILL.md, JSON, write its run record).",
+    "Whatever model provider the trial is testing — operator sets `model` per run."
+  ],
+  "model": "github-copilot/claude-opus-4.7",
+  "permissions": {
+    "_comment": "Tighten as needed per run. The intent is: shell + repo file ops only.",
+    "edit": "ask",
+    "bash": {
+      "*": "ask"
+    },
+    "webfetch": "deny",
+    "task": "deny"
+  },
+  "agent": {
+    "_comment": "Forbid sub-agent spawning explicitly — single context, single run.",
+    "general": {
+      "tools": {
+        "task": false,
+        "webfetch": false
+      }
+    }
+  },
+  "mcp": {
+    "_comment": "EMPTY for trial-v0. Do NOT add mempalace, context7, sequential-thinking, VibeUE, vscode-mcp, or any other MCP server. The bridge IPC is filesystem-based (state.json / commands.json) and does not require an MCP server."
+  }
+}

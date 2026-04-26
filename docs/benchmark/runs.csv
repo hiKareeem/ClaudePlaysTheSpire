@@ -1,0 +1,1 @@
+run_id,spec_version,knowledge_condition,bridge_version,game_version,model,model_provider,opencode_session_id,character,ascension,seed,start_time_utc,end_time_utc,duration_minutes,command_count,ipc_error_count,stall_count,halt_reason,death_floor,death_screen,death_cause,victory_floor,boss_reached,final_hp,final_gold,tokens_in,tokens_out,tokens_cache_read,tokens_cache_write
