@@ -4289,8 +4289,8 @@
   {
     "id": "CONFLAGRATION",
     "name": "Conflagration",
-    "description": "Deal 8 damage to ALL enemies.\nDeals 2 additional damage for each other Attack you've played this turn.",
-    "description_raw": "Deal {CalculatedDamage:diff()} damage to ALL enemies.\nDeals {ExtraDamage:diff()} additional damage for each other Attack you've played this turn.",
+    "description": "Deal 2 damage to ALL enemies 4 times.",
+    "description_raw": "Deal {Damage:diff()} damage to ALL enemies {Repeat:diff()} {Repeat:plural:time|times}.",
     "cost": 1,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -4299,9 +4299,9 @@
     "rarity": "Rare",
     "target": "AllEnemies",
     "color": "ironclad",
-    "damage": 8,
+    "damage": 2,
     "block": null,
-    "hit_count": null,
+    "hit_count": 4,
     "powers_applied": null,
     "cards_draw": null,
     "energy_gain": null,
@@ -4310,19 +4310,17 @@
     "tags": null,
     "spawns_cards": null,
     "vars": {
-      "CalculationBase": 8,
-      "ExtraDamage": 2,
-      "CalculatedDamage": 8
+      "Damage": 2,
+      "Repeat": 4
     },
     "upgrade": {
-      "calculationbase": "+1",
-      "extradamage": "+1"
+      "repeat": "+1"
     },
     "image_url": "/static/images/cards/conflagration.webp",
     "beta_image_url": "/static/images/cards/beta/conflagration.webp",
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "Deal 8 damage to ALL enemies.\nDeals 3 additional damage for each other Attack you've played this turn.",
+    "upgrade_description": "Deal 2 damage to ALL enemies 5 times.",
     "type_key": "Attack",
     "rarity_key": "Rare",
     "compendium_order": 63
@@ -6889,46 +6887,39 @@
   {
     "id": "DRUM_OF_BATTLE",
     "name": "Drum of Battle",
-    "description": "Draw 2 cards.\nAt the start of your turn, [gold]Exhaust[/gold] the top card of your [gold]Draw Pile[/gold].",
-    "description_raw": "Draw {Cards:diff()} cards.\nAt the start of your turn, [gold]Exhaust[/gold] the top card of your [gold]Draw Pile[/gold].",
-    "cost": 0,
+    "description": "Draw 2 cards.\nWhen this card is [gold]Exhausted[/gold], gain [energy:2].",
+    "description_raw": "Draw {Cards:diff()} {Cards:plural:card|cards}.\nWhen this card is [gold]Exhausted[/gold], gain {Energy:energyIcons()}.",
+    "cost": 1,
     "is_x_cost": null,
     "is_x_star_cost": null,
     "star_cost": null,
-    "type": "Power",
+    "type": "Skill",
     "rarity": "Uncommon",
     "target": "Self",
     "color": "ironclad",
     "damage": null,
     "block": null,
     "hit_count": null,
-    "powers_applied": [
-      {
-        "power": "Drum of Battle",
-        "amount": 1,
-        "power_key": "DrumOfBattle"
-      }
-    ],
+    "powers_applied": null,
     "cards_draw": 2,
-    "energy_gain": null,
+    "energy_gain": 2,
     "hp_loss": null,
     "keywords": null,
     "tags": null,
     "spawns_cards": null,
     "vars": {
       "Cards": 2,
-      "DrumOfBattlePower": 1,
-      "DrumOfBattle": 1
+      "Energy": 2
     },
     "upgrade": {
-      "cards": "+1"
+      "energy": "+1"
     },
     "image_url": "/static/images/cards/drum_of_battle.webp",
     "beta_image_url": "/static/images/cards/beta/drum_of_battle.webp",
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "Draw 3 cards.\nAt the start of your turn, [gold]Exhaust[/gold] the top card of your [gold]Draw Pile[/gold].",
-    "type_key": "Power",
+    "upgrade_description": "Draw 2 cards.\nWhen this card is [gold]Exhausted[/gold], gain [energy:3].",
+    "type_key": "Skill",
     "rarity_key": "Uncommon",
     "compendium_order": 32
   },
@@ -14209,8 +14200,8 @@
   {
     "id": "NEOWS_FURY",
     "name": "Neow's Fury",
-    "description": "Deal 10 damage.\nPut 2 random cards from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
-    "description_raw": "Deal {Damage:diff()} damage.\nPut {Cards:plural:a random card|{:diff()} random cards} from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
+    "description": "Deal 10 damage.\nPut up to 2 cards from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
+    "description_raw": "Deal {Damage:diff()} damage.\nPut up to {Cards:diff()} {Cards:plural:card|cards} from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
     "cost": 1,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -14243,7 +14234,7 @@
     "beta_image_url": null,
     "type_variants": null,
     "can_be_generated_in_combat": false,
-    "upgrade_description": "Deal 14 damage.\nPut 3 random cards from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
+    "upgrade_description": "Deal 14 damage.\nPut up to 3 cards from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
     "type_key": "Attack",
     "rarity_key": "Ancient",
     "keywords_key": [
@@ -15009,8 +15000,8 @@
   {
     "id": "PACTS_END",
     "name": "Pact's End",
-    "description": "Can only be played if you have 3 or more cards in your [gold]Exhaust Pile[/gold].\nDeal 17 damage to ALL enemies.",
-    "description_raw": "Can only be played if you have {Cards:diff()} or more {Cards:plural:card|cards} in your [gold]Exhaust Pile[/gold].\nDeal {Damage:diff()} damage to ALL enemies.",
+    "description": "If you have 3 or more cards in your [gold]Exhaust Pile[/gold],\ndeal 17 damage to ALL enemies.",
+    "description_raw": "If you have {Cards:diff()} or more {Cards:plural:card|cards} in your [gold]Exhaust Pile[/gold],\ndeal {Damage:diff()} damage to ALL enemies.",
     "cost": 0,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -15040,7 +15031,7 @@
     "beta_image_url": null,
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "Can only be played if you have 3 or more cards in your [gold]Exhaust Pile[/gold].\nDeal 23 damage to ALL enemies.",
+    "upgrade_description": "If you have 3 or more cards in your [gold]Exhaust Pile[/gold],\ndeal 23 damage to ALL enemies.",
     "type_key": "Attack",
     "rarity_key": "Rare",
     "compendium_order": 77
@@ -15207,8 +15198,8 @@
   {
     "id": "PARRY",
     "name": "Parry",
-    "description": "Whenever you play [gold]Sovereign Blade[/gold], gain 10 [gold]Block[/gold].",
-    "description_raw": "Whenever you play [gold]Sovereign Blade[/gold], gain {ParryPower:diff()} [gold]Block[/gold].",
+    "description": "[gold]Sovereign Blade[/gold] now gains 10 [gold]Block[/gold].",
+    "description_raw": "[gold]Sovereign Blade[/gold] now gains {ParryPower:diff()} [gold]Block[/gold].",
     "cost": 1,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -15246,7 +15237,7 @@
     "beta_image_url": "/static/images/cards/beta/parry.webp",
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "Whenever you play [gold]Sovereign Blade[/gold], gain 14 [gold]Block[/gold].",
+    "upgrade_description": "[gold]Sovereign Blade[/gold] now gains 14 [gold]Block[/gold].",
     "type_key": "Power",
     "rarity_key": "Uncommon",
     "compendium_order": 220
@@ -16943,8 +16934,8 @@
   {
     "id": "REAPER_FORM",
     "name": "Reaper Form",
-    "description": "Whenever Attacks deal damage, they also apply that much [gold]Doom[/gold].",
-    "description_raw": "Whenever Attacks deal damage, they also apply that much [gold]Doom[/gold].",
+    "description": "Whenever Attacks deal damage, apply that much [gold]Doom[/gold].",
+    "description_raw": "Whenever Attacks deal damage, apply that much [gold]Doom[/gold].",
     "cost": 3,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -17140,7 +17131,7 @@
   {
     "id": "REFLECT",
     "name": "Reflect",
-    "description": "Gain 17 [gold]Block[/gold].\nBlocked attack damage is reflected to your attacker this turn.",
+    "description": "Gain 16 [gold]Block[/gold].\nBlocked attack damage is reflected to your attacker this turn.",
     "description_raw": "Gain {Block:diff()} [gold]Block[/gold].\nBlocked attack damage is reflected to your attacker this turn.",
     "cost": 1,
     "is_x_cost": null,
@@ -17151,7 +17142,7 @@
     "target": "Self",
     "color": "regent",
     "damage": null,
-    "block": 17,
+    "block": 16,
     "hit_count": null,
     "powers_applied": null,
     "cards_draw": null,
@@ -17161,7 +17152,7 @@
     "tags": null,
     "spawns_cards": null,
     "vars": {
-      "Block": 17,
+      "Block": 16,
       "StarCost": 3
     },
     "upgrade": {
@@ -17171,7 +17162,7 @@
     "beta_image_url": "/static/images/cards/beta/reflect.webp",
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "Gain 21 [gold]Block[/gold].\nBlocked attack damage is reflected to your attacker this turn.",
+    "upgrade_description": "Gain 20 [gold]Block[/gold].\nBlocked attack damage is reflected to your attacker this turn.",
     "type_key": "Skill",
     "rarity_key": "Uncommon",
     "compendium_order": 226
@@ -18487,7 +18478,7 @@
     "id": "SEVEN_STARS",
     "name": "Seven Stars",
     "description": "Deal 7 damage to ALL enemies 7 times.",
-    "description_raw": "Deal {Damage:diff()} damage to ALL enemies {Repeat:plural:{} time|{} times}.",
+    "description_raw": "Deal {Damage:diff()} damage to ALL enemies {Repeat:diff()} {Repeat:plural:time|times}.",
     "cost": 2,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -19704,8 +19695,8 @@
   {
     "id": "SOVEREIGN_BLADE",
     "name": "Sovereign Blade",
-    "description": "Deal 10 damage.",
-    "description_raw": "Deal {Damage:diff()} damage{SeekingEdgeAmount:cond:>0? to ALL enemies|}{Repeat:plural:| {} times}.",
+    "description": "Deal 10 damage to ALL enemies.",
+    "description_raw": "Deal {Damage:diff()} damage{TargetType:choose(AllEnemies): to ALL enemies|}{Repeat:plural:| {} times}.{GainsBlock:cond:\nGain {CalculatedBlock:diff()} [gold]Block[/gold].|}",
     "cost": 2,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -20972,8 +20963,8 @@
   {
     "id": "SUMMON_FORTH",
     "name": "Summon Forth",
-    "description": "[gold]Forge[/gold] 8.\nPut [gold]Sovereign Blade[/gold] into your [gold]Hand[/gold] from anywhere.",
-    "description_raw": "[gold]Forge[/gold] {Forge:diff()}.\nPut [gold]Sovereign Blade[/gold] into your [gold]Hand[/gold] from anywhere.",
+    "description": "Put [gold]Sovereign Blade[/gold] into your [gold]Hand[/gold] from anywhere.\n[gold]Forge[/gold] 8.",
+    "description_raw": "Put [gold]Sovereign Blade[/gold] into your [gold]Hand[/gold] from anywhere.\n[gold]Forge[/gold] {Forge:diff()}.",
     "cost": 1,
     "is_x_cost": null,
     "is_x_star_cost": null,
@@ -21004,7 +20995,7 @@
     "beta_image_url": "/static/images/cards/beta/summon_forth.webp",
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "[gold]Forge[/gold] 11.\nPut [gold]Sovereign Blade[/gold] into your [gold]Hand[/gold] from anywhere.",
+    "upgrade_description": "Put [gold]Sovereign Blade[/gold] into your [gold]Hand[/gold] from anywhere.\n[gold]Forge[/gold] 11.",
     "type_key": "Skill",
     "rarity_key": "Uncommon",
     "compendium_order": 232
@@ -23000,13 +22991,13 @@
       "Block": 6
     },
     "upgrade": {
-      "block": "+2"
+      "block": "+3"
     },
     "image_url": "/static/images/cards/untouchable.webp",
     "beta_image_url": null,
     "type_variants": null,
     "can_be_generated_in_combat": null,
-    "upgrade_description": "Gain 8 [gold]Block[/gold].",
+    "upgrade_description": "Gain 9 [gold]Block[/gold].",
     "type_key": "Skill",
     "rarity_key": "Common",
     "keywords_key": [

@@ -2,6 +2,8 @@
 
 Structured JSON for every game entity, vendored from [spire-codex](https://github.com/ptrlrd/spire-codex). See `ATTRIBUTION.md` for provenance.
 
+**Game version:** 0.104.0 (2026-04-23). Sourced from `data-beta/v0.104.0/eng/`. Patch summary in [`changelogs/0.104.0.json`](changelogs/0.104.0.json).
+
 ## When to read JSON vs. markdown
 
 - **JSON (here)** — authoritative stats: costs, damage, HP, intents, scaling, exact descriptions, upgrade deltas, keywords, powers applied. Machine-parseable.
@@ -39,6 +41,8 @@ Agents should treat JSON as truth for numbers and markdown as advice for decisio
 
 ## Schema notes
 
-- Cards use `description_raw` with SmartFormat template vars like `{DexterityPower:diff()}` alongside resolved `description`. `vars{}` holds current values, `upgrade{}` holds deltas.
+- Cards use `description_raw` with SmartFormat template vars like `{DexterityPower:diff()}` alongside resolved `description`. `vars{}` holds current values, `upgrade{}` holds deltas, `upgrade_description` holds the resolved upgraded text.
+- Powers use `type: "Buff" | "Debuff"` (not `PowerType`). 207 buffs / 51 debuffs in v0.104.0.
 - Monster `moves` include intent, damage, hit count, powers applied (target + amount), and ascension variants.
 - Events preserve `preconditions` (gold/HP/act/deck/relic/potion conditions) and runtime-computed values.
+- Field naming is `snake_case` throughout (e.g. `description_raw`, `power_type`, `hit_count`).

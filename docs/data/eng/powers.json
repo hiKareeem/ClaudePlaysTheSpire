@@ -630,16 +630,6 @@
     "image_url": "/static/images/powers/draw_cards_next_turn_power.webp"
   },
   {
-    "id": "DRUM_OF_BATTLE",
-    "name": "Drum of Battle",
-    "description": "At the start of your turn, [gold]Exhaust[/gold] the top [blue]2[/blue] cards of your [gold]Draw Pile[/gold].",
-    "description_raw": "At the start of your turn, [gold]Exhaust[/gold] the top {Amount:plural:card|[blue]{}[/blue] cards} of your [gold]Draw Pile[/gold].",
-    "type": "Buff",
-    "stack_type": "Counter",
-    "allow_negative": null,
-    "image_url": "/static/images/powers/drum_of_battle_power.webp"
-  },
-  {
     "id": "DUPLICATION",
     "name": "Duplication",
     "description": "Your next [blue]2[/blue] cards are played an extra time.",
@@ -1572,7 +1562,7 @@
   {
     "id": "PARRY",
     "name": "Parry",
-    "description": "Whenever you play [gold]Sovereign Blade[/gold], gain [blue]8[/blue] [gold]Block[/gold].",
+    "description": "[gold]Sovereign Blade[/gold] now gains [gold]Block[/gold].",
     "description_raw": null,
     "type": "Buff",
     "stack_type": "Counter",
@@ -1732,8 +1722,8 @@
   {
     "id": "REAPER_FORM",
     "name": "Reaper Form",
-    "description": "Whenever Attacks deal damage, they also apply [blue]2[/blue] times that much [gold]Doom[/gold].",
-    "description_raw": "Whenever Attacks deal damage, they also apply {Amount:plural:|[blue]{}[/blue] times }that much [gold]Doom[/gold].",
+    "description": "Whenever Attacks deal damage, apply [blue]2[/blue] times that much [gold]Doom[/gold].",
+    "description_raw": "Whenever Attacks deal damage, apply {Amount:plural:|[blue]{}[/blue] times }that much [gold]Doom[/gold].",
     "type": "Buff",
     "stack_type": "Counter",
     "allow_negative": null,

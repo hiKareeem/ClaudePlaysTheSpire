@@ -27,6 +27,14 @@ Spire Codex does not ship an explicit LICENSE file. Permission to vendor and red
 
 Game data itself is ultimately owned by Mega Crit Games (Slay the Spire 2, Steam App ID 2868840). This data is included solely as reference material to support modding and accessibility tooling for the game.
 
+## Mega Crit Non-Objection
+
+On 2026-04-26, Casey Yano (co-founder, Mega Crit Games) publicly stated on the `ClaudePlaysTheSpire` Twitch channel that Mega Crit has no objection to autonomous AI agents playing the retail Slay the Spire 2 client. Verbatim:
+
+> "I can't deny robots from playing the game. It would upset our future AI overlords." — `caseyyano`, 2026-04-26
+
+The full transcript and context are archived in [`megacrit-statement.md`](./megacrit-statement.md). This is a non-objection, not a license, partnership, or endorsement. All Slay the Spire 2 content, code, art, and trademarks remain the property of Mega Crit Games; HermesBridge is an independent third-party tool.
+
 ## Refresh Procedure
 
 To update the snapshot:

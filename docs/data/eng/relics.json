@@ -516,8 +516,8 @@
   {
     "id": "BOOMING_CONCH",
     "name": "Booming Conch",
-    "description": "At the start of [gold]Elite[/gold] combats, draw [blue]2[/blue] additional cards.",
-    "description_raw": "At the start of [gold]Elite[/gold] combats, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards}.",
+    "description": "At the start of [gold]Elite[/gold] combats, draw [blue]2[/blue] additional cards and gain [energy:1].",
+    "description_raw": "At the start of [gold]Elite[/gold] combats, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards} and gain {Energy:energyIcons()}.",
     "flavor": "[red]Details for this relic will be revealed in the future...[/red]",
     "rarity": "Ancient Relic",
     "pool": "shared",
@@ -580,8 +580,8 @@
   {
     "id": "BRILLIANT_SCARF",
     "name": "Brilliant Scarf",
-    "description": "The [blue]5th[/blue] card you play each turn is free.",
-    "description_raw": "The [blue]5th[/blue] card you play each turn is free.",
+    "description": "The [blue]5th[/blue] card you play from your hand each turn is free.",
+    "description_raw": "The [blue]5th[/blue] card you play from your hand each turn is free.",
     "flavor": "[red]Details for this relic will be revealed in the future...[/red]",
     "rarity": "Ancient Relic",
     "pool": "shared",

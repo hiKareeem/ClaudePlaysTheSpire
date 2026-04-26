@@ -16,15 +16,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_ARCHITECT_EVENT_ENCOUNTER",
-        "encounter_name": "The Architect",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -56,27 +48,19 @@
         "name": "Killshot",
         "intent": "Attack",
         "damage": {
-          "normal": 11,
-          "ascension": 12
+          "normal": 10,
+          "ascension": 11
         }
       }
     ],
     "damage_values": {
       "Killshot": {
-        "normal": 11,
-        "ascension": 12
+        "normal": 10,
+        "ascension": 11
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "RUBY_RAIDERS_NORMAL",
-        "encounter_name": "Ruby Raiders",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -144,15 +128,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "RUBY_RAIDERS_NORMAL",
-        "encounter_name": "Ruby Raiders",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -186,22 +162,15 @@
     "id": "AXEBOT",
     "name": "Axebot",
     "type": "Normal",
-    "min_hp": 40,
-    "max_hp": 44,
-    "min_hp_ascension": 42,
-    "max_hp_ascension": 46,
+    "min_hp": 70,
+    "max_hp": 78,
+    "min_hp_ascension": 76,
+    "max_hp_ascension": 86,
     "moves": [
       {
         "id": "BOOT_UP",
         "name": "Boot Up",
         "intent": "Defend + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 1
-          }
-        ],
         "block": 10
       },
       {
@@ -209,104 +178,56 @@
         "name": "The One-Two",
         "intent": "Attack",
         "damage": {
-          "normal": 5,
-          "ascension": 6,
+          "normal": 9,
+          "ascension": 10,
           "hit_count": 2
         }
-      },
-      {
-        "id": "SHARPEN",
-        "name": "Sharpen",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 4
-          }
-        ]
       },
       {
         "id": "HAMMER_UPPERCUT",
         "name": "Hammer Uppercut",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          },
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
-          "normal": 8,
-          "ascension": 10
+          "normal": 12,
+          "ascension": 14
         }
       }
     ],
     "damage_values": {
       "OneTwo": {
-        "normal": 5,
-        "ascension": 6,
+        "normal": 9,
+        "ascension": 10,
         "hit_count": 2
       },
       "HammerUppercut": {
-        "normal": 8,
-        "ascension": 10
+        "normal": 12,
+        "ascension": 14
       }
     },
-    "block_values": {
-      "bootUp": 10
-    },
-    "encounters": [
-      {
-        "encounter_id": "AXEBOTS_NORMAL",
-        "encounter_name": "Bot Buddies",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "block_values": null,
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
-      "type": "random",
+      "type": "cycle",
       "initial_move": "BOOT_UP",
       "states": [
         {
           "id": "BOOT_UP_MOVE",
           "type": "move",
-          "move_id": "BOOT_UP",
-          "next": "RAND_MOVE"
+          "move_id": "BOOT_UP"
         },
         {
           "id": "ONE_TWO_MOVE",
           "type": "move",
-          "move_id": "ONE_TWO",
-          "next": "RAND_MOVE"
-        },
-        {
-          "id": "SHARPEN_MOVE",
-          "type": "move",
-          "move_id": "SHARPEN",
-          "next": "RAND_MOVE"
+          "move_id": "ONE_TWO"
         },
         {
           "id": "HAMMER_UPPERCUT_MOVE",
           "type": "move",
-          "move_id": "HAMMER_UPPERCUT",
-          "next": "RAND_MOVE"
-        },
-        {
-          "id": "RAND_MOVE",
-          "type": "random",
-          "branches": []
+          "move_id": "HAMMER_UPPERCUT"
         }
       ],
-      "description": "Starts with Boot Up"
+      "description": "Always uses Boot Up"
     },
     "image_url": "/static/images/monsters/axebot.webp",
     "beta_image_url": null
@@ -328,15 +249,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BATTLEWORN_DUMMY_EVENT_ENCOUNTER",
-        "encounter_name": "Battleworn Dummy",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -371,15 +284,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BATTLEWORN_DUMMY_EVENT_ENCOUNTER",
-        "encounter_name": "Battleworn Dummy",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -414,15 +319,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BATTLEWORN_DUMMY_EVENT_ENCOUNTER",
-        "encounter_name": "Battleworn Dummy",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -467,22 +364,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BOWLBUGS_NORMAL",
-        "encounter_name": "Bowlbug Swarm",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "BOWLBUGS_WEAK",
-        "encounter_name": "Bowlbugs",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -520,18 +402,11 @@
       {
         "id": "BUFF",
         "name": "Buff",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 15
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "THRASH2",
-        "name": "Thrash",
+        "name": "Thrash2",
         "intent": "Attack",
         "damage": {
           "normal": 3
@@ -544,22 +419,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BOWLBUGS_NORMAL",
-        "encounter_name": "Bowlbug Swarm",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "BOWLBUGS_WEAK",
-        "encounter_name": "Bowlbugs",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -584,7 +444,7 @@
           "next": "THRASH2_MOVE"
         }
       ],
-      "description": "Thrash → Buff → Thrash → repeat"
+      "description": "Thrash → Buff → Thrash2 → repeat"
     },
     "image_url": "/static/images/monsters/bowlbug_nectar.webp",
     "beta_image_url": null
@@ -620,29 +480,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BOWLBUGS_NORMAL",
-        "encounter_name": "Bowlbug Swarm",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "BOWLBUGS_WEAK",
-        "encounter_name": "Bowlbugs",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": true
-      },
-      {
-        "encounter_id": "SLUMBERING_BEETLE_NORMAL",
-        "encounter_name": "Slumber Party",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -680,8 +518,8 @@
     "max_hp_ascension": 44,
     "moves": [
       {
-        "id": "TRASH",
-        "name": "Trash",
+        "id": "THRASH",
+        "name": "Thrash",
         "intent": "Attack",
         "damage": {
           "normal": 4,
@@ -692,14 +530,7 @@
       {
         "id": "TOXIC_SPIT",
         "name": "Toxic Spit",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ]
+        "intent": "Debuff"
       }
     ],
     "damage_values": {
@@ -710,31 +541,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BOWLBUGS_NORMAL",
-        "encounter_name": "Bowlbug Swarm",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLUMBERING_BEETLE_NORMAL",
-        "encounter_name": "Slumber Party",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
       "initial_move": null,
       "states": [
         {
-          "id": "TRASH_MOVE",
+          "id": "THRASH_MOVE",
           "type": "move",
-          "move_id": "TRASH"
+          "move_id": "THRASH"
         },
         {
           "id": "TOXIC_SPIT_MOVE",
@@ -768,14 +584,7 @@
       {
         "id": "ROAR",
         "name": "Roar",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -785,15 +594,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "RUBY_RAIDERS_NORMAL",
-        "encounter_name": "Ruby Raiders",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -825,25 +626,18 @@
     "max_hp_ascension": null,
     "moves": [
       {
-        "id": "INITIAL_SLEEP",
-        "name": "Initial Sleep",
+        "id": "SLEEP",
+        "name": "Sleep",
         "intent": "Sleep"
       },
       {
         "id": "WAKE",
         "name": "Wake",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 10
-          }
-        ]
+        "intent": "Buff"
       },
       {
-        "id": "SLEEP",
-        "name": "Sleep",
+        "id": "SLEEP_MOVE_2",
+        "name": "Sleep Move 2",
         "intent": "Sleep"
       },
       {
@@ -863,24 +657,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BYGONE_EFFIGY_ELITE",
-        "encounter_name": "Bygone Effigy",
-        "room_type": "Elite",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
-      "initial_move": "INITIAL_SLEEP",
+      "initial_move": "SLEEP",
       "states": [
         {
-          "id": "INITIAL_SLEEP_MOVE",
+          "id": "SLEEP_MOVE",
           "type": "move",
-          "move_id": "INITIAL_SLEEP",
+          "move_id": "SLEEP",
           "next": "WAKE_MOVE"
         },
         {
@@ -890,9 +676,9 @@
           "next": "SLASHES_MOVE"
         },
         {
-          "id": "SLEEP_MOVE",
+          "id": "SLEEP_MOVE_2",
           "type": "move",
-          "move_id": "SLEEP",
+          "move_id": "SLEEP_MOVE_2",
           "next": "SLASHES_MOVE"
         },
         {
@@ -902,7 +688,7 @@
           "next": "SLASHES_MOVE"
         }
       ],
-      "description": "Initial Sleep → Wake → Slashes → repeat"
+      "description": "Sleep → Wake → Slashes → repeat"
     },
     "image_url": "/static/images/monsters/bygone_effigy.webp",
     "beta_image_url": null
@@ -949,15 +735,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "BYRDONIS_ELITE",
-        "encounter_name": "Byrdonis",
-        "room_type": "Elite",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1028,14 +806,7 @@
       {
         "id": "INCANTATION",
         "name": "Incantation",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "RITUAL",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "DARK_STRIKE",
@@ -1054,22 +825,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CULTISTS_NORMAL",
-        "encounter_name": "Cultists",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SEAPUNK_NORMAL",
-        "encounter_name": "Underdocks Wildlife",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1103,26 +859,12 @@
       {
         "id": "STAMP",
         "name": "Stamp",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "PLOW",
-            "target": "self",
-            "amount": 150
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "PLOW",
         "name": "Plow",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 18,
           "ascension": 20
@@ -1136,14 +878,7 @@
       {
         "id": "BEAST_CRY",
         "name": "Beast Cry",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "RINGING",
-            "target": "player",
-            "amount": 1
-          }
-        ]
+        "intent": "Debuff"
       },
       {
         "id": "STOMP",
@@ -1158,13 +893,6 @@
         "id": "CRUSH",
         "name": "Crush",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 17,
           "ascension": 19
@@ -1186,15 +914,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CEREMONIAL_BEAST_BOSS",
-        "encounter_name": "Ceremonial Beast",
-        "room_type": "Boss",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1276,22 +996,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CHOMPERS_NORMAL",
-        "encounter_name": "An Automaton Pair",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "TUNNELER_NORMAL",
-        "encounter_name": "Tunneling Twosome",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1343,14 +1048,7 @@
       {
         "id": "GOOP",
         "name": "Goop",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ]
+        "intent": "Debuff"
       }
     ],
     "damage_values": {
@@ -1364,29 +1062,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CORPSE_SLUGS_NORMAL",
-        "encounter_name": "Many Corpse Slugs",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "CORPSE_SLUGS_WEAK",
-        "encounter_name": "Corpse Slugs",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": true
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "RAVENOUS",
-        "amount": 4,
-        "amount_ascension": 5
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
       "initial_move": null,
@@ -1447,15 +1124,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "RUBY_RAIDERS_NORMAL",
-        "encounter_name": "Ruby Raiders",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1508,18 +1177,6 @@
         "id": "BUG_STING",
         "name": "Bug Sting",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 2
-          },
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7,
@@ -1529,14 +1186,7 @@
       {
         "id": "ADAPT",
         "name": "Adapt",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "GUARDED_STRIKE",
@@ -1569,15 +1219,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "KAISER_CRAB_BOSS",
-        "encounter_name": "Kaiser Crab",
-        "room_type": "Boss",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1631,50 +1273,29 @@
       {
         "id": "CHARGE_UP",
         "name": "Charge Up",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       },
       {
-        "id": "REPEATER",
-        "name": "Repeater",
+        "id": "REPEATER_BLAST",
+        "name": "Repeater Blast",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 7,
           "ascension": 8
         }
       },
       {
-        "id": "REPEATER_MOVE_2",
-        "name": "Repeater Move 2",
+        "id": "REPEATER_BLAST_MOVE_2",
+        "name": "Repeater Blast Move 2",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 7,
           "ascension": 8
         }
       },
       {
-        "id": "EXPEL_BLAST",
-        "name": "Expel Blast",
+        "id": "EXPEL",
+        "name": "Expel",
         "intent": "Attack",
         "damage": {
           "normal": 5,
@@ -1701,22 +1322,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CONSTRUCT_MENAGERIE_NORMAL",
-        "encounter_name": "Construct Menagerie",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "CUBEX_CONSTRUCT_NORMAL",
-        "encounter_name": "Cubex Construct",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1726,25 +1332,25 @@
           "id": "CHARGE_UP_MOVE",
           "type": "move",
           "move_id": "CHARGE_UP",
-          "next": "REPEATER_MOVE"
+          "next": "REPEATER_BLAST_MOVE"
         },
         {
-          "id": "REPEATER_MOVE",
+          "id": "REPEATER_BLAST_MOVE",
           "type": "move",
-          "move_id": "REPEATER",
-          "next": "REPEATER_MOVE_2"
+          "move_id": "REPEATER_BLAST",
+          "next": "REPEATER_BLAST_MOVE_2"
         },
         {
-          "id": "REPEATER_MOVE_2",
+          "id": "REPEATER_BLAST_MOVE_2",
           "type": "move",
-          "move_id": "REPEATER_MOVE_2",
-          "next": "EXPEL_BLAST"
+          "move_id": "REPEATER_BLAST_MOVE_2",
+          "next": "EXPEL_MOVE"
         },
         {
-          "id": "EXPEL_BLAST",
+          "id": "EXPEL_MOVE",
           "type": "move",
-          "move_id": "EXPEL_BLAST",
-          "next": "REPEATER_MOVE"
+          "move_id": "EXPEL",
+          "next": "REPEATER_BLAST_MOVE"
         },
         {
           "id": "SUBMERGE_MOVE",
@@ -1753,7 +1359,7 @@
           "next": "CHARGE_UP_MOVE"
         }
       ],
-      "description": "Charge Up → Repeater → Repeater Move 2 → Expel Blast → repeat"
+      "description": "Charge Up → Repeater Blast → Repeater Blast Move 2 → Expel → repeat"
     },
     "image_url": "/static/images/monsters/cubex_construct.webp",
     "beta_image_url": null
@@ -1770,14 +1376,7 @@
       {
         "id": "INCANTATION",
         "name": "Incantation",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "RITUAL",
-            "target": "self",
-            "amount": 5
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "DARK_STRIKE",
@@ -1796,15 +1395,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CULTISTS_NORMAL",
-        "encounter_name": "Cultists",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -1849,13 +1440,6 @@
         "id": "BULK",
         "name": "Bulk",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7
@@ -1865,13 +1449,6 @@
         "id": "CONSTRICT",
         "name": "Constrict",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -1983,15 +1560,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "DEVOTED_SCULPTOR_WEAK",
-        "encounter_name": "Devoted Sculptor",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -2049,13 +1618,6 @@
         "id": "GRASP",
         "name": "Grasp",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 10,
           "ascension": 11,
@@ -2079,15 +1641,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "DOORMAKER_BOSS",
-        "encounter_name": "The Doormaker",
-        "room_type": "Boss",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -2135,24 +1689,7 @@
       {
         "id": "PHEROMONE_SPIT",
         "name": "Pheromone Spit",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "PERSONAL_HIVE",
-            "target": "self",
-            "amount": 1
-          },
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 1
-          },
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "BEES",
@@ -2187,15 +1724,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "ENTOMANCER_ELITE",
-        "encounter_name": "Entomancer",
-        "room_type": "Elite",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -2243,8 +1772,8 @@
         }
       },
       {
-        "id": "MANDIBLE",
-        "name": "Mandible",
+        "id": "MANDIBLES",
+        "name": "Mandibles",
         "intent": "Attack",
         "damage": {
           "normal": 8,
@@ -2254,14 +1783,7 @@
       {
         "id": "ENRAGE",
         "name": "Enrage",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -2274,22 +1796,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "EXOSKELETONS_NORMAL",
-        "encounter_name": "Many Exoskeletons",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "EXOSKELETONS_WEAK",
-        "encounter_name": "Exoskeletons",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "mixed",
@@ -2302,9 +1809,9 @@
           "next": "RAND"
         },
         {
-          "id": "MANDIBLE_MOVE",
+          "id": "MANDIBLES_MOVE",
           "type": "move",
-          "move_id": "MANDIBLE",
+          "move_id": "MANDIBLES",
           "next": "ENRAGE_MOVE"
         },
         {
@@ -2323,7 +1830,7 @@
               "repeat": "CannotRepeat"
             },
             {
-              "move_id": "MANDIBLE",
+              "move_id": "MANDIBLES",
               "weight": 1.0,
               "repeat": "CannotRepeat"
             }
@@ -2338,7 +1845,7 @@
               "condition": "base.Creature.SlotName == \"first\""
             },
             {
-              "move_id": "MANDIBLE",
+              "move_id": "MANDIBLES",
               "condition": "base.Creature.SlotName == \"second\""
             },
             {
@@ -2352,7 +1859,7 @@
           ]
         }
       ],
-      "description": "then random: Skitter (no repeat), Mandible (no repeat); then conditional: Skitter (if base.Creature.SlotName == \"first\") / Mandible (if base.Creature.SlotName == \"second\") / Enrage (if base.Creature.SlotName == \"third\") / Rand (if base.Creature.SlotName == \"fourth\")"
+      "description": "then random: Skitter (no repeat), Mandibles (no repeat); then conditional: Skitter (if base.Creature.SlotName == \"first\") / Mandibles (if base.Creature.SlotName == \"second\") / Enrage (if base.Creature.SlotName == \"third\") / Rand (if base.Creature.SlotName == \"fourth\")"
     },
     "image_url": "/static/images/monsters/exoskeleton.webp",
     "beta_image_url": null
@@ -2374,15 +1881,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FOGMOG_NORMAL",
-        "encounter_name": "Fogmog",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -2444,15 +1943,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FABRICATOR_NORMAL",
-        "encounter_name": "Fabricator",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "mixed",
@@ -2542,13 +2033,6 @@
         "id": "THROW_RELIC",
         "name": "Throw Relic",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 9,
           "ascension": 10
@@ -2557,14 +2041,7 @@
       {
         "id": "ENRAGE",
         "name": "Enrage",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -2581,15 +2058,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FAKE_MERCHANT_EVENT_ENCOUNTER",
-        "encounter_name": "The Merchant???",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -2646,7 +2115,7 @@
     "moves": [
       {
         "id": "SPAWNED",
-        "name": "Spawned",
+        "name": "Wake Up",
         "intent": "Stun"
       },
       {
@@ -2657,15 +2126,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "GREMLIN_MERC_NORMAL",
-        "encounter_name": "Two Gremlins in a Trenchcoat",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -2682,7 +2143,7 @@
           "move_id": "FLEE"
         }
       ],
-      "description": "Always uses Spawned"
+      "description": "Always uses Wake Up"
     },
     "image_url": "/static/images/monsters/fat_gremlin.webp",
     "beta_image_url": null
@@ -2699,14 +2160,7 @@
       {
         "id": "WAR_CHANT",
         "name": "War Chant",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "FLAIL",
@@ -2740,15 +2194,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "KNIGHTS_ELITE",
-        "encounter_name": "Knight Gang",
-        "room_type": "Elite",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -2801,13 +2247,6 @@
         "id": "VULNERABLE_SPORES",
         "name": "Vulnerable Spores",
         "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -2817,13 +2256,6 @@
         "id": "FRAIL_SPORES",
         "name": "Frail Spores",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -2850,22 +2282,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FLYCONID_NORMAL",
-        "encounter_name": "Shroom and Slime",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SNAPPING_JAXFRUIT_NORMAL",
-        "encounter_name": "Overgrowth Flora",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -2916,20 +2333,13 @@
     "moves": [
       {
         "id": "ILLUSION",
-        "name": "Illusion",
+        "name": "Illusory Spores",
         "intent": "Summon"
       },
       {
         "id": "SWIPE",
-        "name": "Swipe",
+        "name": "Thwack",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -2939,13 +2349,6 @@
         "id": "SWIPE_RANDOM",
         "name": "Swipe Random",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -2972,15 +2375,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FOGMOG_NORMAL",
-        "encounter_name": "Fogmog",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -3027,7 +2422,7 @@
           ]
         }
       ],
-      "description": "Starts with Illusion, then random: Swipe Random (no repeat, 40%), Headbutt (no repeat, 60%)"
+      "description": "Starts with Illusory Spores, then random: Swipe Random (no repeat, 40%), Headbutt (no repeat, 60%)"
     },
     "image_url": "/static/images/monsters/fogmog.webp",
     "beta_image_url": null
@@ -3045,13 +2440,6 @@
         "id": "TACKLE",
         "name": "Tackle",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 9,
           "ascension": 11
@@ -3093,15 +2481,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FOSSIL_STALKER_NORMAL",
-        "encounter_name": "Fossil Stalker",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -3153,14 +2533,7 @@
       {
         "id": "FOR_THE_QUEEN",
         "name": "For the Queen",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 5
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "STRIKE_DOWN_EVIL",
@@ -3175,13 +2548,6 @@
         "id": "TONGUE_LASH",
         "name": "Tongue Lash",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 13,
           "ascension": 14
@@ -3212,22 +2578,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FROG_KNIGHT_NORMAL",
-        "encounter_name": "Frog Knight",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "PLATING",
-        "amount": 15,
-        "amount_ascension": 19
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
       "initial_move": "TONGUE_LASH",
@@ -3306,14 +2658,7 @@
       {
         "id": "INHALE",
         "name": "Inhale",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 7
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -3323,22 +2668,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FUZZY_WURM_CRAWLER_WEAK",
-        "encounter_name": "Fuzzy Wurm Crawler",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      },
-      {
-        "encounter_id": "OVERGROWTH_CRAWLERS",
-        "encounter_name": "Overgrowth Crawlers",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -3392,15 +2722,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "LIVING_FOG_NORMAL",
-        "encounter_name": "Evil Gas",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -3428,7 +2750,7 @@
     "moves": [
       {
         "id": "THUNDER_STRIKE",
-        "name": "Thunder Strike",
+        "name": "Channel Lightning",
         "intent": "Attack",
         "damage": {
           "normal": 6,
@@ -3440,13 +2762,6 @@
         "id": "SHOCKING_SLAP",
         "name": "Shocking Slap",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 13,
           "ascension": 14
@@ -3456,13 +2771,6 @@
         "id": "GALVANIC_BURST",
         "name": "Galvanic Burst",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 16,
           "ascension": 17
@@ -3485,15 +2793,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "GLOBE_HEAD_NORMAL",
-        "encounter_name": "A Lone Globe Head",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -3518,7 +2818,7 @@
           "next": "SHOCKING_SLAP"
         }
       ],
-      "description": "Shocking Slap → Thunder Strike → Galvanic Burst → repeat"
+      "description": "Shocking Slap → Channel Lightning → Galvanic Burst → repeat"
     },
     "image_url": "/static/images/monsters/orb_head.webp",
     "beta_image_url": null
@@ -3546,13 +2846,6 @@
         "id": "DOUBLE_SMASH",
         "name": "Double Smash",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7,
@@ -3563,13 +2856,6 @@
         "id": "HEHE",
         "name": "Hehe",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -3593,15 +2879,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "GREMLIN_MERC_NORMAL",
-        "encounter_name": "Two Gremlins in a Trenchcoat",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -3680,13 +2958,6 @@
         "id": "RAMMING_SPEED",
         "name": "Ramming Speed",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 10,
           "ascension": 11
@@ -3733,15 +3004,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "HAUNTED_SHIP_NORMAL",
-        "encounter_name": "Haunted Ship",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -3799,14 +3062,7 @@
       {
         "id": "TENDERIZING_GOOP",
         "name": "Tenderizing Goop",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "TENDER",
-            "target": "player",
-            "amount": 1
-          }
-        ]
+        "intent": "Debuff"
       },
       {
         "id": "BITE",
@@ -3840,15 +3096,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "HUNTER_KILLER_NORMAL",
-        "encounter_name": "Hunter Killer",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -3930,13 +3178,6 @@
         "id": "PULSATE",
         "name": "Pulsate",
         "intent": "Buff + Defend",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 4
-          }
-        ],
         "block": 20
       }
     ],
@@ -3956,15 +3197,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "INFESTED_PRISMS_ELITE",
-        "encounter_name": "Infested Prism",
-        "room_type": "Elite",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -4054,15 +3287,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "INKLETS_NORMAL",
-        "encounter_name": "Inklets",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -4161,14 +3386,7 @@
       {
         "id": "POWER_DANCE",
         "name": "Power Dance",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -4183,15 +3401,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_KIN_BOSS",
-        "encounter_name": "The Kin",
-        "room_type": "Boss",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -4232,15 +3442,8 @@
     "moves": [
       {
         "id": "ORB_OF_FRAILTY",
-        "name": "Orb Of Frailty",
+        "name": "Orb of Frailty",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -4248,15 +3451,8 @@
       },
       {
         "id": "ORB_OF_WEAKNESS",
-        "name": "Orb Of Weakness",
+        "name": "Orb of Weakness",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -4264,7 +3460,7 @@
       },
       {
         "id": "BEAM",
-        "name": "Beam",
+        "name": "Soul Beam",
         "intent": "Attack",
         "damage": {
           "normal": 3,
@@ -4274,15 +3470,8 @@
       },
       {
         "id": "RITUAL",
-        "name": "Ritual",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "name": "Dark Ritual",
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -4301,15 +3490,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_KIN_BOSS",
-        "encounter_name": "The Kin",
-        "room_type": "Boss",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -4340,7 +3521,7 @@
           "next": "ORB_OF_FRAILTY_MOVE"
         }
       ],
-      "description": "Orb Of Frailty → Orb Of Weakness → Beam → Ritual → repeat"
+      "description": "Orb of Frailty → Orb of Weakness → Soul Beam → Dark Ritual → repeat"
     },
     "image_url": "/static/images/monsters/kin_priest.webp",
     "beta_image_url": null
@@ -4382,13 +3563,6 @@
         "id": "PONDER",
         "name": "Ponder",
         "intent": "Attack + Heal + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "heal": 30,
         "damage": {
           "normal": 11,
@@ -4412,15 +3586,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "KNOWLEDGE_DEMON_BOSS",
-        "encounter_name": "Knowledge Demon",
-        "room_type": "Boss",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -4516,14 +3682,7 @@
       {
         "id": "SOUL_SIPHON",
         "name": "Soul Siphon",
-        "intent": "Debuff + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Debuff + Buff"
       }
     ],
     "damage_values": {
@@ -4542,15 +3701,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "LAGAVULIN_MATRIARCH_BOSS",
-        "encounter_name": "Lagavulin Matriarch",
-        "room_type": "Boss",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -4627,36 +3778,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FLYCONID_NORMAL",
-        "encounter_name": "Shroom and Slime",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLIMES_NORMAL",
-        "encounter_name": "Swarm of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLIMES_WEAK",
-        "encounter_name": "Group of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      },
-      {
-        "encounter_id": "SLITHERING_STRANGLER_NORMAL",
-        "encounter_name": "Strangler and Friend",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -4690,8 +3812,8 @@
     "max_hp_ascension": 16,
     "moves": [
       {
-        "id": "BUTT",
-        "name": "Butt",
+        "id": "TACKLE",
+        "name": "Tackle",
         "intent": "Attack",
         "damage": {
           "normal": 3,
@@ -4711,38 +3833,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLIMES_NORMAL",
-        "encounter_name": "Swarm of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLIMES_WEAK",
-        "encounter_name": "Group of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      },
-      {
-        "encounter_id": "SLITHERING_STRANGLER_NORMAL",
-        "encounter_name": "Strangler and Friend",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
       "initial_move": "RAND",
       "states": [
         {
-          "id": "BUTT_MOVE",
+          "id": "TACKLE_MOVE",
           "type": "move",
-          "move_id": "BUTT",
+          "move_id": "TACKLE",
           "next": "RAND"
         },
         {
@@ -4780,13 +3880,6 @@
         "id": "ADVANCED_GAS",
         "name": "Advanced Gas",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "SMOGGY",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -4826,15 +3919,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "LIVING_FOG_NORMAL",
-        "encounter_name": "Evil Gas",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -4885,13 +3970,6 @@
         "id": "SMASH",
         "name": "Smash",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 16,
           "ascension": 18
@@ -4908,15 +3986,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TURRET_OPERATOR_WEAK",
-        "encounter_name": "Turret Operator",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -4967,13 +4037,6 @@
         "id": "WEB_CANNON",
         "name": "Web Cannon",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 9,
           "ascension": 10
@@ -4992,13 +4055,6 @@
         "id": "CURL_AND_GROW",
         "name": "Curl and Grow",
         "intent": "Defend + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 5
-          }
-        ],
         "block": 14
       }
     ],
@@ -5013,22 +4069,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "LOUSE_PROGENITOR_NORMAL",
-        "encounter_name": "Louse Progenitor",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "CURL_UP",
-        "amount": 14,
-        "amount_ascension": 18
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
       "initial_move": "WEB_CANNON",
@@ -5065,8 +4107,8 @@
     "max_hp_ascension": null,
     "moves": [
       {
-        "id": "FIRST_POWER_SHIELD",
-        "name": "First Power Shield",
+        "id": "POWER_SHIELD",
+        "name": "Power Shield",
         "intent": "Attack + Defend",
         "block": 5,
         "damage": {
@@ -5119,24 +4161,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "KNIGHTS_ELITE",
-        "encounter_name": "Knight Gang",
-        "room_type": "Elite",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
-      "initial_move": "FIRST_POWER_SHIELD",
+      "initial_move": "POWER_SHIELD",
       "states": [
         {
-          "id": "FIRST_POWER_SHIELD_MOVE",
+          "id": "POWER_SHIELD_MOVE",
           "type": "move",
-          "move_id": "FIRST_POWER_SHIELD",
+          "move_id": "POWER_SHIELD",
           "next": "DAMPEN_MOVE"
         },
         {
@@ -5164,7 +4198,7 @@
           "next": "PREP_MOVE"
         }
       ],
-      "description": "First Power Shield → Dampen → Ram → Prep → Magic Bomb → repeat"
+      "description": "Power Shield → Dampen → Ram → Prep → Magic Bomb → repeat"
     },
     "image_url": "/static/images/monsters/magi_knight.webp",
     "beta_image_url": null
@@ -5190,14 +4224,7 @@
       {
         "id": "ROAR",
         "name": "Roar",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 3
-          }
-        ]
+        "intent": "Debuff"
       },
       {
         "id": "CLAW",
@@ -5222,15 +4249,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "MAWLER_NORMAL",
-        "encounter_name": "Mawler",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -5313,13 +4332,6 @@
         "id": "WINDUP",
         "name": "Windup",
         "intent": "Defend + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 5
-          }
-        ],
         "block": 15
       },
       {
@@ -5345,15 +4357,7 @@
     "block_values": {
       "windup": 15
     },
-    "encounters": [
-      {
-        "encounter_id": "MECHA_KNIGHT_ELITE",
-        "encounter_name": "Mecha Knight",
-        "room_type": "Elite",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -5416,13 +4420,6 @@
         "id": "SUCK",
         "name": "Suck",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 4,
           "ascension": 6
@@ -5440,15 +4437,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "MYTES_NORMAL",
-        "encounter_name": "Mass of Mytes",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -5523,14 +4512,7 @@
       {
         "id": "HISS",
         "name": "Hiss",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -5544,22 +4526,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "NIBBITS_NORMAL",
-        "encounter_name": "A Pair of Nibbits",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "NIBBITS_WEAK",
-        "encounter_name": "A Lone Nibbit",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -5704,13 +4671,6 @@
         "id": "TENDERIZER",
         "name": "Tenderizer",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 7,
           "ascension": 8
@@ -5719,14 +4679,7 @@
       {
         "id": "NUTRITIONAL_PASTE",
         "name": "Nutritional Paste",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -5740,15 +4693,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "OVICOPTER_NORMAL",
-        "encounter_name": "Ovicopter",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -5802,9 +4747,9 @@
     "id": "OWL_MAGISTRATE",
     "name": "Owl Magistrate",
     "type": "Normal",
-    "min_hp": 234,
+    "min_hp": 231,
     "max_hp": null,
-    "min_hp_ascension": 243,
+    "min_hp_ascension": 247,
     "max_hp_ascension": null,
     "moves": [
       {
@@ -5829,26 +4774,12 @@
       {
         "id": "JUDICIAL_FLIGHT",
         "name": "Judicial Flight",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "SOAR",
-            "target": "self",
-            "amount": 1
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "VERDICT",
         "name": "Verdict",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 4
-          }
-        ],
         "damage": {
           "normal": 33,
           "ascension": 36
@@ -5871,15 +4802,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "OWL_MAGISTRATE_NORMAL",
-        "encounter_name": "Owl Magistrate",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -6034,14 +4957,7 @@
       {
         "id": "ENLARGE",
         "name": "Enlarge",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -6059,22 +4975,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "PHANTASMAL_GARDENERS_ELITE",
-        "encounter_name": "Phantasmal Gardeners",
-        "room_type": "Elite",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "SKITTISH",
-        "amount": 6,
-        "amount_ascension": 7
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
       "initial_move": "INIT_MOVE",
@@ -6164,15 +5066,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "PHROG_PARASITE_ELITE",
-        "encounter_name": "Phrog Parasite",
-        "room_type": "Elite",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -6229,13 +5123,6 @@
         "id": "FAST_PUNCH",
         "name": "Fast Punch",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 5,
           "ascension": 6,
@@ -6255,29 +5142,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "CONSTRUCT_MENAGERIE_NORMAL",
-        "encounter_name": "Construct Menagerie",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "PUNCH_CONSTRUCT_NORMAL",
-        "encounter_name": "Punch Construct",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "PUNCH_OFF_EVENT_ENCOUNTER",
-        "encounter_name": "Punch Constructs",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -6319,36 +5184,12 @@
       {
         "id": "PUPPET_STRINGS",
         "name": "Puppet Strings",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "CHAINS_OF_BINDING",
-            "target": "player",
-            "amount": 3
-          }
-        ]
+        "intent": "Debuff"
       },
       {
-        "id": "YOUR_MINE",
-        "name": "Your Mine",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 99
-          },
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 99
-          },
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 99
-          }
-        ]
+        "id": "YOU_ARE_MINE",
+        "name": "You Are Mine",
+        "intent": "Debuff"
       },
       {
         "id": "BURN_BRIGHT_FOR_ME",
@@ -6378,14 +5219,7 @@
       {
         "id": "ENRAGE",
         "name": "Enrage",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -6400,15 +5234,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "QUEEN_BOSS",
-        "encounter_name": "Queen",
-        "room_type": "Boss",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -6418,12 +5244,12 @@
           "id": "PUPPET_STRINGS_MOVE",
           "type": "move",
           "move_id": "PUPPET_STRINGS",
-          "next": "YOUR_MINE_MOVE"
+          "next": "YOU_ARE_MINE_MOVE"
         },
         {
-          "id": "YOUR_MINE_MOVE",
+          "id": "YOU_ARE_MINE_MOVE",
           "type": "move",
-          "move_id": "YOUR_MINE",
+          "move_id": "YOU_ARE_MINE",
           "next": "YOURE_MINE_NOW_BRANCH"
         },
         {
@@ -6479,7 +5305,7 @@
           ]
         }
       ],
-      "description": "Starts: Puppet Strings → Your Mine; then conditional: Burn Bright for Me (if !HasAmalgamDied) / Off with Your Head (if HasAmalgamDied); then conditional: Burn Bright for Me (if !HasAmalgamDied) / Off with Your Head (if HasAmalgamDied)"
+      "description": "Starts: Puppet Strings → You Are Mine; then conditional: Burn Bright for Me (if !HasAmalgamDied) / Off with Your Head (if HasAmalgamDied); then conditional: Burn Bright for Me (if !HasAmalgamDied) / Off with Your Head (if HasAmalgamDied)"
     },
     "image_url": "/static/images/monsters/queen.webp",
     "beta_image_url": null
@@ -6514,14 +5340,7 @@
       {
         "id": "CHARGE_UP",
         "name": "Charge Up",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "LASER",
@@ -6553,15 +5372,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "KAISER_CRAB_BOSS",
-        "encounter_name": "Kaiser Crab",
-        "room_type": "Boss",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -6607,9 +5418,9 @@
     "id": "SCROLL_OF_BITING",
     "name": "Scroll of Biting",
     "type": "Normal",
-    "min_hp": 31,
-    "max_hp": 38,
-    "min_hp_ascension": 32,
+    "min_hp": 30,
+    "max_hp": 37,
+    "min_hp_ascension": 33,
     "max_hp_ascension": 39,
     "moves": [
       {
@@ -6634,14 +5445,7 @@
       {
         "id": "MORE_TEETH",
         "name": "More Teeth",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -6656,22 +5460,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SCROLLS_OF_BITING_NORMAL",
-        "encounter_name": "Many Scrolls of Biting",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SCROLLS_OF_BITING_WEAK",
-        "encounter_name": "Scrolls of Biting",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -6737,13 +5526,6 @@
         "id": "BUBBLE_BURP",
         "name": "Bubble Burp",
         "intent": "Buff + Defend",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 1
-          }
-        ],
         "block": 7
       }
     ],
@@ -6758,22 +5540,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SEAPUNK_NORMAL",
-        "encounter_name": "Underdocks Wildlife",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SEAPUNK_WEAK",
-        "encounter_name": "Seapunk",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -6815,14 +5582,7 @@
       {
         "id": "PRESSURIZE",
         "name": "Pressurize",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 4
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "JET",
@@ -6841,15 +5601,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SEWER_CLAM_NORMAL",
-        "encounter_name": "Sewer Clam",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -6915,22 +5667,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "OVERGROWTH_CRAWLERS",
-        "encounter_name": "Overgrowth Crawlers",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SHRINKER_BEETLE_WEAK",
-        "encounter_name": "Shrinker Beetle",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -6992,13 +5729,6 @@
         "id": "INERTIA",
         "name": "Inertia",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 9,
           "ascension": 11
@@ -7035,15 +5765,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SKULKING_COLONY_ELITE",
-        "encounter_name": "Skulking Colony",
-        "room_type": "Elite",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -7083,9 +5805,9 @@
     "id": "SLIMED_BERSERKER",
     "name": "Slimed Berserker",
     "type": "Normal",
-    "min_hp": 266,
+    "min_hp": 261,
     "max_hp": null,
-    "min_hp_ascension": 276,
+    "min_hp_ascension": 281,
     "max_hp_ascension": null,
     "moves": [
       {
@@ -7096,19 +5818,7 @@
       {
         "id": "LEECHING_HUG",
         "name": "Leeching Hug",
-        "intent": "Debuff + Buff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 3
-          },
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Debuff + Buff"
       },
       {
         "id": "SMOTHER",
@@ -7142,15 +5852,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLIMED_BERSERKER_NORMAL",
-        "encounter_name": "Slimed Berserker",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -7196,18 +5898,11 @@
       {
         "id": "CONSTRICT",
         "name": "Constrict",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "CONSTRICT",
-            "target": "player",
-            "amount": 3
-          }
-        ]
+        "intent": "Debuff"
       },
       {
-        "id": "TWACK",
-        "name": "Twack",
+        "id": "THWACK",
+        "name": "Thwack",
         "intent": "Attack + Defend",
         "block": 5,
         "damage": {
@@ -7236,15 +5931,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLITHERING_STRANGLER_NORMAL",
-        "encounter_name": "Strangler and Friend",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -7257,9 +5944,9 @@
           "next": "rand"
         },
         {
-          "id": "TWACK",
+          "id": "THWACK",
           "type": "move",
-          "move_id": "TWACK",
+          "move_id": "THWACK",
           "next": "CONSTRICT"
         },
         {
@@ -7297,13 +5984,6 @@
         "id": "OIL_SPRAY",
         "name": "Oil Spray",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -7322,13 +6002,6 @@
         "id": "RAGE",
         "name": "Rage",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7
@@ -7350,15 +6023,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLUDGE_SPINNER_WEAK",
-        "encounter_name": "Sludge Spinner",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -7416,13 +6081,6 @@
         "id": "ROLL_OUT",
         "name": "Roll Out",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 16,
           "ascension": 18
@@ -7436,22 +6094,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLUMBERING_BEETLE_NORMAL",
-        "encounter_name": "Slumber Party",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "PLATING",
-        "amount": 15,
-        "amount_ascension": 18
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
       "initial_move": "SNORE",
@@ -7491,13 +6135,6 @@
         "id": "ENERGY_ORB",
         "name": "Energy Orb",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 3,
           "ascension": 4
@@ -7511,22 +6148,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLITHERING_STRANGLER_NORMAL",
-        "encounter_name": "Strangler and Friend",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SNAPPING_JAXFRUIT_NORMAL",
-        "encounter_name": "Overgrowth Flora",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -7555,7 +6177,7 @@
     "moves": [
       {
         "id": "SPAWNED",
-        "name": "Spawned",
+        "name": "Wake Up",
         "intent": "Stun"
       },
       {
@@ -7575,15 +6197,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "GREMLIN_MERC_NORMAL",
-        "encounter_name": "Two Gremlins in a Trenchcoat",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -7600,7 +6214,7 @@
           "move_id": "TACKLE"
         }
       ],
-      "description": "Always uses Spawned"
+      "description": "Always uses Wake Up"
     },
     "image_url": "/static/images/monsters/sneaky_gremlin.webp",
     "beta_image_url": null
@@ -7640,26 +6254,12 @@
       {
         "id": "FADE",
         "name": "Fade",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "INTANGIBLE",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "SCREAM",
         "name": "Scream",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 11,
           "ascension": 12
@@ -7681,15 +6281,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SOUL_FYSH_BOSS",
-        "encounter_name": "Soul Fysh",
-        "room_type": "Boss",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -7764,18 +6356,6 @@
         "id": "DRAIN_LIFE",
         "name": "Drain Life",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 2
-          },
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 18,
           "ascension": 19
@@ -7798,15 +6378,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SOUL_NEXUS_ELITE",
-        "encounter_name": "Soul Nexus",
-        "room_type": "Elite",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -7874,14 +6446,7 @@
       {
         "id": "HEX",
         "name": "Hex",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "HEX",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Debuff"
       },
       {
         "id": "SOUL_SLASH",
@@ -7915,15 +6480,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "KNIGHTS_ELITE",
-        "encounter_name": "Knight Gang",
-        "room_type": "Elite",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -7970,14 +6527,7 @@
       {
         "id": "PROTRUDING_SPIKES",
         "name": "Protruding Spikes",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "THORNS",
-            "target": "self",
-            "amount": 5
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "SPIKE_EXPLOSION",
@@ -8009,15 +6559,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SPINY_TOAD_NORMAL",
-        "encounter_name": "Spiny Toad",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -8060,13 +6602,6 @@
         "id": "STAB",
         "name": "Stab",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 11,
           "ascension": 12
@@ -8117,16 +6652,9 @@
         }
       },
       {
-        "id": "ThrashMove",
-        "name": "Thrashmove",
+        "id": "THRASH",
+        "name": "Thrash",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "VIGOR",
-            "target": "self",
-            "amount": 6
-          }
-        ],
         "damage": {
           "normal": 3,
           "ascension": 4,
@@ -8140,15 +6668,8 @@
       },
       {
         "id": "TERROR",
-        "name": "Terror",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 99
-          }
-        ]
+        "name": "Terrorize",
+        "intent": "Debuff"
       }
     ],
     "damage_values": {
@@ -8163,22 +6684,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TERROR_EEL_ELITE",
-        "encounter_name": "Terror Eel",
-        "room_type": "Elite",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "SHRIEK",
-        "amount": 70,
-        "amount_ascension": 75
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
       "initial_move": "CRASH",
@@ -8187,12 +6694,12 @@
           "id": "CRASH_MOVE",
           "type": "move",
           "move_id": "CRASH",
-          "next": "ThrashMove"
+          "next": "THRASH_MOVE"
         },
         {
-          "id": "ThrashMove",
+          "id": "THRASH_MOVE",
           "type": "move",
-          "move_id": "ThrashMove",
+          "move_id": "THRASH",
           "next": "CRASH_MOVE"
         },
         {
@@ -8208,7 +6715,7 @@
           "next": "CRASH_MOVE"
         }
       ],
-      "description": "Crash → Thrashmove → repeat"
+      "description": "Crash → Thrash → repeat"
     },
     "image_url": "/static/images/monsters/terror_eel.webp",
     "beta_image_url": null
@@ -8225,19 +6732,7 @@
       {
         "id": "RESPAWN",
         "name": "Respawn",
-        "intent": "Heal + Buff",
-        "powers": [
-          {
-            "power_id": "PAINFUL_STABS",
-            "target": "self",
-            "amount": 1
-          },
-          {
-            "power_id": "NEMESIS",
-            "target": "self",
-            "amount": 1
-          }
-        ]
+        "intent": "Heal + Buff"
       },
       {
         "id": "BITE",
@@ -8252,13 +6747,6 @@
         "id": "SKULL_BASH",
         "name": "Skull Bash",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "VULNERABLE",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 14,
           "ascension": 16
@@ -8266,7 +6754,7 @@
       },
       {
         "id": "MULTI_CLAW",
-        "name": "Multi Claw",
+        "name": "Multi-Claw",
         "intent": "Attack",
         "damage": {
           "normal": 10,
@@ -8275,7 +6763,7 @@
       },
       {
         "id": "PHASE3_LACERATE",
-        "name": "Phase3 Lacerate",
+        "name": "Lacerate",
         "intent": "Attack",
         "damage": {
           "normal": 10,
@@ -8294,14 +6782,7 @@
       {
         "id": "BURNING_GROWL",
         "name": "Burning Growl",
-        "intent": "Status + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Status + Buff"
       }
     ],
     "damage_values": {
@@ -8327,22 +6808,8 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TEST_SUBJECT_BOSS",
-        "encounter_name": "Test Subject",
-        "room_type": "Boss",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
-    "innate_powers": [
-      {
-        "power_id": "ENRAGE",
-        "amount": 2,
-        "amount_ascension": 3
-      }
-    ],
+    "encounters": null,
+    "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
       "initial_move": "BITE",
@@ -8369,10 +6836,10 @@
           "id": "PHASE3_LACERATE_MOVE",
           "type": "move",
           "move_id": "PHASE3_LACERATE",
-          "next": "BIG_POUNCE_MOVE"
+          "next": "BIG_POUNCE"
         },
         {
-          "id": "BIG_POUNCE_MOVE",
+          "id": "BIG_POUNCE",
           "type": "move",
           "move_id": "BIG_POUNCE",
           "next": "BURNING_GROWL_MOVE"
@@ -8405,7 +6872,7 @@
           ]
         }
       ],
-      "description": "Starts: Bite → Skull Bash; then conditional: Multi Claw (if Respawns < 2) / Phase3 Lacerate (if Respawns >= 2)"
+      "description": "Starts: Bite → Skull Bash; then conditional: Multi-Claw (if Respawns < 2) / Lacerate (if Respawns >= 2)"
     },
     "image_url": "/static/images/monsters/test_subject.webp",
     "beta_image_url": null
@@ -8439,13 +6906,6 @@
         "id": "BARRAGE",
         "name": "Barrage",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 8,
           "hit_count": 2
@@ -8524,13 +6984,6 @@
         "id": "BARRAGE",
         "name": "Barrage",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 4
-          }
-        ],
         "damage": {
           "normal": 10,
           "hit_count": 2
@@ -8609,13 +7062,6 @@
         "id": "BARRAGE",
         "name": "Barrage",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 9,
           "hit_count": 2
@@ -8678,13 +7124,6 @@
         "id": "MIASMA",
         "name": "Miasma",
         "intent": "Debuff + Defend + Buff",
-        "powers": [
-          {
-            "power_id": "DEXTERITY",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "block": 8
       },
       {
@@ -8695,15 +7134,7 @@
     ],
     "damage_values": null,
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_LOST_AND_FORGOTTEN_NORMAL",
-        "encounter_name": "Lost and Forgotten",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -8740,8 +7171,8 @@
         "intent": "Buff + Status"
       },
       {
-        "id": "THRASH_MOVE_1",
-        "name": "Thrash Move 1",
+        "id": "THRASH",
+        "name": "Thrash",
         "intent": "Attack",
         "damage": {
           "normal": 8,
@@ -8771,14 +7202,7 @@
       {
         "id": "SALIVATE",
         "name": "Salivate",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -8793,15 +7217,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_INSATIABLE_BOSS",
-        "encounter_name": "The Insatiable",
-        "room_type": "Boss",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -8811,19 +7227,19 @@
           "id": "LIQUIFY_GROUND_MOVE",
           "type": "move",
           "move_id": "LIQUIFY_GROUND",
-          "next": "THRASH_MOVE_1"
+          "next": "THRASH_MOVE"
         },
         {
-          "id": "THRASH_MOVE_1",
+          "id": "THRASH_MOVE",
           "type": "move",
-          "move_id": "THRASH_MOVE_1",
+          "move_id": "THRASH",
           "next": "LUNGING_BITE_MOVE"
         },
         {
           "id": "THRASH_MOVE_2",
           "type": "move",
           "move_id": "THRASH_MOVE_2",
-          "next": "THRASH_MOVE_1"
+          "next": "THRASH_MOVE"
         },
         {
           "id": "LUNGING_BITE_MOVE",
@@ -8838,7 +7254,7 @@
           "next": "THRASH_MOVE_2"
         }
       ],
-      "description": "Liquify Ground → Thrash Move 1 → Lunging Bite → Salivate → Thrash Move 2 → repeat"
+      "description": "Liquify Ground → Thrash → Lunging Bite → Salivate → Thrash Move 2 → repeat"
     },
     "image_url": "/static/images/monsters/the_insatiable.webp",
     "beta_image_url": null
@@ -8855,14 +7271,7 @@
       {
         "id": "DEBILITATING_SMOG",
         "name": "Debilitating Smog",
-        "intent": "Debuff + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Debuff + Buff"
       },
       {
         "id": "EYE_LASERS",
@@ -8883,15 +7292,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_LOST_AND_FORGOTTEN_NORMAL",
-        "encounter_name": "Lost and Forgotten",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -8963,15 +7364,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THE_OBSCURA_NORMAL",
-        "encounter_name": "The Obscura",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -9056,14 +7449,7 @@
       {
         "id": "FLUTTER",
         "name": "Flutter",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "FLUTTER",
-            "target": "self",
-            "amount": 5
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "ESCAPE",
@@ -9086,15 +7472,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "THIEVING_HOPPER_WEAK",
-        "encounter_name": "Thieving Hopper",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -9167,14 +7545,7 @@
       {
         "id": "SPIKEN",
         "name": "Spiken",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "THORNS",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -9189,15 +7560,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TOADPOLES_WEAK",
-        "encounter_name": "Toadpoles",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -9251,8 +7614,8 @@
     "max_hp_ascension": null,
     "moves": [
       {
-        "id": "TACKLE_1",
-        "name": "Tackle 1",
+        "id": "TACKLE",
+        "name": "Tackle",
         "intent": "Attack",
         "damage": {
           "normal": 18,
@@ -9313,24 +7676,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "QUEEN_BOSS",
-        "encounter_name": "Queen",
-        "room_type": "Boss",
-        "act": "Act 3 - Glory",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
-      "initial_move": "TACKLE_1",
+      "initial_move": "TACKLE",
       "states": [
         {
-          "id": "TACKLE_1_MOVE",
+          "id": "TACKLE_MOVE",
           "type": "move",
-          "move_id": "TACKLE_1",
+          "move_id": "TACKLE",
           "next": "TACKLE_2_MOVE"
         },
         {
@@ -9358,7 +7713,7 @@
           "next": "BEAM_MOVE"
         }
       ],
-      "description": "Tackle 1 → Tackle 2 → Beam → Tackle 3 → Tackle 4 → repeat"
+      "description": "Tackle → Tackle 2 → Beam → Tackle 3 → Tackle 4 → repeat"
     },
     "image_url": "/static/images/monsters/amalgam.webp",
     "beta_image_url": null
@@ -9394,15 +7749,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "OVICOPTER_NORMAL",
-        "encounter_name": "Ovicopter",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -9436,14 +7783,7 @@
       {
         "id": "TRACK",
         "name": "Track",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 2
-          }
-        ]
+        "intent": "Debuff"
       },
       {
         "id": "HOUNDS",
@@ -9465,15 +7805,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "RUBY_RAIDERS_NORMAL",
-        "encounter_name": "Ruby Raiders",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -9517,18 +7849,11 @@
         "id": "BURROW",
         "name": "Burrow",
         "intent": "Buff + Defend",
-        "powers": [
-          {
-            "power_id": "BURROWED",
-            "target": "self",
-            "amount": 1
-          }
-        ],
         "block": 32
       },
       {
-        "id": "BELOW_MOVE_1",
-        "name": "Below Move 1",
+        "id": "BELOW",
+        "name": "Attack from Below",
         "intent": "Attack",
         "damage": {
           "normal": 23,
@@ -9552,22 +7877,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TUNNELER_NORMAL",
-        "encounter_name": "Tunneling Twosome",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      },
-      {
-        "encounter_id": "TUNNELER_WEAK",
-        "encounter_name": "Tunneler",
-        "room_type": "Monster",
-        "act": "Act 2 - Hive",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -9583,13 +7893,13 @@
           "id": "BURROW_MOVE",
           "type": "move",
           "move_id": "BURROW",
-          "next": "BELOW_MOVE_1"
+          "next": "BELOW_MOVE"
         },
         {
-          "id": "BELOW_MOVE_1",
+          "id": "BELOW_MOVE",
           "type": "move",
-          "move_id": "BELOW_MOVE_1",
-          "next": "BELOW_MOVE_1"
+          "move_id": "BELOW",
+          "next": "BELOW_MOVE"
         },
         {
           "id": "DIZZY_MOVE",
@@ -9598,7 +7908,7 @@
           "next": "BITE_MOVE"
         }
       ],
-      "description": "Bite → Burrow → Below Move 1 → repeat"
+      "description": "Bite → Burrow → Attack from Below → repeat"
     },
     "image_url": "/static/images/monsters/tunneler.webp",
     "beta_image_url": null
@@ -9613,8 +7923,8 @@
     "max_hp_ascension": null,
     "moves": [
       {
-        "id": "UNLOAD_MOVE_1",
-        "name": "Unload Move 1",
+        "id": "UNLOAD",
+        "name": "Unload!",
         "intent": "Attack",
         "damage": {
           "normal": 3,
@@ -9635,14 +7945,7 @@
       {
         "id": "RELOAD",
         "name": "Reload",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 1
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -9653,24 +7956,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TURRET_OPERATOR_WEAK",
-        "encounter_name": "Turret Operator",
-        "room_type": "Monster",
-        "act": "Act 3 - Glory",
-        "is_weak": true
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
-      "initial_move": "UNLOAD_MOVE_1",
+      "initial_move": "UNLOAD",
       "states": [
         {
-          "id": "UNLOAD_MOVE_1",
+          "id": "UNLOAD_MOVE",
           "type": "move",
-          "move_id": "UNLOAD_MOVE_1",
+          "move_id": "UNLOAD",
           "next": "UNLOAD_MOVE_2"
         },
         {
@@ -9683,10 +7978,10 @@
           "id": "RELOAD_MOVE",
           "type": "move",
           "move_id": "RELOAD",
-          "next": "UNLOAD_MOVE_1"
+          "next": "UNLOAD_MOVE"
         }
       ],
-      "description": "Unload Move 1 → Unload Move 2 → Reload → repeat"
+      "description": "Unload! → Unload Move 2 → Reload → repeat"
     },
     "image_url": "/static/images/monsters/turret_operator.webp",
     "beta_image_url": null
@@ -9701,8 +7996,8 @@
     "max_hp_ascension": 29,
     "moves": [
       {
-        "id": "CLUMP_SHOT",
-        "name": "Clump Shot",
+        "id": "POKEY_POUNCE",
+        "name": "Pokey Pounce",
         "intent": "Attack",
         "damage": {
           "normal": 11,
@@ -9722,45 +8017,16 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "FLYCONID_NORMAL",
-        "encounter_name": "Shroom and Slime",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLIMES_NORMAL",
-        "encounter_name": "Swarm of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLIMES_WEAK",
-        "encounter_name": "Group of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      },
-      {
-        "encounter_id": "SLITHERING_STRANGLER_NORMAL",
-        "encounter_name": "Strangler and Friend",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
       "initial_move": "STICKY_SHOT",
       "states": [
         {
-          "id": "CLUMP_SHOT_MOVE",
+          "id": "POKEY_POUNCE_MOVE",
           "type": "move",
-          "move_id": "CLUMP_SHOT",
+          "move_id": "POKEY_POUNCE",
           "next": "RAND"
         },
         {
@@ -9795,8 +8061,8 @@
     "max_hp_ascension": 12,
     "moves": [
       {
-        "id": "BUTT",
-        "name": "Butt",
+        "id": "TACKLE",
+        "name": "Tackle",
         "intent": "Attack",
         "damage": {
           "normal": 4,
@@ -9811,42 +8077,20 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "SLIMES_NORMAL",
-        "encounter_name": "Swarm of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      },
-      {
-        "encounter_id": "SLIMES_WEAK",
-        "encounter_name": "Group of Slimes",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": true
-      },
-      {
-        "encounter_id": "SLITHERING_STRANGLER_NORMAL",
-        "encounter_name": "Strangler and Friend",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
-      "initial_move": "BUTT",
+      "initial_move": "TACKLE",
       "states": [
         {
-          "id": "BUTT_MOVE",
+          "id": "TACKLE_MOVE",
           "type": "move",
-          "move_id": "BUTT",
-          "next": "BUTT_MOVE"
+          "move_id": "TACKLE",
+          "next": "TACKLE_MOVE"
         }
       ],
-      "description": "Always uses Butt"
+      "description": "Always uses Tackle"
     },
     "image_url": "/static/images/monsters/twig_slime_s.webp",
     "beta_image_url": null
@@ -9881,14 +8125,7 @@
       {
         "id": "SCREECH",
         "name": "Screech",
-        "intent": "Debuff",
-        "powers": [
-          {
-            "power_id": "FRAIL",
-            "target": "player",
-            "amount": 1
-          }
-        ]
+        "intent": "Debuff"
       },
       {
         "id": "CALL_FOR_BACKUP",
@@ -9907,15 +8144,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "TWO_TAILED_RATS_NORMAL",
-        "encounter_name": "Two-Tailed Rats",
-        "room_type": "Monster",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "random",
@@ -9994,21 +8223,14 @@
         "name": "Dismember",
         "intent": "Attack + Status",
         "damage": {
-          "normal": 27,
+          "normal": 26,
           "ascension": 30
         }
       },
       {
         "id": "PREPARE",
         "name": "Prepare",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff"
       }
     ],
     "damage_values": {
@@ -10022,20 +8244,12 @@
         "hit_count": 2
       },
       "Dismember": {
-        "normal": 27,
+        "normal": 26,
         "ascension": 30
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "VANTOM_BOSS",
-        "encounter_name": "Vantom",
-        "room_type": "Boss",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -10084,13 +8298,6 @@
         "id": "GRASPING_VINES",
         "name": "Grasping Vines",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "TANGLED",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -10132,15 +8339,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "VINE_SHAMBLER_NORMAL",
-        "encounter_name": "Vine Shambler",
-        "room_type": "Monster",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -10182,31 +8381,12 @@
       {
         "id": "PRESSURIZE",
         "name": "Pressurize",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STEAM_ERUPTION",
-            "target": "self",
-            "amount": 15
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "STOMP",
         "name": "Stomp",
         "intent": "Attack + Debuff + Buff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          },
-          {
-            "power_id": "STEAM_ERUPTION",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 15,
           "ascension": 16
@@ -10216,13 +8396,6 @@
         "id": "RAM",
         "name": "Ram",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STEAM_ERUPTION",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 10,
           "ascension": 11
@@ -10231,38 +8404,17 @@
       {
         "id": "SIPHON",
         "name": "Siphon",
-        "intent": "Heal + Buff",
-        "powers": [
-          {
-            "power_id": "STEAM_ERUPTION",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Heal + Buff"
       },
       {
         "id": "PRESSURE_GUN",
         "name": "Pressure Gun",
-        "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STEAM_ERUPTION",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Attack + Buff"
       },
       {
         "id": "PRESSURE_UP",
         "name": "Pressure Up",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STEAM_ERUPTION",
-            "target": "self",
-            "amount": 3
-          }
-        ],
         "damage": {
           "normal": 13,
           "ascension": 14
@@ -10270,7 +8422,7 @@
       },
       {
         "id": "ABOUT_TO_BLOW",
-        "name": "About To Blow",
+        "name": "About to Blow",
         "intent": "Stun"
       },
       {
@@ -10298,15 +8450,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "WATERFALL_GIANT_BOSS",
-        "encounter_name": "Waterfall Giant",
-        "room_type": "Boss",
-        "act": "Underdocks",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "cycle",
@@ -10388,14 +8532,7 @@
       {
         "id": "WRIGGLE",
         "name": "Wriggle",
-        "intent": "Buff + Status",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ]
+        "intent": "Buff + Status"
       },
       {
         "id": "SPAWNED",
@@ -10410,22 +8547,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "DENSE_VEGETATION_EVENT_ENCOUNTER",
-        "encounter_name": "Wrigglers",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      },
-      {
-        "encounter_id": "PHROG_PARASITE_ELITE",
-        "encounter_name": "Phrog Parasite",
-        "room_type": "Elite",
-        "act": "Act 1 - Overgrowth",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "innate_powers": null,
     "attack_pattern": {
       "type": "conditional",
@@ -10544,13 +8666,6 @@
         "id": "BULK",
         "name": "Bulk",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7
@@ -10560,13 +8675,6 @@
         "id": "CONSTRICT",
         "name": "Constrict",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -10599,15 +8707,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "DECIMILLIPEDE_ELITE",
-        "encounter_name": "The Decimillipede",
-        "room_type": "Elite",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "image_url": "/static/images/monsters/decimillipede_segment_back.webp"
   },
   {
@@ -10633,13 +8733,6 @@
         "id": "BULK",
         "name": "Bulk",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7
@@ -10649,13 +8742,6 @@
         "id": "CONSTRICT",
         "name": "Constrict",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -10688,15 +8774,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "DECIMILLIPEDE_ELITE",
-        "encounter_name": "The Decimillipede",
-        "room_type": "Elite",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "image_url": "/static/images/monsters/decimillipede_segment_front.webp"
   },
   {
@@ -10722,13 +8800,6 @@
         "id": "BULK",
         "name": "Bulk",
         "intent": "Attack + Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 2
-          }
-        ],
         "damage": {
           "normal": 6,
           "ascension": 7
@@ -10738,13 +8809,6 @@
         "id": "CONSTRICT",
         "name": "Constrict",
         "intent": "Attack + Debuff",
-        "powers": [
-          {
-            "power_id": "WEAK",
-            "target": "player",
-            "amount": 1
-          }
-        ],
         "damage": {
           "normal": 8,
           "ascension": 9
@@ -10777,15 +8841,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "DECIMILLIPEDE_ELITE",
-        "encounter_name": "The Decimillipede",
-        "room_type": "Elite",
-        "act": "Act 2 - Hive",
-        "is_weak": false
-      }
-    ],
+    "encounters": null,
     "image_url": "/static/images/monsters/decimillipede_segment_middle.webp"
   },
   {
@@ -10800,14 +8856,7 @@
       {
         "id": "WAR_CHANT",
         "name": "War Chant",
-        "intent": "Buff",
-        "powers": [
-          {
-            "power_id": "STRENGTH",
-            "target": "self",
-            "amount": 3
-          }
-        ]
+        "intent": "Buff"
       },
       {
         "id": "FLAIL",
@@ -10841,25 +8890,7 @@
       }
     },
     "block_values": null,
-    "encounters": [
-      {
-        "encounter_id": "MYSTERIOUS_KNIGHT_EVENT_ENCOUNTER",
-        "encounter_name": "Mysterious Knight",
-        "room_type": "Monster",
-        "act": null,
-        "is_weak": false
-      }
-    ],
-    "image_url": "/static/images/monsters/flail_knight.webp",
-    "innate_powers": [
-      {
-        "power_id": "STRENGTH",
-        "amount": 6
-      },
-      {
-        "power_id": "PLATING",
-        "amount": 6
-      }
-    ]
+    "encounters": null,
+    "image_url": "/static/images/monsters/flail_knight.webp"
   }
 ]

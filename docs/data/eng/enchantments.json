@@ -222,8 +222,8 @@
   {
     "id": "TEZCATARAS_EMBER",
     "name": "Tezcatara's Ember",
-    "description": "Costs [blue]0[/blue] and gains [gold]Eternal[/gold].",
-    "description_raw": null,
+    "description": "Costs [blue]0[/blue], deals [blue]3[/blue] additional damage, and gains [gold]Eternal[/gold].",
+    "description_raw": "Costs [blue]0[/blue], deals [blue]{Damage}[/blue] additional damage, and gains [gold]Eternal[/gold].",
     "extra_card_text": null,
     "card_type": null,
     "applicable_to": null,

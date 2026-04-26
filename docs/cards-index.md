@@ -6,6 +6,8 @@ This directory holds two layers of agent reference:
 
 Structured JSON vendored from [spire-codex](https://github.com/ptrlrd/spire-codex) (see [`data/ATTRIBUTION.md`](data/ATTRIBUTION.md)). Authoritative for every stat: costs, damage, HP, intents, scaling, descriptions, upgrades, powers applied, keywords.
 
+**Current game version:** 0.104.0 (2026-04-23). See [`data/changelogs/0.104.0.json`](data/changelogs/0.104.0.json) for the v0.103.2 → v0.104.0 patch notes (308 changed entries; reworks: Conflagration, Drum of Battle, Parry/Sovereign Blade; new badges; ancient buff scaling).
+
 Read [`data/README.md`](data/README.md) for a file-by-file schema guide.
 
 ## 2. Curated strategy & runbook
