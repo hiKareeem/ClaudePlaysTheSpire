@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.1.3 — 2026-04-26
+
+StS2 v0.104.0 compat patch + game-data refresh + SpireBench scaffolding.
+
+### Bridge fixes
+
+- **StS2 v0.104.0 compatibility.** Game v0.104.0 broke `Creature.CombatState` access (returned `null`/threw). Added `BridgeStateExtractor.SafeGetCombatState(room, player)` which prefers `room?.CombatState` and swallows `MissingMethodException` / `NullReferenceException` from the legacy `player?.Creature?.CombatState` fallback. All three call sites in `BridgeCommandDispatcher` (EndTurn guard, PlayCard `targetIndex` resolution, UsePotion `targetIndex` resolution) and `BuildCombatState` in the extractor route through it. Smoke-tested end-to-end: StartRun → Map → Combat → PlayCard → EndTurn against retail v0.104.0.
+
+### Reference
+
+- **Game data refreshed for v0.104.0.** Re-vendored `docs/data/eng/` from spire-codex upstream against game v0.104.0. 308 changed entries vs v0.103.2; reworks include Conflagration, Drum of Battle, Parry/Sovereign Blade. New badges and ancient buff scaling. Buff count 206 → 207. Per-patch diff archived at `docs/data/changelogs/0.104.0.json` for forward-looking agents.
+- **Mega Crit non-objection on record.** New `docs/data/megacrit-statement.md` archives an on-record statement from Casey Yano (co-founder, Mega Crit Games) on the `ClaudePlaysTheSpire` Twitch channel (2026-04-26): "I can't deny robots from playing the game." `docs/data/ATTRIBUTION.md` adds a non-objection paragraph. This is a non-objection, not a license, partnership, or endorsement.
+
+### Agent guidance
+
+- **AGENTS.md hardened.** `docs/data/README.md` is now required reading step 4 ahead of `verified-flows/` and `gauntlet-findings.md`. New explicit rule: always check JSON before quoting a number; field names are `snake_case` (`description_raw`, `hit_count`, `power_type`); powers use `type: "Buff" | "Debuff"`. When curated markdown predates the current changelog entry, JSON wins on stats and the markdown is advisory only.
+- **SKILL.md choice-screen potion flow corrected.** Replaced the misleading "Skill Potion silently adds a random Skill card" line with the real flow: choice-screen potions (Skill / Fire / Power / Colorless / Orobic Acid) open `chooseACardScreen`, follow up with `ChooseACard cardIndex=N`. Occasional wedge requires `DiscardPotion`. Pre-flight check `state.chooseACardScreen.active`. Expanded `Purchase` category list to include all real type strings the dispatcher accepts.
+- **bridge-protocol-notes.md** new bullets in §Refresh-lag quirks: choice-screen wedge detection, stale `state.combat` after `StartRun`, mid-combat upgrade numeric-field lag (trust `currentUpgradeLevel`/`isUpgraded` over `damage`/`block`). §Combat lifecycle: gate `EndTurn` on `combat != null && screen.name == "Combat"`.
+- **gauntlet-findings.md frozen as off-limits archive.** The file is now off-limits to trial agents and is no longer shipped in the release zip. The accumulated runbook is the dependent variable in any benchmark trial; including it under required reading contaminates zero-shot conditions. Trial-v0 agents are pointed at `SKILL.md`, `bridge-protocol-notes.md`, and the SpireBench protocol's allowed-reading list instead.
+
+### SpireBench (new)
+
+- **`docs/benchmark/protocol.md`** — full benchmark spec for autonomous LLM agents playing unmodified retail StS2 via HermesBridge. Trial-v0 measures the **A0-zero-shot** knowledge condition: each run is a fresh OpenCode session, no MemPalace, no sub-agent spawning, no web search, no training-recall coaching. Strategy and accumulated learning are off-limits to the agent. Covers: agent contract, trial parameters table, run-record YAML schema (with `tokens_in/out/cache_read/cache_write` and `opencode_session_id`), halt-reason enum (`death | victory | runcap | error_streak | stall | rate_limit | manual`), operator responsibilities pre/during/post-run, forbidden operator actions, allowed/disallowed reading and tool whitelists.
+- **`docs/benchmark/opencode.benchmark.json`** — reference sandbox `opencode.json` for trial-v0 runs. Strips all MCP servers (mempalace, context7, sequential-thinking, vscode-mcp, VibeUE), denies `webfetch` and `task` (sub-agents). Operator copies this over the normal config (with backup) for benchmark sessions.
+- **`docs/benchmark/runs.csv`** — 29-column run-record CSV header (one row per completed run).
+- **`tools/get-session-tokens.ps1`** — aggregates `step-finish` token counts from OpenCode's local SQLite session DB into 4 YAML-ready lines for the run record. Tries `System.Data.SQLite` first, falls back to `sqlite3.exe` on PATH.
+
+### Tooling
+
+- **Tooling triage.** Lands the dump-state / dump-hand / dump-map state-inspection scripts agents have been using during gauntlets. `run-cmd.ps1` now uses `$PSScriptRoot` instead of a hardcoded absolute path (works for anyone cloning). Removed stale `dump-combat.ps1` (used the obsolete state shape — `state.combat.hand` instead of `hand.cards`, `enemy.hp` instead of `currentHp`). `__pycache__/` and `*.pyc` gitignored.
+
+### Packaging
+
+- Manifest bumped to `v0.1.3`.
+- Release zip adds `docs/data/changelogs/`, `docs/data/megacrit-statement.md`, `docs/benchmark/`, and `tools/get-session-tokens.ps1`. Drops `docs/gauntlet-findings.md` and `docs/autopilot-session-*.md` (off-limits / maintainer-only).
+
 ## v0.1.2 — 2026-04-23
 
 Documentation and reference-material release. No code changes.

@@ -141,7 +141,7 @@ folder; agents get the rest in-place without cloning the repo.
 
 ```powershell
 $root    = $PSScriptRoot  # repo root
-$version = '0.1.1'
+$version = '0.1.3'
 $mods    = "E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\HermesBridge"
 $stage   = Join-Path $root "_nexus_staging\HermesBridge-v$version"
 
@@ -164,10 +164,19 @@ $docs = @(
 )
 foreach ($d in $docs) { Copy-Item "$root\docs\$d" "$stage\docs\" }
 
-# Mechanical ground truth (spire-codex JSON snapshot)
-New-Item -ItemType Directory -Force "$stage\docs\data\eng" | Out-Null
-Copy-Item "$root\docs\data\ATTRIBUTION.md","$root\docs\data\README.md" "$stage\docs\data\"
+# Mechanical ground truth (spire-codex JSON snapshot + per-patch changelogs + Mega Crit non-objection)
+New-Item -ItemType Directory -Force "$stage\docs\data\eng","$stage\docs\data\changelogs" | Out-Null
+Copy-Item "$root\docs\data\ATTRIBUTION.md","$root\docs\data\README.md","$root\docs\data\megacrit-statement.md" "$stage\docs\data\"
 Copy-Item "$root\docs\data\eng\*.json" "$stage\docs\data\eng\"
+Copy-Item "$root\docs\data\changelogs\*.json" "$stage\docs\data\changelogs\"
+
+# SpireBench (zero-shot benchmark scaffolding)
+New-Item -ItemType Directory -Force "$stage\docs\benchmark" | Out-Null
+Copy-Item "$root\docs\benchmark\protocol.md","$root\docs\benchmark\runs.csv","$root\docs\benchmark\opencode.benchmark.json" "$stage\docs\benchmark\"
+
+# NOT shipped: docs/gauntlet-findings.md (off-limits to trial agents),
+# docs/autopilot-session-*.md (maintainer-only run logs),
+# docs/benchmark/blog-draft.md (in-progress write-up).
 
 $zip = Join-Path $root "HermesBridge-v$version.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
