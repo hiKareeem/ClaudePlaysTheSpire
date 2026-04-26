@@ -41,6 +41,29 @@ internal static class BridgeStateExtractor
         try { return $"{id.Category}:{id.Entry}"; } catch { return "<err>"; }
     }
 
+    /// <summary>
+    /// Safely obtain CombatState. The game removed Creature.CombatState in a
+    /// recent patch; this helper catches MissingMethodException and falls back
+    /// gracefully. Prefer room?.CombatState as the primary source.
+    /// </summary>
+    public static CombatState? SafeGetCombatState(CombatRoom? room, Player? player)
+    {
+        if (room?.CombatState is CombatState cs)
+            return cs;
+        try
+        {
+            return player?.Creature?.CombatState as CombatState;
+        }
+        catch (MissingMethodException)
+        {
+            return null;
+        }
+        catch (NullReferenceException)
+        {
+            return null;
+        }
+    }
+
     public static string? SafeLocString(LocString? s)
     {
         if (s is null) return null;
@@ -997,7 +1020,7 @@ internal static class BridgeStateExtractor
         try
         {
             var pcs = player?.PlayerCombatState;
-            var combatState = room?.CombatState ?? player?.Creature?.CombatState;
+            var combatState = SafeGetCombatState(room, player);
             EmitOrbDiagnostic(combatState, player);
 
             var enemies = new List<object>();

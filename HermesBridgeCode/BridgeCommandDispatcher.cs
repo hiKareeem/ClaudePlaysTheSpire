@@ -122,7 +122,7 @@ internal static class BridgeCommandDispatcher
             }
         }
 
-        var combatState = BridgeSingleton.CurrentCombatRoom?.CombatState ?? player.Creature?.CombatState;
+        var combatState = BridgeStateExtractor.SafeGetCombatState(BridgeSingleton.CurrentCombatRoom, player);
 
         if (command.TryGetProperty("expectedCurrentSide", out var expectedSideEl) && expectedSideEl.ValueKind == JsonValueKind.String)
         {
@@ -218,7 +218,7 @@ internal static class BridgeCommandDispatcher
         else if (command.TryGetProperty("targetIndex", out var tgtIdxEl) && tgtIdxEl.ValueKind == JsonValueKind.Number)
         {
             var tgtIndex = tgtIdxEl.GetInt32();
-            var combatState = BridgeSingleton.CurrentCombatRoom?.CombatState ?? player.Creature?.CombatState;
+            var combatState = BridgeStateExtractor.SafeGetCombatState(BridgeSingleton.CurrentCombatRoom, player);
             var enemies = combatState?.Enemies;
             if (enemies is null || tgtIndex < 0 || tgtIndex >= enemies.Count)
             {
@@ -1954,7 +1954,7 @@ internal static class BridgeCommandDispatcher
         else if (command.TryGetProperty("targetIndex", out var tgtIdxEl) && tgtIdxEl.ValueKind == JsonValueKind.Number)
         {
             var tgtIndex = tgtIdxEl.GetInt32();
-            var combatState = BridgeSingleton.CurrentCombatRoom?.CombatState ?? player.Creature?.CombatState;
+            var combatState = BridgeStateExtractor.SafeGetCombatState(BridgeSingleton.CurrentCombatRoom, player);
             var enemies = combatState?.Enemies;
             if (enemies is null || tgtIndex < 0 || tgtIndex >= enemies.Count)
             {

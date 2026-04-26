@@ -45,3 +45,12 @@ entities.json
 chroma.sqlite3
 # ChromaDB HNSW segment folders (UUID-named, created next to chroma.sqlite3)
 [0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f]-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]/
+
+# Live stream overlay output (local-only, per-session)
+tools/_stream/
+tools/stream_overlay.py
+
+# Python bytecode cache
+__pycache__/
+*.pyc
+
