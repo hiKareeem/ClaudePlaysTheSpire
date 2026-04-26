@@ -176,13 +176,16 @@ For the v0 trial, runs are configured along these axes:
 Each model is expected to complete **one run per character at A0** for the
 v0 trial = 5 runs/model. Models under evaluation in trial-v0:
 
-- `claude-opus-4.7` (frontier, control)
-- `gpt-5.2-high`
-- `gemini-3-pro`
-- `claude-sonnet-4.5` (mid-tier, expected separation)
-- `gpt-5-mini` (mid-tier)
+- `claude-opus-4.7` (frontier, control — closed-weights)
+- `gpt-5.5` (frontier — closed-weights)
+- `gemini-3.1-pro` (frontier — closed-weights)
+- `glm-5.1` (frontier — open-weights)
+- `deepseek-v3.5` (frontier — open-weights, free tier)
 
-Total: 5 models × 5 characters = 25 runs.
+Total: 5 models × 5 characters = 25 runs. Lineup is 3 closed-weights vs.
+2 open-weights to support the closed-vs-open frontier comparison; the
+mid-tier hypothesis (frontier clears Act 1, mid-tier dies F1-4) is
+deferred to trial-v1.
 
 Optional add: 10 additional Opus 4.7 runs (2 per character, distinct
 sessions) to characterize within-model variance for the control. Total
@@ -229,8 +232,13 @@ final_hp: 0
 final_gold: 247
 tokens_in: null             # raw input tokens, OpenCode SQLite step-finish.tokens.input summed by session_id
 tokens_out: null            # raw output tokens, .tokens.output summed
-tokens_cache_read: null     # .tokens.cacheRead summed (Anthropic cache reads ≈ 10% of new-input price)
-tokens_cache_write: null    # .tokens.cacheWrite summed
+tokens_cache_read: null     # .tokens.cache.read summed (Anthropic cache reads ≈ 10% of new-input price)
+tokens_cache_write: null    # .tokens.cache.write summed
+tokens_reasoning: null      # .tokens.reasoning summed (reasoning models only)
+tokens_total: null          # .tokens.total summed
+cost_usd: null              # .cost summed (when populated by provider)
+wall_seconds: null          # max(time_updated) - min(time_created) across session parts
+step_finish_count: null     # number of step-finish parts in the session
 ---
 ```
 
@@ -375,13 +383,15 @@ does not have reliable access):
 
 1. `opencode_session_id`, `start_time_utc`, `end_time_utc`,
    `duration_minutes`, `model`, `model_provider`.
-2. `tokens_in`, `tokens_out`, `tokens_cache_read`, `tokens_cache_write` —
-   read directly from the OpenCode SQLite session DB at
-   `~/.local/share/opencode/opencode.db`. Aggregate
-   `part.data.tokens.{input,output,cacheRead,cacheWrite}` over all
-   `step-finish` parts for the run's `session_id`. Helper:
-   `tools/get-session-tokens.ps1 -SessionId <ses_xxx>` outputs the four
-   YAML lines directly.
+2. `tokens_in`, `tokens_out`, `tokens_cache_read`, `tokens_cache_write`,
+   `tokens_reasoning`, `tokens_total`, `cost_usd`, `wall_seconds`,
+   `step_finish_count` — read directly from the OpenCode SQLite session
+   DB at `~/.local/share/opencode/opencode.db`. Aggregate
+   `part.data.tokens.{input,output,reasoning,total}` plus
+   `tokens.cache.{read,write}` over all `step-finish` parts for the
+   run's `session_id`. Helper:
+   `tools/get-session-tokens.ps1 -SessionId <ses_xxx>` outputs the
+   nine YAML lines directly.
 3. `command_count`, `ipc_error_count`, `stall_count` — count from
    `trace.log` or the agent's session transcript.
 
