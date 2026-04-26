@@ -138,6 +138,7 @@ Start here:
 |---|---|
 | `docs/bridge-protocol-notes.md` | IPC file layout, screen names, triggers, state-payload shape, command gotchas, known refresh lags. **Read in full.** |
 | `docs/hermes-sts2-runbook.md` | Launch sequence, failure modes, recovery. |
+| `docs/data/README.md` → `docs/data/eng/*.json` | Authoritative game data (vendored spire-codex, v0.104.0). Cards / relics / potions / powers / monsters / events / encounters / etc. **Use this for any stat lookup. Do not recall stats from memory.** |
 | `docs/session-bugs-2026-04-20.md` | Current known-bug inventory. Skim; do not try to fix. |
 | `autopilot-lib.ps1` | Helper library (IPC primitives only — no policy, no loop). Dot-source it and drive yourself. |
 | `HermesBridgeCode/BridgeCommandDispatcher.cs` | Authoritative command list + parameter names — grep `case "..."` near line 47-80. |
@@ -356,7 +357,7 @@ This is what you'll need to finish a run.
 | `ReturnToMenu` | — | From GameOver (usually auto). |
 | `PlayCard` | `handIndex`; `targetIndex` if card targets an enemy | OMIT `targetIndex` on self/untargeted. |
 | `EndTurn` | — | Optionally `expectedRevision`/`expectedScreen`/`expectedCurrentSide`/`expectedRoundNumber` for guarded replay safety. |
-| `UsePotion` | `slotIndex`; `targetIndex` for attack potions | `targetSelf:true` or omit for self. **Fire Potion, Explosive Potion, and any damage potion require `targetIndex`** — without it the command returns `ok` but stalls awaiting a UI target pick and no damage fires. Self-targeted potions (TargetType `Player` **or `Self`** — e.g. Distilled Chaos) now resolve the player as the target automatically (bug Pw1 fixed 2026-04-22; previously only the `Player` substring matched, so `Self` potions silently stalled). After `UsePotion`, always re-read hand: Skill Potion silently adds a random Skill card, Distilled Chaos auto-plays the top N of your draw pile (may open a HandSelect modal mid-sequence if one of those cards is e.g. Armaments — see HandSelect below). |
+| `UsePotion` | `slotIndex`; `targetIndex` for attack potions | `targetSelf:true` or omit for self. **Fire Potion, Explosive Potion, and any damage potion require `targetIndex`** — without it the command returns `ok` but stalls awaiting a UI target pick and no damage fires. Self-targeted potions (TargetType `Player` **or `Self`** — e.g. Distilled Chaos) now resolve the player as the target automatically (bug Pw1 fixed 2026-04-22; previously only the `Player` substring matched, so `Self` potions silently stalled). After `UsePotion`, always re-read hand: Distilled Chaos auto-plays the top N of your draw pile (may open a HandSelect modal mid-sequence if one of those cards is e.g. Armaments — see HandSelect below). **Choice-screen potions** (Skill / Fire / Power / Colorless / Orobic Acid) open a `chooseACardScreen` modal — follow up with `ChooseACard cardIndex=N` to commit. Modal occasionally fails to open and `state.json` shows the slot consumed but no `chooseACardScreen` payload appears; the slot is wedged. Workaround: `DiscardPotion`. Pre-flight: after `UsePotion`, wait one revision and check `state.chooseACardScreen.active`. |
 | `DiscardPotion` | `slotIndex` | |
 | `SelectReward` | `rewardPosition` (preferred, = `rewards[i].position`) OR `rewardIndex` (legacy, = `rewards[i].index` / `RewardsSetIndex`) | `index` is **not** unique when multiple rewards come from the same set (e.g. event-procured potions) — pass `rewardPosition` in those cases. Returns `error` if the game refuses the claim (e.g. potion inventory full). |
 | `SkipReward` | `rewardPosition` (preferred) OR `rewardIndex` (legacy) | Works for Gold / Potion / Relic / Card. No per-kind variants exist. |
@@ -370,7 +371,7 @@ This is what you'll need to finish a run.
 | `ChooseACard` | `cardIndex` | |
 | `HandSelectCard` | `handIndex` | Active when `handSelect.active=true`. **Modes differ**: in `SimpleSelect` (e.g. Brand's exhaust-a-card, discard-N prompts) picking a card **auto-commits** — the modal closes on the spot; a subsequent `HandConfirmSelect` returns `error: hand is not in card selection mode`. In `UpgradeSelect` (e.g. Armaments) the pick only *selects*; the modal stays open until you send `HandConfirmSelect` (or `HandCancelSelect`). Check `handSelect.mode` before deciding whether to follow up with Confirm. |
 | `HandConfirmSelect` / `HandCancelSelect` | — | Required only for `UpgradeSelect` mode; no-op/error otherwise (see above). |
-| `Purchase` | `category` ("character"/"colorless"/"potion"/"relic"), `index` | |
+| `Purchase` | `category` ("character_card"/"colorless_card"/"potion"/"relic"; legacy aliases "character"/"colorless"/"charactercard"/"colorlesscard" also accepted), `index` | |
 | `PurchaseCardRemoval` | — | |
 | `LeaveShop` | — | |
 | `OpenChest` | — | |
