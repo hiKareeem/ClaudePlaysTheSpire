@@ -398,12 +398,24 @@ does not have reliable access):
    nine YAML lines directly.
 3. `command_count`, `ipc_error_count`, `stall_count` — count from
    `trace.log` or the agent's session transcript.
-4. **Append a row to `docs/benchmark/runs.csv`.** Column order is the
-   single header line in that file (35 columns, matching the YAML
-   front-matter field order plus the operator-filled token fields).
-   Empty fields are written as a bare comma (no quotes, no `null`
-   token); the analysis script (`tools/spirebench-summary.py`) treats
-   empty cells as `NaN`.
+4. **Append a row to `docs/benchmark/runs.csv` via the helper.** Run
+
+   ```
+   tools\append-run-csv.ps1 -RunId <run_id>
+   ```
+
+   The helper reads the run record's YAML front-matter, calls
+   `get-session-tokens.ps1` to fill any null token / wall_seconds /
+   cost_usd / step_finish_count fields from the OpenCode session DB,
+   patches those values back into the front-matter (so the `.md` and
+   `.csv` stay in lockstep), and appends a properly-quoted row to
+   `runs.csv` in the exact column order of the existing 35-column
+   header. The `seed` field is force-quoted to dodge spreadsheet
+   scientific-notation rounding. Empty / null fields are written as
+   a bare comma; `tools/spirebench-summary.py` treats empty cells as
+   `NaN`. The helper refuses to append a duplicate `run_id`. Do **not**
+   hand-edit `runs.csv` — column order drift is the most common
+   source of bad rows.
 
 ### Forbidden operator actions
 

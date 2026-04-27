@@ -174,31 +174,37 @@ Before pasting the prompt above, the operator must:
 When the run ends (death, victory, stall, rate-limit, error-streak,
 runcap, or manual halt):
 
-1. Note `end_time_utc` (now).
-2. Run `tools\get-session-tokens.ps1 -SessionId <ses_xxx>` and paste
-   the YAML lines into the run record's front-matter.
-3. Fill operator-filled fields per protocol.md §Operator
-   responsibilities (`opencode_session_id`, times, duration,
-   `model`, `model_provider`).
-4. **Snapshot floor-history.** Copy
+1. Note `end_time_utc` (now, in UTC — not local time).
+2. Fill operator-filled fields per protocol.md §Operator
+   responsibilities: `opencode_session_id` (the OpenCode session id,
+   format `ses_<27-char-base32>`, **not** the upstream provider's
+   session id), `start_time_utc` / `end_time_utc` (both UTC),
+   `duration_minutes`, `model`, `model_provider`.
+3. **Snapshot floor-history.** Copy
    `%APPDATA%\SlayTheSpire2\hermesbridge\floor-history.jsonl` to
    `docs\benchmark\runs\<RUN_ID>.jsonl` (sibling to the .md record;
    same basename, .jsonl extension). Do this **before** restarting
    the game for the next run — bridge v0.1.5+ truncates the runtime
    file on game startup, so a missed snapshot loses the data
    permanently.
-5. If the agent didn't write a run record (e.g. it hit
+4. If the agent didn't write a run record (e.g. it hit
    `rate_limit` mid-run before reaching the write step), the operator
    creates the record from the template manually. Set
    `halt_reason: rate_limit` and leave decision-log/bridge-findings as
    `<run halted before agent could write record>`. **This counts as a
    void run; restart with the same `<RUN_ID>` after fixing the cause.**
-6. Append a row to `docs/benchmark/runs.csv` (one line per run).
-7. **Restart the game** (kill StS2, relaunch) before the next run.
+5. Append the runs.csv row via the helper:
+   `tools\append-run-csv.ps1 -RunId <RUN_ID>`. The helper reads the
+   front-matter, fetches token totals from the OpenCode session DB
+   (filling any null token fields), patches them back into the
+   front-matter, and appends a properly-quoted CSV row. Do **not**
+   hand-edit `runs.csv` — column order drift is the most common
+   source of bad rows.
+6. **Restart the game** (kill StS2, relaunch) before the next run.
    Stale `state.combat` from the prior run is documented behavior;
    restarting is the cleanest avoidance. Game restart also clears
    `floor-history.jsonl` automatically (bridge v0.1.5+).
-8. **Start a fresh OpenCode session** for the next run. Do **not**
+7. **Start a fresh OpenCode session** for the next run. Do **not**
    reuse the session.
 
 ### Trial-v0 model lineup
