@@ -1278,25 +1278,57 @@ internal static class BridgeStateExtractor
             }
             catch (Exception ex) { restSite = new { error = ex.Message }; }
 
+            // Snapshot scalars once so the anonymous object below and the
+            // floor-history JSONL writer both see the same values, and we
+            // don't pay reflection twice.
+            var ascensionLevel = ReflectInt(state, "AscensionLevel");
+            var totalFloor = ReflectInt(state, "TotalFloor");
+            var actFloor = ReflectInt(state, "ActFloor");
+            var currentActIndex = ReflectInt(state, "CurrentActIndex");
+            var currentHp = TryInt(() => player?.Creature?.CurrentHp ?? -1);
+            var maxHp = TryInt(() => player?.Creature?.MaxHp ?? -1);
+            var block = TryInt(() => player?.Creature?.Block ?? -1);
+            var gold = TryInt(() => player?.Gold ?? -1);
+            var maxPotionCount = TryInt(() => player?.MaxPotionCount ?? -1);
+            var roomTypeStr = TryEnum(() => GetProp(currentRoom, "RoomType")?.ToString());
+
+            // Count non-null potions only — PotionSlots holds nulls for empty slots.
+            var potionCount = 0;
+            foreach (var p in potions) if (p is not null) potionCount++;
+
+            // Per-floor history (SpireBench): append a JSONL row when
+            // totalFloor advances. No-op on stale snapshots, mid-floor
+            // re-extractions, MainMenu/GameOver screens (totalFloor<=0).
+            BridgeFloorHistory.TryAppendIfFloorAdvanced(
+                floor: totalFloor,
+                act: currentActIndex,
+                hp: currentHp,
+                maxHp: maxHp,
+                gold: gold,
+                deckSize: deck.Count,
+                relicCount: relics.Count,
+                potionCount: potionCount,
+                roomType: roomTypeStr);
+
             return new
             {
                 gameMode = TryEnum(() => GetProp(state, "GameMode")?.ToString()),
-                ascensionLevel = ReflectInt(state, "AscensionLevel"),
-                totalFloor = ReflectInt(state, "TotalFloor"),
-                actFloor = ReflectInt(state, "ActFloor"),
-                currentActIndex = ReflectInt(state, "CurrentActIndex"),
+                ascensionLevel,
+                totalFloor,
+                actFloor,
+                currentActIndex,
                 actId = SafeModelIdOrNull(actModel?.Id),
                 currentRoom = new
                 {
                     id = SafeModelIdOrNull((GetProp(currentRoom, "ModelId") as ModelId)),
-                    roomType = TryEnum(() => GetProp(currentRoom, "RoomType")?.ToString()),
+                    roomType = roomTypeStr,
                 },
                 restSite,
-                currentHp = TryInt(() => player?.Creature?.CurrentHp ?? -1),
-                maxHp = TryInt(() => player?.Creature?.MaxHp ?? -1),
-                block = TryInt(() => player?.Creature?.Block ?? -1),
-                gold = TryInt(() => player?.Gold ?? -1),
-                maxPotionCount = TryInt(() => player?.MaxPotionCount ?? -1),
+                currentHp,
+                maxHp,
+                block,
+                gold,
+                maxPotionCount,
                 character = SafeModelIdOrNull(character?.Id),
                 relics,
                 potions,

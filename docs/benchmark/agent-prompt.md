@@ -23,11 +23,11 @@ called HermesBridge.
 
 **Your assignment for this run:**
 
-- Run ID: `<RUN_ID>`
-- Character: `<CHARACTER>`
+- Run ID: `2026-04-26-glm-5.1-ironclad-run01`
+- Character: `IRONCLAD`
 - Ascension: `0`
 - Knowledge condition: `A0-zero-shot`
-- Model: `<MODEL_SLUG>`
+- Model: `glm-5.1`
 
 **Your contract is `docs/benchmark/protocol.md`. Read it first, in full,
 before doing anything else.** That document is the authoritative spec
@@ -54,8 +54,10 @@ command):**
   tools available, refuse to use them and note the leak in your run
   record's "Notes for maintainers" section.
 - **No reading outside the whitelist in protocol.md §Allowed reading.**
-  Notably off-limits: `gauntlet-findings.md`, `autopilot-session-*.md`,
-  `verified-flows/`, other agents' run records, anything outside this repo.
+  Notably off-limits: `autopilot-session-*.md`, `verified-flows/`,
+  other agents' run records, anything outside this repo.
+  `gauntlet-findings.md` has been removed from the repository for
+  trial-v0; do not attempt to recover or reference it.
 - **Game stats come from `docs/data/eng/*.json`.** If your training-data
   recall disagrees with the JSON, the JSON wins. Do not trust your
   memory of card numbers, relic effects, monster HP, or anything else
@@ -77,14 +79,64 @@ command):**
 4. Drive the game one tick at a time until `GameOver` or `Victory`,
    honoring all per-tick discipline from `SKILL.md` and
    `protocol.md`.
-5. When the run ends, write your run record to
-   `docs/benchmark/runs/<RUN_ID>.md`. Use
-   `docs/benchmark/run-record-template.md` as the starting point.
-   Fields the operator fills post-hoc are listed in protocol.md
-   §Operator responsibilities — leave those `null` and the operator
-   will fill them.
+5. **When the run ends, you have not finished. The run is not complete
+   until you write the run record.** Write to
+   `docs/benchmark/runs/<RUN_ID>.md` (exact path —
+   `<RUN_ID>` is given to you above; create the file if it doesn't
+   exist; do not write to any other location). Start from
+   `docs/benchmark/run-record-template.md` and fill every field you
+   can. Fields the operator fills post-hoc are listed in protocol.md
+   §Operator responsibilities — leave **those specific fields** as
+   `null` (do not leave other fields null; if you don't know a value
+   that the agent is responsible for, write what you observed and
+   note the uncertainty in `notes_for_maintainers`).
 6. Stop. Do not start a new run. Do not summarize for the operator
    beyond what the run record contains.
+
+**Halt-without-record is a benchmark failure.** If you hit a
+rate-limit, error-streak, or stall, your *last act* before halting
+must be to write the run record with `halt_reason` set and whatever
+fields you can fill. A run with no record on disk counts as a void
+run and will be re-attempted, wasting compute. Treat the record as
+mandatory output, not optional commentary.
+
+**Run-end completion checklist (you must work through this in order
+once `screen` is `GameOver` or `Victory`, before stopping):**
+
+- [ ] `docs/benchmark/runs/<RUN_ID>.md` exists on disk
+- [ ] front-matter `run_id` matches `<RUN_ID>` exactly
+- [ ] front-matter `character`, `model`, `ascension`,
+      `knowledge_condition`, `bridge_version`, `game_version`,
+      `spec_version` filled
+- [ ] front-matter `halt_reason` set (`death` | `victory` | `runcap` |
+      `error_streak` | `stall` | `rate_limit` | `manual`)
+- [ ] front-matter `death_floor` + `death_cause` filled if
+      `halt_reason: death` (cause from protocol.md §Death-cause
+      taxonomy); `victory_floor` + `boss_reached` if
+      `halt_reason: victory`; `final_hp` and `final_gold` filled in
+      both cases (use `state.json` from your last read; if you can't
+      read it, leave null and explain in `## Notes for maintainers`)
+- [ ] front-matter `command_count`, `ipc_error_count`, `stall_count`
+      filled (you tracked these as you went; if you didn't, write
+      your best estimate and note that in `## Notes for maintainers`)
+- [ ] `## Summary` section: one paragraph — what happened, why it
+      ended
+- [ ] `## Bridge findings` section: IPC quirks, stale state, missing
+      fields, commands that didn't behave as `SKILL.md` claimed.
+      Write `None observed.` if there were none
+- [ ] `## Decision log highlights` section: 3-7 bullets covering
+      Neow choice, contested map choices, key card-play forks, key
+      event/shop decisions
+- [ ] `## Notes for maintainers` section: tool leaks (MemPalace,
+      webfetch, etc. that shouldn't have been available), protocol
+      ambiguities, harness improvements. Omit the section entirely if
+      there's nothing to add
+
+You may emit a single short message confirming you've written the
+record (e.g. `"Run record written to docs/benchmark/runs/<RUN_ID>.md.
+Halting."`). That is the only narration the operator wants. Do not
+write a separate "summary for the operator" — the record *is* the
+summary.
 
 **Begin by reading `docs/benchmark/protocol.md`.**
 

@@ -25,6 +25,18 @@ internal static class BridgePaths
     /// Schema: { "id", "status": "ok"|"error"|"ignored", "message", "timestampUtc", "revision" }.
     /// </summary>
     public static string ResultJsonPath => Path.Combine(BaseDirectory, "result.json");
+
+    /// <summary>
+    /// Bridge appends one JSONL row here every time TotalFloor changes
+    /// during a run. Schema:
+    /// { "t":"&lt;iso8601&gt;", "floor":N, "act":N, "hp":N, "maxHp":N,
+    ///   "gold":N, "deckSize":N, "relicCount":N, "potionCount":N,
+    ///   "roomType":"Combat|Elite|Shop|Event|Rest|Treasure|Boss|..." }
+    /// Used by SpireBench post-hoc analysis to chart HP/gold/deck
+    /// curves per run. File is per-game-process; not cleared between
+    /// runs (each run's rows are scoped by t/floor=1 boundaries).
+    /// </summary>
+    public static string FloorHistoryPath => Path.Combine(BaseDirectory, "floor-history.jsonl");
     public static void EnsureDirectories()
     {
         Directory.CreateDirectory(BaseDirectory);

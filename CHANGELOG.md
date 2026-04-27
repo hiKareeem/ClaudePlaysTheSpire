@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.4 — 2026-04-27
+
+SpireBench trial-v0 prep: per-floor metric capture + trial-v0.1 amendment.
+
+### Bridge
+
+- **`floor-history.jsonl` writer.** `BridgeStateExtractor.ExtractRun` now appends one JSONL row to `%APPDATA%/SlayTheSpire2/hermesbridge/floor-history.jsonl` whenever `state.TotalFloor` advances. New `BridgeFloorHistory` class holds the static cursor and serializes the row by hand (no JSON dep needed for one line). Schema: `{t, floor, act, hp, maxHp, gold, deckSize, relicCount, potionCount, roomType}`. Idempotent within a floor (repeated extracts at the same floor are no-ops). New `BridgePaths.FloorHistoryPath` constant. Append failures are trapped and traced — never break state extraction. Used by SpireBench post-trial analysis for HP/gold/deck curves.
+
+### SpireBench
+
+- **trial-v0.1 amendment.** See `docs/benchmark/protocol.md` §Amendments for the full record. Three changes: (1) bridge bumped to v0.1.4 for per-floor capture; (2) `agent-prompt.md` hardened — run record is now a terminating obligation with explicit completion checklist, halt-without-record is a benchmark failure; (3) `docs/gauntlet-findings.md` removed from the repo for trial-v0 duration (recoverable from git commit `9cc1dc4`; will be restored after trial-v0 completes). Pre-amendment runs (run01-run02 from 2026-04-26) discarded; trial-v0 restarts from run01 against v0.1.4.
+
 ## v0.1.3 — 2026-04-26
 
 StS2 v0.104.0 compat patch + game-data refresh + SpireBench scaffolding.

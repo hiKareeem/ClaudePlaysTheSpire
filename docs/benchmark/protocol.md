@@ -75,9 +75,12 @@ You may not:
 - Create any new file outside `docs/benchmark/runs/<run_id>.md` (the run record).
 - Modify `autopilot-lib.ps1`, any `tools/*.ps1`, any C# file, or `SKILL.md`.
 - Read other agents' run records (`docs/benchmark/runs/<other_run_id>.md`).
-- Read `gauntlet-findings.md`. All bridge-protocol findings have been
-  merged into `SKILL.md` and `docs/bridge-protocol-notes.md`; the file
-  itself is off-limits (see §Allowed reading).
+- Read `gauntlet-findings.md`. The file has been removed from the
+  repository for the duration of trial-v0 (see §Amendments,
+  trial-v0.1) — it does not exist on disk. All bridge-protocol
+  findings live in `SKILL.md` and `docs/bridge-protocol-notes.md`.
+  Do not attempt to recover the file from git history or any other
+  source.
 - Web-search for Slay the Spire 2 strategy, card stats, or anything else.
   All stat lookups must come from `docs/data/eng/*.json`.
 - Recall stats from training data. If the JSON disagrees with your
@@ -144,7 +147,8 @@ You **may not** read anything else, including but not limited to:
 - `docs/handoffs/*`, `docs/handoff-replies/*` — out of scope.
 - `docs/verified-flows/*` — playthrough narratives that may encode
   strategy lessons.
-- `docs/gauntlet-findings.md` — strategy/historical record; off-limits.
+- `docs/gauntlet-findings.md` — removed from repo for trial-v0
+  duration (see §Amendments, trial-v0.1). Does not exist on disk.
 - `docs/autopilot-session-*.md` — prior gauntlet logs.
 - `docs/reference-{ironclad,potions,relics}.md` — historical reference,
   may be stale; deferred to JSON entirely for trial-v0.
@@ -449,3 +453,30 @@ trial-v0 runs are complete:
 
 After all trial-v0 runs are complete, this protocol may be revised freely
 into trial-v1 for the next iteration.
+
+### Amendments
+
+**trial-v0.1** (2026-04-26, before run01 ships in the dataset):
+
+- Bridge bumped to v0.1.4: `BridgeStateExtractor.ExtractRun` now appends
+  one JSONL row to `%APPDATA%/SlayTheSpire2/hermesbridge/floor-history.jsonl`
+  every time `state.TotalFloor` advances. Schema:
+  `{t, floor, act, hp, maxHp, gold, deckSize, relicCount, potionCount, roomType}`.
+  This is a passive observer — no agent-visible behavior change. Used by
+  the post-trial analysis script for HP/gold/deck curves.
+- Agent prompt hardened: `docs/benchmark/agent-prompt.md` now treats the
+  run record as a terminating obligation with an explicit completion
+  checklist. Halt-without-record is a benchmark failure and triggers
+  re-attempt.
+- `docs/gauntlet-findings.md` deleted from the repo for the duration of
+  trial-v0. Pre-amendment evidence (run01 skipped its run record;
+  run02's agent ignored the off-limits whitelist and appended a "Run
+  29" entry to gauntlet-findings.md instead of writing
+  `runs/<run_id>.md`) showed the file was an attractive nuisance even
+  with an off-limits header. Removing it deterministically prevents the
+  failure mode. The file is recoverable from git history
+  (commit 9cc1dc4) and will be restored after trial-v0 completes.
+- Pre-amendment runs (run01-run02 from 2026-04-26) are **discarded**, not
+  tagged "incomparable", because the floor-history data is needed for
+  the planned charts and reconstruction from `trace.log` would be lossy.
+  Trial-v0 restarts from run01 once v0.1.4 ships.

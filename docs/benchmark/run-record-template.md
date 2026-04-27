@@ -1,8 +1,8 @@
 ---
 run_id: YYYY-MM-DD-<model_slug>-<character_lower>-runNN
-spec_version: trial-v0
+spec_version: trial-v0.1
 knowledge_condition: A0-zero-shot
-bridge_version: v0.1.3
+bridge_version: v0.1.4
 game_version: 0.104.0
 model: <model_slug>            # claude-opus-4.7 | gpt-5.5 | glm-5.1 | gemini-3.1-pro | deepseek-v3.5
 model_provider: <provider>     # github-copilot | openai | zai | google | deepseek (or openrouter for the last 3)
