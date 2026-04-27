@@ -398,6 +398,12 @@ does not have reliable access):
    nine YAML lines directly.
 3. `command_count`, `ipc_error_count`, `stall_count` — count from
    `trace.log` or the agent's session transcript.
+4. **Append a row to `docs/benchmark/runs.csv`.** Column order is the
+   single header line in that file (35 columns, matching the YAML
+   front-matter field order plus the operator-filled token fields).
+   Empty fields are written as a bare comma (no quotes, no `null`
+   token); the analysis script (`tools/spirebench-summary.py`) treats
+   empty cells as `NaN`.
 
 ### Forbidden operator actions
 
