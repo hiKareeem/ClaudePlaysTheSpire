@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.5 — 2026-04-27
+
+SpireBench trial-v0 prep follow-up: deterministic per-run isolation for `floor-history.jsonl`.
+
+### Bridge
+
+- **Floor-history file is auto-truncated on game startup.** `BridgeFloorHistory`'s static constructor clears `%APPDATA%/SlayTheSpire2/hermesbridge/floor-history.jsonl` exactly once per process. Game restart between runs (already in protocol.md §Per-run setup) is now sufficient to guarantee a fresh file — operator no longer has to remember to delete the runtime file in the teardown step. Truncation failures are trapped and traced; they never block append. The teardown step in `agent-prompt.md` is reworded to "snapshot before next launch" rather than "snapshot then delete."
+
 ## v0.1.4 — 2026-04-27
 
 SpireBench trial-v0 prep: per-floor metric capture + trial-v0.1 amendment.

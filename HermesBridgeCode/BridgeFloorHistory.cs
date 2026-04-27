@@ -17,11 +17,42 @@ namespace HermesBridge.HermesBridgeCode;
 /// process. Restarting the game resets the cursor to 0, which is the
 /// correct behaviour at run boundaries (operator restarts game
 /// between SpireBench runs per protocol.md §Per-run setup).
+///
+/// The static constructor truncates any pre-existing file on first
+/// touch, so the file always contains exactly the current process's
+/// run. v0.1.4 left the operator responsible for clearing the file
+/// in the teardown checklist; v0.1.5 makes it deterministic.
 /// </summary>
 internal static class BridgeFloorHistory
 {
     private static int _lastLoggedFloor = -1;
     private static readonly object _lock = new();
+
+    static BridgeFloorHistory()
+    {
+        // Truncate any stale floor-history.jsonl from a prior game session
+        // exactly once per process lifetime. The runtime file is shared
+        // across runs (same path, same game install) and the operator
+        // restarts the game between SpireBench runs, so a fresh process =
+        // a fresh run = a fresh file. This removes the previous reliance
+        // on the operator deleting the file in the per-run teardown.
+        try
+        {
+            BridgePaths.EnsureDirectories();
+            var path = BridgePaths.FloorHistoryPath;
+            if (File.Exists(path))
+            {
+                File.WriteAllText(path, string.Empty);
+                BridgeTrace.Log("FloorHistory: truncated stale file at startup.");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Never let init failure break the type — appends will still
+            // try later and trace their own failures.
+            BridgeTrace.Log($"FloorHistory: startup truncate failed: {ex.Message}");
+        }
+    }
 
     public static void TryAppendIfFloorAdvanced(
         int floor,

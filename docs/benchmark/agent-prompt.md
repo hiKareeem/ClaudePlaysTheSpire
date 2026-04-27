@@ -183,25 +183,22 @@ runcap, or manual halt):
 4. **Snapshot floor-history.** Copy
    `%APPDATA%\SlayTheSpire2\hermesbridge\floor-history.jsonl` to
    `docs\benchmark\runs\<RUN_ID>.jsonl` (sibling to the .md record;
-   same basename, .jsonl extension). The runtime file is shared
-   across runs in the same game session — copy it now or it will
-   accumulate next-run rows.
-5. **Clear the runtime floor-history** before the next run:
-   delete `%APPDATA%\SlayTheSpire2\hermesbridge\floor-history.jsonl`
-   so the next run starts with a fresh file. (The bridge resets its
-   in-memory cursor on game restart, so a stale file would be
-   appended-to with floor=1 again — preventing this is cleaner.)
-6. If the agent didn't write a run record (e.g. it hit
+   same basename, .jsonl extension). Do this **before** restarting
+   the game for the next run — bridge v0.1.5+ truncates the runtime
+   file on game startup, so a missed snapshot loses the data
+   permanently.
+5. If the agent didn't write a run record (e.g. it hit
    `rate_limit` mid-run before reaching the write step), the operator
    creates the record from the template manually. Set
    `halt_reason: rate_limit` and leave decision-log/bridge-findings as
    `<run halted before agent could write record>`. **This counts as a
    void run; restart with the same `<RUN_ID>` after fixing the cause.**
-7. Append a row to `docs/benchmark/runs.csv` (one line per run).
-8. **Restart the game** (kill StS2, relaunch) before the next run.
+6. Append a row to `docs/benchmark/runs.csv` (one line per run).
+7. **Restart the game** (kill StS2, relaunch) before the next run.
    Stale `state.combat` from the prior run is documented behavior;
-   restarting is the cleanest avoidance.
-9. **Start a fresh OpenCode session** for the next run. Do **not**
+   restarting is the cleanest avoidance. Game restart also clears
+   `floor-history.jsonl` automatically (bridge v0.1.5+).
+8. **Start a fresh OpenCode session** for the next run. Do **not**
    reuse the session.
 
 ### Trial-v0 model lineup

@@ -486,3 +486,20 @@ into trial-v1 for the next iteration.
   tagged "incomparable", because the floor-history data is needed for
   the planned charts and reconstruction from `trace.log` would be lossy.
   Trial-v0 restarts from run01 once v0.1.4 ships.
+
+**trial-v0.2** (2026-04-27, before run01 ships in the dataset):
+
+- Bridge bumped to v0.1.5: `BridgeFloorHistory` now truncates a
+  pre-existing `floor-history.jsonl` exactly once per process at
+  startup (static constructor). Game restart between runs (already
+  required by §Per-run setup) is now sufficient to guarantee a
+  per-run file; the operator no longer has to delete the runtime
+  file in the teardown checklist. No agent-visible behavior change.
+- `agent-prompt.md` teardown checklist updated: snapshot step
+  (copy `%APPDATA%/...` → `runs/<RUN_ID>.jsonl`) is now ordered
+  **before** the game-restart step, and the explicit-delete step
+  is removed. Snapshotting after restart would lose the data.
+- `run-record-template.md` bumped: `spec_version` trial-v0.1 →
+  trial-v0.2, `bridge_version` v0.1.4 → v0.1.5. No structural
+  changes to the schema; trial-v0.1 and trial-v0.2 records are
+  fully comparable.
