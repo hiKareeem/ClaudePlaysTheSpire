@@ -17,8 +17,8 @@ foreach ($opt in $s.cardRewardOptions.cards) {
     $c = $opt.card
     if (-not $c) { Write-Output "  [$i] (null card)"; $i++; continue }
     $upg = if ($c.isUpgraded) { '+' } else { '' }
-    $cost = if ($null -ne $c.energyCost) { "$($c.energyCost)E" } else { '?E' }
-    Write-Output ("  [{0}] {1}{2}  {3}  {4}  cardType={5}" -f $i, $c.title, $upg, $c.rarity, $cost, $c.cardType)
+    $cost = if ($null -ne $c.energyCost -and $c.energyCost -ge 0) { "$($c.energyCost)E" } else { '?E' }
+    Write-Output ("  [{0}] {1}{2}  {3}  {4}  type={5}" -f $i, $c.title, $upg, $c.rarity, $cost, $c.type)
     if ($c.description) { Write-Output "       $($c.description)" }
     $i++
 }

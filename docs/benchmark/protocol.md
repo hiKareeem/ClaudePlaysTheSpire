@@ -172,7 +172,7 @@ For the v0 trial, runs are configured along these axes:
 | **Knowledge condition** | `A0-zero-shot` (only) |
 | **Seed** | unseeded (game default — record the run-seed if exposed in `state.run`) |
 | **Run-cap (commands)** | `500` |
-| **Stall threshold** | `30s` no revision change after a command |
+| **Stall threshold** | `bridge_stall`: 30s no revision change after a command. `agent_stall`: 120s no `step_finish` event from the OpenCode session despite an actionable game state. Both halt the run as `halt_reason: stall`. |
 | **Halt conditions** | `GameOver`, `Victory`, run-cap reached, 5 consecutive `status=error` on distinct commands, stall, **rate-limit from model provider**, manual abort by operator |
 | **Mid-run model rotation** | **Prohibited.** If the assigned model rate-limits or fails mid-run, the operator halts and logs `halt_reason: rate_limit`. Do **not** swap to a fallback model and continue — the run is over. |
 | **Session isolation** | One fresh OpenCode session per run (operator pre-flight enforced). No session state, file-system state, or memory store carries between runs. |
@@ -423,6 +423,11 @@ does not have reliable access):
 - Showing the agent any other agent's run record.
 - Restarting a stalled run "to give it a fair shake" — log the stall and
   count it.
+- **Sending a second message into a stalled OpenCode session** ("continue",
+  "keep going", or re-pasting the agent-prompt). The second turn cannot
+  honour the pre-flight `screen: MainMenu` check and will either misread
+  it as terminal (run08) or pollute the trial with operator-driven
+  recovery prompts. A stalled run is over.
 - Swapping models mid-run.
 - Re-using an OpenCode session across runs.
 - Backfilling from training-data / web-search to "complete" a run record.
@@ -515,3 +520,57 @@ into trial-v1 for the next iteration.
   trial-v0.2, `bridge_version` v0.1.4 → v0.1.5. No structural
   changes to the schema; trial-v0.1 and trial-v0.2 records are
   fully comparable.
+
+**trial-v0.3** (2026-04-29, after run01-run07 ship; first run
+covered: run08 `2026-04-28-gemini-3.1-pro-preview-regent-run08`):
+
+- **Stall taxonomy split into `bridge_stall` and `agent_stall`.**
+  The pre-amendment definition ("30s no revision change after a
+  command") only covered the bridge-side case. Run07 + run08
+  exposed an agent-side failure mode: gemini-3.1-pro-preview
+  stopped *generating* mid-run while the bridge was healthy.
+  - `bridge_stall`: 30s no revision change after a command issued.
+    Same as before. Counts toward `stall_count`.
+  - `agent_stall`: agent's OpenCode session has not produced a new
+    `step_finish` event in **120s** despite the game state being
+    actionable. Counts toward `stall_count`.
+  - Both share `halt_reason: stall`. The taxonomy difference is
+    recorded in `## Notes for maintainers`.
+- **Stall handling formalised.** Stalls are terminal: the operator
+  records the run as `halt_reason: stall` at the point of stall,
+  with whatever `final_hp`/`final_gold`/`boss_reached` the bridge
+  last observed. The operator does **not**:
+  - send a "continue" or "keep going" message into the same OpenCode
+    session (this contaminates the run with operator coaching);
+  - inject the agent-prompt into the same session a second time
+    (the new turn will misread mid-run pre-flight checks — this
+    happened on run08, where a second turn read step 2's
+    `screen: MainMenu` requirement and self-aborted at floor 19);
+  - start a fresh OpenCode session and "continue" the run (counts
+    as a new run, but the game state is not a clean `MainMenu`).
+  Two stalls within a run are extraordinarily unlikely (the first
+  is already terminal); the "after 2 occurrences" wording in the
+  amendment options refers to the lifetime model-budget — i.e. if
+  a model stalls on multiple distinct runs in succession, consider
+  excluding it from the lineup and noting the exclusion in the
+  trial summary.
+- **Agent-prompt step 2 reworded** to remove the "halt if not
+  MainMenu" loophole that run08's second turn fell into. Step 2
+  now says: pre-flight is the operator's responsibility, agent
+  observes `MainMenu` on first read or writes a stub record with
+  `halt_reason: manual` describing what was observed instead. No
+  recovery path for non-`MainMenu` state — that's a setup error.
+- **Run08 disposition.** Run08 is preserved as
+  `halt_reason: stall` despite the second-turn confusion that
+  produced an initial draft labelling it `halt_reason: manual`.
+  The first OpenCode turn (ses_226bcfd55ffe9hdrh7KvVM5XZK,
+  2026-04-29T12:42:20Z–13:54:39Z, 350 commands, reached f19
+  Act 2) is the canonical run. The second turn's "manual halt"
+  draft was overwritten before commit.
+- `tools/list-cards.ps1` field-name fix: `$c.cardType` →
+  `$c.type` and `$c.energyCost` guard for negative sentinel
+  values. The script was reading from a card schema that doesn't
+  exist; the bridge serialises card type as `type`. Unrelated to
+  the trial protocol but bundled into the same commit.
+- No bridge bump, no template bump (`spec_version` stays
+  trial-v0.2 — schema unchanged, only operator workflow tightened).

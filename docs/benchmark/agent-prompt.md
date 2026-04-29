@@ -71,9 +71,13 @@ command):**
 
 1. Read the four required files above.
 2. Verify the bridge is alive: `tools/read-state.ps1` should return
-   valid JSON with `screen: MainMenu` (the operator has launched the
-   game and confirmed pre-flight; if state isn't `MainMenu` something
-   is wrong — note it and halt).
+   valid JSON. The operator has launched the game and confirmed
+   pre-flight, so on the first read of a fresh session `screen`
+   should be `MainMenu`. If it is anything else, the operator has
+   made a setup error — write a stub run record with
+   `halt_reason: manual` and `## Notes for maintainers` describing
+   what `screen` you observed, then halt. **Do not call `StartRun`
+   from a non-`MainMenu` state.**
 3. From `MainMenu`, issue `StartRun` with character `<CHARACTER>` at
    ascension `0`.
 4. Drive the game one tick at a time until `GameOver` or `Victory`,

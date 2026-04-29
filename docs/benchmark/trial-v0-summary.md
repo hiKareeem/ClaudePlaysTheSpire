@@ -5,23 +5,28 @@ re-run the script after appending new runs to `runs.csv`._
 
 ## Overview
 
-- Total runs: **1** (with run records: 1)
-- Halt reasons: death=1
-- Models tested: glm-5.1
-- Characters: IRONCLAD
+- Total runs: **8** (with run records: 8)
+- Halt reasons: death=7, stall=1
+- Models tested: gemini-3.1-pro-preview, glm-5.1
+- Characters: DEFECT, IRONCLAD, NECROBINDER, REGENT, SILENT
 
 ## Per-model results
 
 | model | runs | victories | deaths | rate_limits | median_floor | max_floor | mean_tokens_total | mean_cost_usd | mean_wall_seconds |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| glm-5.1 | 1 | 0 | 1 | 0 | 15.00 | 15.00 | 32419132 | 0.00 | 7414 |
+| glm-5.1 | 5 | 0 | 5 | 0 | 15.00 | 17.00 | 31671320 | 0.00 | 6181 |
+| gemini-3.1-pro-preview | 3 | 0 | 2 | 0 | 12.00 | 16.00 | 19031863 | 0.00 | 3644 |
 
 
 ## Per-character results
 
 | character | runs | victories | median_floor | max_floor |
 | --- | --- | --- | --- | --- |
-| IRONCLAD | 1 | 0 | 15.00 | 15.00 |
+| IRONCLAD | 2 | 0 | 15.50 | 16.00 |
+| SILENT | 2 | 0 | 12.50 | 17.00 |
+| DEFECT | 1 | 0 | 17.00 | 17.00 |
+| REGENT | 2 | 0 | 7.00 | 7.00 |
+| NECROBINDER | 1 | 0 | 7.00 | 7.00 |
 
 
 ## Charts

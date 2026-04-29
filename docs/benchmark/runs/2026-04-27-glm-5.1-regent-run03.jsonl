@@ -1,0 +1,7 @@
+{"t":"2026-04-27T22:59:40.634Z","floor":1,"act":0,"hp":75,"maxHp":75,"gold":99,"deckSize":10,"relicCount":1,"potionCount":0,"roomType":"Event"}
+{"t":"2026-04-27T23:01:06.184Z","floor":2,"act":0,"hp":75,"maxHp":75,"gold":99,"deckSize":10,"relicCount":2,"potionCount":0,"roomType":"Monster"}
+{"t":"2026-04-27T23:06:18.104Z","floor":3,"act":0,"hp":69,"maxHp":75,"gold":118,"deckSize":11,"relicCount":2,"potionCount":0,"roomType":"Monster"}
+{"t":"2026-04-27T23:09:26.976Z","floor":4,"act":0,"hp":67,"maxHp":75,"gold":134,"deckSize":12,"relicCount":2,"potionCount":0,"roomType":"Monster"}
+{"t":"2026-04-27T23:15:03.644Z","floor":5,"act":0,"hp":54,"maxHp":75,"gold":145,"deckSize":13,"relicCount":2,"potionCount":1,"roomType":"Monster"}
+{"t":"2026-04-27T23:20:05.302Z","floor":6,"act":0,"hp":39,"maxHp":75,"gold":157,"deckSize":14,"relicCount":2,"potionCount":0,"roomType":"Monster"}
+{"t":"2026-04-27T23:24:39.273Z","floor":7,"act":0,"hp":25,"maxHp":75,"gold":175,"deckSize":14,"relicCount":2,"potionCount":0,"roomType":"Monster"}
