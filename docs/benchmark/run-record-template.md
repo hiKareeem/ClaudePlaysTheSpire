@@ -33,6 +33,31 @@ tokens_total: null
 cost_usd: null
 wall_seconds: null
 step_finish_count: null
+# --- .run-derived stats (parse-run-history.py) ---
+# These are filled by `python tools/maintainer/parse-run-history.py
+# --run-id <run_id> --write` after the run ends. Leave them blank or
+# omitted in the agent-authored draft; the parser injects them.
+act_reached: null
+total_floors: null
+total_card_picks: null
+total_card_skips: null
+total_relics_picked: null
+total_potions_used: null
+total_potions_bought: null
+total_damage_taken: null
+total_gold_gained: null
+total_gold_spent: null
+total_gold_lost: null
+total_hp_healed: null
+elites_fought: null
+rests_taken: null
+shops_visited: null
+events_visited: null
+rest_choice_heal: null
+rest_choice_smith: null
+killed_by: null
+was_abandoned: null
+run_time_seconds: null
 ---
 
 ## Summary

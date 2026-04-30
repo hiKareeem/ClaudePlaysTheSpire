@@ -409,13 +409,37 @@ does not have reliable access):
    cost_usd / step_finish_count fields from the OpenCode session DB,
    patches those values back into the front-matter (so the `.md` and
    `.csv` stay in lockstep), and appends a properly-quoted row to
-   `runs.csv` in the exact column order of the existing 35-column
-   header. The `seed` field is force-quoted to dodge spreadsheet
+   `runs.csv` in the exact column order of the existing header.
+   The `seed` field is force-quoted to dodge spreadsheet
    scientific-notation rounding. Empty / null fields are written as
    a bare comma; `tools/spirebench-summary.py` treats empty cells as
    `NaN`. The helper refuses to append a duplicate `run_id`. Do **not**
    hand-edit `runs.csv` — column order drift is the most common
    source of bad rows.
+5. **Enrich the record with `.run`-derived stats.** After the run
+   ends, StS2 writes a save-game journal at
+   `%APPDATA%\SlayTheSpire2\steam\<steam_id>\profile1\saves\history\<unix>.run`
+   (UTF-8 pretty JSON, ~10–90 KB). This contains per-floor truth that
+   the agent can't easily self-report (full card-pick / skip history,
+   relic choices, rest-site choices, gold flow, damage taken,
+   elites_fought, killed_by_encounter / killed_by_event, etc.). After
+   appending the CSV row, run
+
+   ```
+   python tools\maintainer\parse-run-history.py --run-id <run_id> --write
+   ```
+
+   The parser matches the run record to its `.run` file by `seed`
+   (preferred) or by `start_time_utc + character` (fallback for
+   records whose seed was not surfaced by the agent), archives the
+   raw `.run` next to the `.md` / `.jsonl` as
+   `docs/benchmark/runs/<run_id>.run`, and patches 21 derived stat
+   fields into the run record's frontmatter under the marker comment
+   `# --- .run-derived stats (parse-run-history.py) ---`. The set of
+   stat fields is documented at the top of the parser. After
+   patching, run `python tools/maintainer/regenerate-runs-csv.py`
+   to rebuild `runs.csv` with the extended schema. Both helpers are
+   idempotent.
 
 ### Forbidden operator actions
 

@@ -1,2 +1,8 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+
+# Archived StS2 save-game journals: keep byte-exact (whatever EOL the
+# game wrote). They're parsed by tools/maintainer/parse-run-history.py
+# and treated as opaque research artifacts.
+*.run binary
+
