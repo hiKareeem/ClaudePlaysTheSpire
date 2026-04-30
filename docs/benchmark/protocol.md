@@ -172,9 +172,9 @@ For the v0 trial, runs are configured along these axes:
 | **Knowledge condition** | `A0-zero-shot` (only) |
 | **Seed** | unseeded (game default — record the run-seed if exposed in `state.run`) |
 | **Run-cap (commands)** | `500` |
-| **Stall threshold** | `bridge_stall`: 30s no revision change after a command. `agent_stall`: 120s no `step_finish` event from the OpenCode session despite an actionable game state. Both halt the run as `halt_reason: stall`. |
-| **Halt conditions** | `GameOver`, `Victory`, run-cap reached, 5 consecutive `status=error` on distinct commands, stall, **rate-limit from model provider**, manual abort by operator |
-| **Mid-run model rotation** | **Prohibited.** If the assigned model rate-limits or fails mid-run, the operator halts and logs `halt_reason: rate_limit`. Do **not** swap to a fallback model and continue — the run is over. |
+| **Stall threshold** | `bridge_stall`: 30s no revision change after a command. `agent_stall`: 120s no `step_finish` event from the OpenCode session despite an actionable game state. Both halt the run as `halt_reason: stall`. Provider rate-limit pauses where the agent resumes without operator intervention are tracked separately as `rate_limit_pause` and are **not** terminal — see trial-v0.4 amendment. |
+| **Halt conditions** | `GameOver`, `Victory`, run-cap reached, 5 consecutive `status=error` on distinct commands, stall, **terminal rate-limit from model provider** (session does not resume — `halt_reason: rate_limit`), manual abort by operator |
+| **Mid-run model rotation** | **Prohibited.** If the assigned model hard-fails (provider returns terminal error or session does not resume after a reasonable pause) mid-run, the operator halts and logs `halt_reason: rate_limit`. Do **not** swap to a fallback model and continue — the run is over. A non-terminal rate-limit pause where the agent resumes on its own is logged in `## Notes for maintainers` as `rate_limit_pause` with the gap duration; the run continues. |
 | **Session isolation** | One fresh OpenCode session per run (operator pre-flight enforced). No session state, file-system state, or memory store carries between runs. |
 
 Each model is expected to complete **one run per character at A0** for the
@@ -574,3 +574,71 @@ covered: run08 `2026-04-28-gemini-3.1-pro-preview-regent-run08`):
   the trial protocol but bundled into the same commit.
 - No bridge bump, no template bump (`spec_version` stays
   trial-v0.2 — schema unchanged, only operator workflow tightened).
+
+**trial-v0.4** (2026-04-30, after run08 ships and run09-run10 are
+reserved-but-unfilled; first run covered: run11
+`2026-04-30-gpt-5.5-ironclad-run11`):
+
+- **`rate_limit_pause` formalised as non-terminal.** Run11 exposed
+  a third stall-shaped failure mode that the trial-v0.3 taxonomy
+  did not cover: the GitHub Copilot-hosted gpt-5.5 session paused
+  for ~147.6 minutes between floor 43 and floor 44 (and a separate
+  ~55.7 minute pause between floor 42 and floor 43), then **resumed
+  on its own without operator intervention** and continued to
+  act3_boss death at floor 50. This is mechanically distinct from
+  an `agent_stall`:
+  - `agent_stall`: agent has stopped generating and will not resume
+    on its own; the operator must abandon. Terminal.
+  - `rate_limit_pause`: provider has paused token issuance (rate
+    limiting); the OpenCode session is still alive and will resume
+    once the provider's rate-limit window clears. Non-terminal.
+  The 120s `agent_stall` threshold remains correct for declaring
+  a run dead in real-time. After 120s of no `step_finish`, the
+  operator opens the OpenCode session and inspects: if the session
+  shows a provider rate-limit message and is waiting, that is a
+  `rate_limit_pause` and the operator **does not abandon**; if the
+  session shows no progress and no rate-limit indicator, that is
+  an `agent_stall` and is terminal per trial-v0.3.
+- **Recording.** A `rate_limit_pause` is recorded in
+  `## Notes for maintainers` of the run record with: pause
+  duration, floor range over which it occurred, and a note that
+  `wall_seconds` includes the pause. The `halt_reason` is whatever
+  the run actually ended on (typically `death` or `victory`),
+  **not** `rate_limit`. There is no separate halt_reason value for
+  pauses that resolved.
+- **Analysis impact.** `wall_seconds` for runs containing a
+  `rate_limit_pause` is not directly comparable to runs without
+  one. Analysis tooling and the trial summary should flag affected
+  runs and exclude them from wall-clock means or report a
+  pause-corrected wall-time alongside the raw value. Token counts,
+  step_finish counts, and gameplay metrics are unaffected and
+  remain comparable.
+- **Run07 reclassification deferred.** Run07
+  (`gemini-3.1-pro-preview-silent`, 0 tokens, 50 step_finish in
+  3500s) is currently labelled `halt_reason: death` but exhibits
+  pause-shaped data. Without provider-side telemetry it is not
+  possible to retrospectively determine whether the gemini stall
+  was a terminal `agent_stall` or an unrecoverable
+  `rate_limit_pause` (where the provider pause exceeded the
+  operator's patience). Run07 is left as-is; future gemini retries
+  for the unfilled DEFECT and NECROBINDER cells should monitor
+  for the same pattern.
+- **Numbering policy clarified.** Run-id numbering does **not**
+  need to be contiguous. Run09 and run10 remain reserved for the
+  gemini DEFECT and NECROBINDER cells, planned as retries after
+  the rest of the lineup completes. If gemini cannot complete
+  those runs, the slots stay vacant or are filled by a different
+  model with the run-id renumbered accordingly. Pandas/charts
+  treat run-id as a string key; gaps are inert.
+- **Run11 protocol violation noted.** Run11's agent had MemPalace
+  and sub-agent tools exposed during the session, contrary to the
+  benchmark's tool restriction. The run record's
+  `## Notes for maintainers` flags this. Operators should verify
+  `opencode.benchmark.json` is the active config before pre-flight.
+  Run11 is preserved in the dataset because the gameplay decision
+  log shows no spire2-specific external knowledge retrieval; the
+  violation is a tool-exposure issue, not a knowledge-condition
+  contamination.
+- No bridge bump, no template bump (`spec_version` stays
+  trial-v0.2 — schema unchanged, only operator workflow and
+  taxonomy clarified).

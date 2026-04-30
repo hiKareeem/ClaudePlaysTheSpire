@@ -5,15 +5,16 @@ re-run the script after appending new runs to `runs.csv`._
 
 ## Overview
 
-- Total runs: **8** (with run records: 8)
-- Halt reasons: death=7, stall=1
-- Models tested: gemini-3.1-pro-preview, glm-5.1
+- Total runs: **9** (with run records: 9)
+- Halt reasons: death=8, stall=1
+- Models tested: gemini-3.1-pro-preview, glm-5.1, gpt-5.5
 - Characters: DEFECT, IRONCLAD, NECROBINDER, REGENT, SILENT
 
 ## Per-model results
 
 | model | runs | victories | deaths | rate_limits | median_floor | max_floor | mean_tokens_total | mean_cost_usd | mean_wall_seconds |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| gpt-5.5 | 1 | 0 | 1 | 0 | 50.00 | 50.00 | 187017137 | 0.00 | 22085 |
 | glm-5.1 | 5 | 0 | 5 | 0 | 15.00 | 17.00 | 31671320 | 0.00 | 6181 |
 | gemini-3.1-pro-preview | 3 | 0 | 2 | 0 | 12.00 | 16.00 | 19031863 | 0.00 | 3644 |
 
@@ -22,7 +23,7 @@ re-run the script after appending new runs to `runs.csv`._
 
 | character | runs | victories | median_floor | max_floor |
 | --- | --- | --- | --- | --- |
-| IRONCLAD | 2 | 0 | 15.50 | 16.00 |
+| IRONCLAD | 3 | 0 | 16.00 | 50.00 |
 | SILENT | 2 | 0 | 12.50 | 17.00 |
 | DEFECT | 1 | 0 | 17.00 | 17.00 |
 | REGENT | 2 | 0 | 7.00 | 7.00 |
