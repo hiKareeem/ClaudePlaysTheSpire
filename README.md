@@ -141,7 +141,7 @@ folder; agents get the rest in-place without cloning the repo.
 
 ```powershell
 $root    = $PSScriptRoot  # repo root
-$version = '0.1.3'
+$version = '0.1.5'
 $mods    = "E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\HermesBridge"
 $stage   = Join-Path $root "_nexus_staging\HermesBridge-v$version"
 
@@ -170,13 +170,24 @@ Copy-Item "$root\docs\data\ATTRIBUTION.md","$root\docs\data\README.md","$root\do
 Copy-Item "$root\docs\data\eng\*.json" "$stage\docs\data\eng\"
 Copy-Item "$root\docs\data\changelogs\*.json" "$stage\docs\data\changelogs\"
 
-# SpireBench (zero-shot benchmark scaffolding)
-New-Item -ItemType Directory -Force "$stage\docs\benchmark" | Out-Null
-Copy-Item "$root\docs\benchmark\protocol.md","$root\docs\benchmark\runs.csv","$root\docs\benchmark\opencode.benchmark.json" "$stage\docs\benchmark\"
+# SpireBench (zero-shot benchmark scaffolding + trial-v0 results)
+New-Item -ItemType Directory -Force "$stage\docs\benchmark\charts" | Out-Null
+Copy-Item @(
+  "$root\docs\benchmark\protocol.md",
+  "$root\docs\benchmark\agent-prompt.md",
+  "$root\docs\benchmark\run-record-template.md",
+  "$root\docs\benchmark\trial-v0-summary.md",
+  "$root\docs\benchmark\runs.csv",
+  "$root\docs\benchmark\opencode.benchmark.json"
+) "$stage\docs\benchmark\"
+if (Test-Path "$root\docs\benchmark\charts\*") {
+  Copy-Item "$root\docs\benchmark\charts\*" "$stage\docs\benchmark\charts\"
+}
 
 # NOT shipped: docs/gauntlet-findings.md (off-limits to trial agents),
 # docs/autopilot-session-*.md (maintainer-only run logs),
-# docs/benchmark/blog-draft.md (in-progress write-up).
+# docs/benchmark/blog-draft.md (in-progress write-up),
+# docs/benchmark/runs/* (per-run maintainer records; runs.csv is the public summary).
 
 $zip = Join-Path $root "HermesBridge-v$version.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }

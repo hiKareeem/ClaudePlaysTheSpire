@@ -24,7 +24,7 @@ victory_floor: null
 boss_reached: null             # null | act1_boss | act2_boss | act3_boss | heart
 final_hp: null
 final_gold: null
-tokens_in: null                # fill from tools/get-session-tokens.ps1
+tokens_in: null                # fill from tools/maintainer/get-session-tokens.ps1
 tokens_out: null
 tokens_cache_read: null
 tokens_cache_write: null

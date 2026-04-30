@@ -394,14 +394,14 @@ does not have reliable access):
    `part.data.tokens.{input,output,reasoning,total}` plus
    `tokens.cache.{read,write}` over all `step-finish` parts for the
    run's `session_id`. Helper:
-   `tools/get-session-tokens.ps1 -SessionId <ses_xxx>` outputs the
+   `tools/maintainer/get-session-tokens.ps1 -SessionId <ses_xxx>` outputs the
    nine YAML lines directly.
 3. `command_count`, `ipc_error_count`, `stall_count` — count from
    `trace.log` or the agent's session transcript.
 4. **Append a row to `docs/benchmark/runs.csv` via the helper.** Run
 
    ```
-   tools\append-run-csv.ps1 -RunId <run_id>
+   tools\maintainer\append-run-csv.ps1 -RunId <run_id>
    ```
 
    The helper reads the run record's YAML front-matter, calls

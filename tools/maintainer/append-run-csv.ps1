@@ -1,4 +1,4 @@
-# tools/append-run-csv.ps1
+# tools/maintainer/append-run-csv.ps1
 # ---------------------------------------------------------------
 # Build a SpireBench runs.csv row from a run-record .md file's
 # YAML front-matter + token data from get-session-tokens.ps1, and
@@ -12,7 +12,7 @@
 # quoted CSV row in the correct column order.
 #
 # Usage:
-#   .\tools\append-run-csv.ps1 -RunId 2026-04-27-glm-5.1-ironclad-run01
+#   .\tools\maintainer\append-run-csv.ps1 -RunId 2026-04-27-glm-5.1-ironclad-run01
 #
 # Optional:
 #   -RecordPath   Override default docs/benchmark/runs/<RunId>.md
@@ -23,7 +23,7 @@
 #
 # Behaviour:
 #   - Reads <RunId>.md frontmatter (between leading --- and second ---)
-#   - Calls tools/get-session-tokens.ps1 with frontmatter's
+#   - Calls tools/maintainer/get-session-tokens.ps1 with frontmatter's
 #     opencode_session_id to fetch token totals + wall_seconds
 #     + step_finish_count (only if any of those fields are null in
 #     the frontmatter; otherwise frontmatter wins)
@@ -111,7 +111,7 @@ if ($needTokens) {
     if (Test-IsNullish $sessionId) {
         Write-Warning "opencode_session_id missing from frontmatter; cannot fetch tokens. Token fields will be empty."
     } else {
-        $tokenScript = Join-Path $repoRoot 'tools\get-session-tokens.ps1'
+        $tokenScript = Join-Path $repoRoot 'tools\maintainer\get-session-tokens.ps1'
         if (-not (Test-Path $tokenScript)) {
             throw "get-session-tokens.ps1 not found at $tokenScript"
         }

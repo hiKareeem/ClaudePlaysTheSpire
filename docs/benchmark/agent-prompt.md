@@ -198,7 +198,7 @@ runcap, or manual halt):
    `<run halted before agent could write record>`. **This counts as a
    void run; restart with the same `<RUN_ID>` after fixing the cause.**
 5. Append the runs.csv row via the helper:
-   `tools\append-run-csv.ps1 -RunId <RUN_ID>`. The helper reads the
+    `tools\maintainer\append-run-csv.ps1 -RunId <RUN_ID>`. The helper reads the
    front-matter, fetches token totals from the OpenCode session DB
    (filling any null token fields), patches them back into the
    front-matter, and appends a properly-quoted CSV row. Do **not**

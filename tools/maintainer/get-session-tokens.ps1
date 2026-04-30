@@ -1,11 +1,11 @@
-# tools/get-session-tokens.ps1
+# tools/maintainer/get-session-tokens.ps1
 # ---------------------------------------------------------------
 # Extract aggregated token usage + wall-clock duration for an
 # OpenCode session, for use in SpireBench trial-v0 run-record
 # YAML front-matter.
 #
 # Usage:
-#   .\tools\get-session-tokens.ps1 -SessionId ses_245781889ffeWpFXFej2xZ5IKo
+#   .\tools\maintainer\get-session-tokens.ps1 -SessionId ses_245781889ffeWpFXFej2xZ5IKo
 #
 # Reads:
 #   ~\.local\share\opencode\opencode.db  (SQLite, WAL mode)

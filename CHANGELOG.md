@@ -8,6 +8,21 @@ SpireBench trial-v0 prep follow-up: deterministic per-run isolation for `floor-h
 
 - **Floor-history file is auto-truncated on game startup.** `BridgeFloorHistory`'s static constructor clears `%APPDATA%/SlayTheSpire2/hermesbridge/floor-history.jsonl` exactly once per process. Game restart between runs (already in protocol.md §Per-run setup) is now sufficient to guarantee a fresh file — operator no longer has to remember to delete the runtime file in the teardown step. Truncation failures are trapped and traced; they never block append. The teardown step in `agent-prompt.md` is reworded to "snapshot before next launch" rather than "snapshot then delete."
 
+### SpireBench
+
+- **trial-v0.2 / v0.3 / v0.4 amendments.** See `docs/benchmark/protocol.md` §Amendments. v0.2: per-run `opencode.benchmark.json` sandbox config formalized. v0.3: tools/maintainer split — runs.csv schema bumped to 34 fields with token / wall / cost / step_finish / command_count columns; `tools/maintainer/append-run-csv.ps1` helper merges run-record YAML frontmatter with OpenCode session DB token data and appends a typed CSV row. v0.4: `rate_limit_pause` formalized as non-terminal note (provider-side token pause; agent resumes on its own); distinct from `stall` (terminal halt). The `agent-prompt.md` teardown obligation is unchanged.
+- **`tools/maintainer/append-run-csv.ps1`** — frontmatter→runs.csv append helper. Validates `run_id` matches, refuses duplicate appends, force-quotes `seed` to avoid scientific-notation rounding, calls `get-session-tokens.ps1` for any null token / wall / cost / step_finish fields, optionally patches the .md frontmatter back so `.md` and `.csv` stay in lockstep.
+- **First 9 trial-v0 runs archived.** `docs/benchmark/runs/` holds run01-run08 (glm-5.1, gemini-3.5-pro, qwen-3.5-coder, kimi-k2.5) plus run11 (gpt-5.5 ironclad). 5-model lineup: glm-5.1, gemini-3.5-pro, qwen-3.5-coder, kimi-k2.5, gpt-5.5; claude-opus-4.7, deepseek-v3.5 reserved for later. Initial chart pass at `docs/benchmark/charts/`.
+
+### Tooling
+
+- **Maintainer tools split.** `tools/append-run-csv.ps1` and `tools/get-session-tokens.ps1` moved to `tools/maintainer/`. The `tools/` glob in the release bundler picks up the agent-facing inspector scripts only; maintainer tools stay in the repo for benchmark operators but don't ship in the public zip.
+
+### Packaging
+
+- Manifest bumped to `v0.1.5`.
+- Release zip now includes the full `docs/benchmark/` set: `protocol.md`, `agent-prompt.md`, `run-record-template.md`, `trial-v0-summary.md`, `runs.csv`, `opencode.benchmark.json`, and `charts/`. Drops `docs/benchmark/runs/*` (per-run maintainer records — `runs.csv` is the public summary) and `docs/benchmark/blog-draft.md` (in-progress write-up).
+
 ## v0.1.4 — 2026-04-27
 
 SpireBench trial-v0 prep: per-floor metric capture + trial-v0.1 amendment.
@@ -45,7 +60,7 @@ StS2 v0.104.0 compat patch + game-data refresh + SpireBench scaffolding.
 - **`docs/benchmark/protocol.md`** — full benchmark spec for autonomous LLM agents playing unmodified retail StS2 via HermesBridge. Trial-v0 measures the **A0-zero-shot** knowledge condition: each run is a fresh OpenCode session, no MemPalace, no sub-agent spawning, no web search, no training-recall coaching. Strategy and accumulated learning are off-limits to the agent. Covers: agent contract, trial parameters table, run-record YAML schema (with `tokens_in/out/cache_read/cache_write` and `opencode_session_id`), halt-reason enum (`death | victory | runcap | error_streak | stall | rate_limit | manual`), operator responsibilities pre/during/post-run, forbidden operator actions, allowed/disallowed reading and tool whitelists.
 - **`docs/benchmark/opencode.benchmark.json`** — reference sandbox `opencode.json` for trial-v0 runs. Strips all MCP servers (mempalace, context7, sequential-thinking, vscode-mcp, VibeUE), denies `webfetch` and `task` (sub-agents). Operator copies this over the normal config (with backup) for benchmark sessions.
 - **`docs/benchmark/runs.csv`** — 29-column run-record CSV header (one row per completed run).
-- **`tools/get-session-tokens.ps1`** — aggregates `step-finish` token counts from OpenCode's local SQLite session DB into 4 YAML-ready lines for the run record. Tries `System.Data.SQLite` first, falls back to `sqlite3.exe` on PATH.
+- **`tools/maintainer/get-session-tokens.ps1`** — aggregates `step-finish` token counts from OpenCode's local SQLite session DB into 4 YAML-ready lines for the run record. Tries `System.Data.SQLite` first, falls back to `sqlite3.exe` on PATH.
 
 ### Tooling
 
@@ -54,7 +69,7 @@ StS2 v0.104.0 compat patch + game-data refresh + SpireBench scaffolding.
 ### Packaging
 
 - Manifest bumped to `v0.1.3`.
-- Release zip adds `docs/data/changelogs/`, `docs/data/megacrit-statement.md`, `docs/benchmark/`, and `tools/get-session-tokens.ps1`. Drops `docs/gauntlet-findings.md` and `docs/autopilot-session-*.md` (off-limits / maintainer-only).
+- Release zip adds `docs/data/changelogs/`, `docs/data/megacrit-statement.md`, `docs/benchmark/`, and `tools/maintainer/get-session-tokens.ps1`. Drops `docs/gauntlet-findings.md` and `docs/autopilot-session-*.md` (off-limits / maintainer-only).
 
 ## v0.1.2 — 2026-04-23
 
