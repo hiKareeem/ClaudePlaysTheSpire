@@ -49,8 +49,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# Resolve repo root from this script's location (tools/ is a child).
-$repoRoot = Split-Path -Parent (Split-Path -Parent $PSCommandPath)
+# Resolve repo root from this script's location (tools/maintainer/<this>.ps1 is three deep).
+$repoRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSCommandPath))
 
 if (-not $RecordPath) {
     $RecordPath = Join-Path $repoRoot "docs\benchmark\runs\$RunId.md"
@@ -194,6 +194,11 @@ if ($PatchRecord) {
         }
         $patched += $lines[$i]
     }
-    Set-Content -LiteralPath $RecordPath -Value $patched -Encoding UTF8
+    # Use .NET WriteAllLines + UTF8Encoding(false) to avoid the BOM that
+    # PowerShell 5.1's `Set-Content -Encoding UTF8` would inject. parse-run-history.py
+    # rejects frontmatter that doesn't start with literal '---' on line 1, so a
+    # leading BOM silently breaks the next pipeline step.
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllLines($RecordPath, [string[]]$patched, $utf8NoBom)
     Write-Host "Patched token fields into frontmatter: $RecordPath"
 }
