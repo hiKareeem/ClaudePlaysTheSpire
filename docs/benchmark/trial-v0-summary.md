@@ -5,16 +5,17 @@ re-run the script after appending new runs to `runs.csv`._
 
 ## Overview
 
-- Total runs: **9** (with run records: 9)
-- Halt reasons: death=8, stall=1
-- Models tested: gemini-3.1-pro-preview, glm-5.1, gpt-5.5
+- Total runs: **14** (with run records: 14)
+- Halt reasons: death=12, stall=2
+- Models tested: deepseek-v4-pro, gemini-3.1-pro-preview, glm-5.1, gpt-5.5
 - Characters: DEFECT, IRONCLAD, NECROBINDER, REGENT, SILENT
 
 ## Per-model results
 
 | model | runs | victories | deaths | rate_limits | median_floor | max_floor | mean_tokens_total | mean_cost_usd | mean_wall_seconds |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| gpt-5.5 | 1 | 0 | 1 | 0 | 50.00 | 50.00 | 187017137 | 0.00 | 22085 |
+| gpt-5.5 | 5 | 0 | 4 | 0 | 22.50 | 50.00 | 134052550 | 0.00 | 46834 |
+| deepseek-v4-pro | 1 | 0 | 1 | 0 | 20.00 | 20.00 | 120785500 | 18.34 | 4696 |
 | glm-5.1 | 5 | 0 | 5 | 0 | 15.00 | 17.00 | 31671320 | 0.00 | 6181 |
 | gemini-3.1-pro-preview | 3 | 0 | 2 | 0 | 12.00 | 16.00 | 19031863 | 0.00 | 3644 |
 
@@ -23,11 +24,11 @@ re-run the script after appending new runs to `runs.csv`._
 
 | character | runs | victories | median_floor | max_floor |
 | --- | --- | --- | --- | --- |
-| IRONCLAD | 3 | 0 | 16.00 | 50.00 |
-| SILENT | 2 | 0 | 12.50 | 17.00 |
-| DEFECT | 1 | 0 | 17.00 | 17.00 |
-| REGENT | 2 | 0 | 7.00 | 7.00 |
-| NECROBINDER | 1 | 0 | 7.00 | 7.00 |
+| IRONCLAD | 4 | 0 | 18.00 | 50.00 |
+| SILENT | 3 | 0 | 17.00 | 28.00 |
+| DEFECT | 2 | 0 | 17.00 | 17.00 |
+| REGENT | 3 | 0 | 12.00 | 17.00 |
+| NECROBINDER | 2 | 0 | 12.00 | 17.00 |
 
 
 ## Charts
