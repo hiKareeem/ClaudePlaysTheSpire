@@ -2357,6 +2357,27 @@ internal static class BridgeStateExtractor
                                             state = st,
                                         });
                                     }
+                                    else if (string.Equals(st, "Travelable", StringComparison.Ordinal))
+                                    {
+                                        // BKI-002 fix: post-Act-boss transition, the player has
+                                        // currentCoord==null momentarily and the IsTravelable
+                                        // predicate (which depends on adjacency to current
+                                        // position) returns false even for legitimate entry
+                                        // nodes like the row-0 Ancient. The MapPointState enum,
+                                        // however, is set by the game's own bookkeeping when a
+                                        // node becomes available. If state==Travelable but the
+                                        // predicate disagrees, trust the enum: SelectMapNode's
+                                        // own validator and TravelToMapCoord both accept these
+                                        // nodes (verified in-game 2026-05-04). Without this
+                                        // fallback, agents see available:[] and stall.
+                                        available.Add(new
+                                        {
+                                            col = coord.col,
+                                            row = coord.row,
+                                            pointType = pt,
+                                            state = st,
+                                        });
+                                    }
 
                                     // If this point is not in the act's normal grid, record it
                                     // so it can be merged into the reported grid below.

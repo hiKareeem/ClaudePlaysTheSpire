@@ -1016,10 +1016,30 @@ internal static class BridgeCommandDispatcher
             return (s, m);
         }
 
-        // 3b) Treasure room path. Mirrors the rest-site pattern - the proceed
-        // button lives on the NTreasureRoom Godot node; OnProceedButtonReleased
-        // is non-public so resolve via reflection. Captured node is set by
-        // TreasureRoomReadyPatch.
+        // 3b) Treasure room path. Maps Proceed -> "skip the relic offer".
+        //
+        // BKI-001 root cause discovery (run17 + 2026-05-04 in-game testing):
+        //
+        // The naive approach was to invoke NTreasureRoom.OnProceedButtonReleased
+        // via reflection (the field is _proceedButton with IsSkip=true in the
+        // skip-relic state). This ALWAYS strands the agent — the screen
+        // transitions to Map but every NMapPoint stays IsTravelable=false and
+        // map.available empties. Confirmed by Kareem in-game: "agent sent
+        // Proceed, this was the expected result. It's either accept the relic
+        // or SKIP". The in-game Skip button does NOT route through the
+        // OnProceedButtonReleased reflection target reliably.
+        //
+        // The MerchantRoom/EventRoom pattern is the proven recipe for "leave
+        // room -> map":
+        //   1. room.Exit(IRunState)               // record map-point history
+        //   2. NMapScreen.SetTravelEnabled(true)  // grant travel rights
+        //   3. NMapScreen.Open(false)             // UI transition
+        // We apply the same pattern to TreasureRoom here.
+        //
+        // Preconditions enforced:
+        //   - chest must be opened (else: not a legitimate skip moment)
+        //   - relic must still be on offer (_holdersInUse non-empty);
+        //     after PickRelic the room auto-advances and Proceed is moot.
         var treasure = BridgeSingleton.CurrentTreasureRoom;
         if (treasure is not null)
         {
@@ -1030,17 +1050,97 @@ internal static class BridgeCommandDispatcher
                 {
                     return ("error", "no live NTreasureRoom captured (TreasureRoomReadyPatch not fired?)");
                 }
-                var m = typeof(MegaCrit.Sts2.Core.Nodes.Rooms.NTreasureRoom).GetMethod(
-                    "OnProceedButtonReleased",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (m is null) return ("error", "could not resolve NTreasureRoom.OnProceedButtonReleased");
-                m.Invoke(ntreasure, new object?[] { null });
-                BridgeTrace.Log("DispatchProceed via NTreasureRoom.OnProceedButtonReleased");
-                return ("ok", "proceeded from treasure room");
+
+                // BKI-001 guard.
+                try
+                {
+                    var openedField = typeof(MegaCrit.Sts2.Core.Nodes.Rooms.NTreasureRoom).GetField(
+                        "_hasChestBeenOpened",
+                        System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                    bool chestOpened = openedField?.GetValue(ntreasure) is bool b && b;
+                    if (!chestOpened)
+                    {
+                        BridgeTrace.Log("DispatchProceed BKI-001 guard: blocked, chest not opened");
+                        return ("error",
+                            "treasure chest not yet opened; send OpenChest first, then either " +
+                            "SelectTreasureRelic (to take the relic) or Proceed (to skip it). " +
+                            "Bypassing this strands map.available (BKI-001).");
+                    }
+
+                    var collField = typeof(MegaCrit.Sts2.Core.Nodes.Rooms.NTreasureRoom).GetField(
+                        "_relicCollection",
+                        System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                    var coll = collField?.GetValue(ntreasure) as NTreasureRoomRelicCollection;
+                    int holderCount = 0;
+                    if (coll is not null)
+                    {
+                        var holdersField = typeof(NTreasureRoomRelicCollection).GetField(
+                            "_holdersInUse",
+                            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                        if (holdersField?.GetValue(coll) is System.Collections.ICollection holders)
+                        {
+                            holderCount = holders.Count;
+                        }
+                    }
+                    if (holderCount == 0)
+                    {
+                        BridgeTrace.Log("DispatchProceed BKI-001 guard: blocked, no relic to skip");
+                        return ("error",
+                            "no relic on offer to skip; either you already picked one (room should " +
+                            "have auto-advanced) or the chest was empty. If state.screen.name is still " +
+                            "Room:Treasure, this is unexpected — re-check state.treasure (BKI-001).");
+                    }
+                }
+                catch (Exception exGuard)
+                {
+                    BridgeTrace.Log($"DispatchProceed BKI-001 guard threw (ignored): {exGuard.Message}");
+                }
+
+                // Apply the merchant/event-room exit pattern.
+                var rm = RunManager.Instance;
+                if (rm is null) return ("error", "RunManager.Instance null; cannot Exit treasure room");
+                var stateProp = rm.GetType().GetProperty("State",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+                var runState = stateProp?.GetValue(rm) as MegaCrit.Sts2.Core.Runs.IRunState;
+                if (runState is null) return ("error", "RunManager.State null/not-IRunState; cannot Exit treasure room");
+
+                // 1) Record history (fire-and-forget; Exit completes synchronously
+                //    for non-async treasure-room logic).
+                var exitTask = treasure.Exit(runState);
+                exitTask.ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        var inner = t.Exception?.GetBaseException();
+                        BridgeTrace.Log($"TreasureRoom.Exit FAULTED: {inner?.GetType().Name}: {inner?.Message}");
+                    }
+                    else { BridgeTrace.Log("TreasureRoom.Exit completed (history recorded)"); }
+                });
+
+                // 2) Open the map screen with travel enabled.
+                try
+                {
+                    var mapScreen = NMapScreen.Instance;
+                    if (mapScreen is null || !Godot.GodotObject.IsInstanceValid(mapScreen))
+                    {
+                        BridgeTrace.Log("DispatchProceed (treasure): NMapScreen.Instance null/invalid");
+                        return ("error", "NMapScreen.Instance null/invalid; treasure exit recorded but map cannot open");
+                    }
+                    mapScreen.SetTravelEnabled(true);
+                    mapScreen.Open(false);
+                    BridgeTrace.Log("DispatchProceed (treasure skip): TreasureRoom.Exit + NMapScreen.Open(false) invoked");
+                }
+                catch (Exception exMap)
+                {
+                    BridgeTrace.Log($"DispatchProceed (treasure): NMapScreen.Open threw: {exMap.Message}");
+                    return ("error", $"NMapScreen.Open threw after TreasureRoom.Exit: {exMap.Message}");
+                }
+
+                return ("ok", "skipped treasure relic; map opened with travel enabled");
             }
             catch (Exception ex)
             {
-                return ("error", $"NTreasureRoom.OnProceedButtonReleased threw: {ex.Message}");
+                return ("error", $"DispatchProceed (treasure) threw: {ex.GetType().Name}: {ex.Message}");
             }
         }
 
@@ -1166,7 +1266,10 @@ internal static class BridgeCommandDispatcher
                 var wanted = new MapCoord { col = col, row = row };
                 bool found = false;
                 bool travelable = false;
+                string? stateStr = null;
                 var travelProp = typeof(NMapPoint).GetProperty("IsTravelable",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+                var stateProp = typeof(NMapPoint).GetProperty("State",
                     System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
                 foreach (System.Collections.DictionaryEntry e in dict)
                 {
@@ -1175,15 +1278,26 @@ internal static class BridgeCommandDispatcher
                         if (e.Key is MapCoord k && k.col == col && k.row == row)
                         {
                             found = true;
-                            if (e.Value is NMapPoint np && travelProp?.GetValue(np) is bool t)
-                                travelable = t;
+                            if (e.Value is NMapPoint np)
+                            {
+                                if (travelProp?.GetValue(np) is bool t) travelable = t;
+                                try { stateStr = stateProp?.GetValue(np)?.ToString(); } catch { }
+                            }
                             break;
                         }
                     }
                     catch { }
                 }
                 if (!found) return ("error", $"no map point at ({col},{row})");
-                if (!travelable) return ("error", $"map point ({col},{row}) is not currently travelable");
+                // BKI-002: accept the move if either the live predicate says travelable
+                // OR the MapPointState enum is "Travelable". The predicate transiently
+                // returns false post-Act-boss when currentCoord is null; the enum is
+                // more reliable for off-grid entry nodes (row-0 Ancient, etc).
+                bool stateAllows = string.Equals(stateStr, "Travelable", StringComparison.Ordinal);
+                if (!travelable && !stateAllows)
+                {
+                    return ("error", $"map point ({col},{row}) is not currently travelable (IsTravelable=false, state={stateStr ?? "null"})");
+                }
             }
         }
         catch (Exception ex)

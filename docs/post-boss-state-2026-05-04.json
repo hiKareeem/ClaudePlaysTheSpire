@@ -1,0 +1,1520 @@
+{
+  "schemaVersion": 1,
+  "modVersion": "0.1.1",
+  "timestampUtc": "2026-05-04T15:07:19.5239568Z",
+  "revision": 457,
+  "source": {
+    "modId": "HermesBridge",
+    "trigger": "MapScreenOpen"
+  },
+  "screen": {
+    "name": "Map"
+  },
+  "rewards": null,
+  "cardRewardOptions": null,
+  "combat": null,
+  "run": {
+    "gameMode": "Standard",
+    "ascensionLevel": 0,
+    "totalFloor": 17,
+    "actFloor": 17,
+    "currentActIndex": 0,
+    "actId": "ACT:UNDERDOCKS",
+    "currentRoom": {
+      "id": "ENCOUNTER:WATERFALL_GIANT_BOSS",
+      "roomType": "Boss"
+    },
+    "restSite": null,
+    "currentHp": 45,
+    "maxHp": 88,
+    "block": 0,
+    "gold": 159,
+    "maxPotionCount": 3,
+    "character": "CHARACTER:IRONCLAD",
+    "relics": [
+      {
+        "id": "RELIC:BURNING_BLOOD",
+        "title": "Burning Blood",
+        "description": "At the end of combat, heal [green]6[/green] HP.",
+        "rarity": "Starter"
+      },
+      {
+        "id": "RELIC:SMALL_CAPSULE",
+        "title": "Small Capsule",
+        "description": "Upon pickup, obtain a random [gold]Relic[/gold].",
+        "rarity": "Ancient"
+      },
+      {
+        "id": "RELIC:WHETSTONE",
+        "title": "Whetstone",
+        "description": "Upon pickup, [gold]Upgrade[/gold] [blue]2[/blue] random Attacks.",
+        "rarity": "Common"
+      },
+      {
+        "id": "RELIC:REGAL_PILLOW",
+        "title": "Regal Pillow",
+        "description": "Whenever you [gold]Rest[/gold], heal an additional [blue]15[/blue] HP.",
+        "rarity": "Common"
+      }
+    ],
+    "potions": [
+      {
+        "id": "POTION:COLORLESS_POTION",
+        "title": "Colorless Potion",
+        "description": "Choose [blue]1[/blue] of [blue]3[/blue] random Colorless cards to add into your [gold]Hand[/gold]. It\u0027s free to play this turn.",
+        "rarity": "Common",
+        "targetType": "Self"
+      },
+      {
+        "id": "POTION:GIGANTIFICATION_POTION",
+        "title": "Gigantification Potion",
+        "description": "The next Attack you play deals triple damage.",
+        "rarity": "Rare",
+        "targetType": "AnyPlayer"
+      },
+      {
+        "id": "POTION:FYSH_OIL",
+        "title": "Fysh Oil",
+        "description": "Gain [blue]1[/blue] [gold]Strength[/gold] and [blue]1[/blue] [gold]Dexterity[/gold].",
+        "rarity": "Uncommon",
+        "targetType": "AnyPlayer"
+      }
+    ],
+    "deck": [
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike\u002B",
+        "description": "Deal 9 damage.",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": true,
+        "isUpgradable": false,
+        "currentUpgradeLevel": 1,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [
+          "Strike"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "description": "Deal 6 damage.",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [
+          "Strike"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike\u002B",
+        "description": "Deal 9 damage.\n[gold]Replay[/gold] 1.",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": true,
+        "isUpgradable": false,
+        "currentUpgradeLevel": 1,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [
+          "Strike"
+        ],
+        "keywords": [],
+        "enchantment": {
+          "title": "Spiral",
+          "dynamicDescription": "This card gains [gold]Replay[/gold] [blue]1[/blue].",
+          "amount": 1,
+          "status": "Normal",
+          "shouldGlowGold": false,
+          "shouldGlowRed": false
+        },
+        "affliction": null
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "description": "Deal 6 damage.",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [
+          "Strike"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:STRIKE_IRONCLAD",
+        "title": "Strike",
+        "description": "Deal 6 damage.",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [
+          "Strike"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "description": "Gain 5 [gold]Block[/gold].",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [
+          "Defend"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "description": "Gain 5 [gold]Block[/gold].",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [
+          "Defend"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "description": "Gain 5 [gold]Block[/gold].",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [
+          "Defend"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:DEFEND_IRONCLAD",
+        "title": "Defend",
+        "description": "Gain 5 [gold]Block[/gold].",
+        "type": "Skill",
+        "rarity": "Basic",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [
+          "Defend"
+        ],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:BASH",
+        "title": "Bash",
+        "description": "Deal 8 damage.\nApply 2 [gold]Vulnerable[/gold].",
+        "type": "Attack",
+        "rarity": "Basic",
+        "energyCost": 2,
+        "effectiveEnergyCost": 2,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:HOWL_FROM_BEYOND",
+        "title": "Howl from Beyond",
+        "description": "Deal 16 damage to ALL enemies.\nAt the start of your turn, if this is in your [gold]Exhaust Pile[/gold], play it.",
+        "type": "Attack",
+        "rarity": "Uncommon",
+        "energyCost": 3,
+        "effectiveEnergyCost": 3,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AllEnemies",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:RAMPAGE",
+        "title": "Rampage",
+        "description": "Deal 9 damage.\nIncrease this card\u0027s damage by 5 this combat.",
+        "type": "Attack",
+        "rarity": "Uncommon",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:BRAND",
+        "title": "Brand",
+        "description": "Lose 1 HP.\n[gold]Exhaust[/gold] 1 card.\nGain 1 [gold]Strength[/gold].",
+        "type": "Skill",
+        "rarity": "Rare",
+        "energyCost": 0,
+        "effectiveEnergyCost": 0,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": true,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:SHRUG_IT_OFF",
+        "title": "Shrug It Off",
+        "description": "Gain 8 [gold]Block[/gold].\nDraw 1 card.",
+        "type": "Skill",
+        "rarity": "Common",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:TREMBLE",
+        "title": "Tremble",
+        "description": "Apply 3 [gold]Vulnerable[/gold].\n[gold]Exhaust[/gold].",
+        "type": "Skill",
+        "rarity": "Common",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": true,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [],
+        "keywords": [
+          "Exhaust"
+        ],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:VICIOUS",
+        "title": "Vicious",
+        "description": "Whenever you apply [gold]Vulnerable[/gold], draw 1 card.",
+        "type": "Power",
+        "rarity": "Uncommon",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:STAMPEDE",
+        "title": "Stampede",
+        "description": "At the end of your turn, 1 random Attack in your [gold]Hand[/gold] is played against a random enemy.",
+        "type": "Power",
+        "rarity": "Uncommon",
+        "energyCost": 2,
+        "effectiveEnergyCost": 2,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:INFLAME",
+        "title": "Inflame",
+        "description": "Gain 2 [gold]Strength[/gold].",
+        "type": "Power",
+        "rarity": "Uncommon",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:PILLAGE",
+        "title": "Pillage",
+        "description": "Deal 6 damage.\nDraw cards until you draw a non-Attack card.",
+        "type": "Attack",
+        "rarity": "Uncommon",
+        "energyCost": 1,
+        "effectiveEnergyCost": 1,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "AnyEnemy",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      },
+      {
+        "id": "CARD:HELLRAISER",
+        "title": "Hellraiser",
+        "description": "Whenever you draw a card containing \u201CStrike\u201D, it is played against a random enemy.",
+        "type": "Power",
+        "rarity": "Rare",
+        "energyCost": 2,
+        "effectiveEnergyCost": 2,
+        "costsX": false,
+        "baseStarCost": -1,
+        "currentStarCost": -1,
+        "isPlayable": false,
+        "isUpgraded": false,
+        "isUpgradable": true,
+        "currentUpgradeLevel": 0,
+        "pile": "Deck",
+        "handIndex": null,
+        "ethereal": false,
+        "innate": false,
+        "retain": false,
+        "exhaust": false,
+        "willExhaust": false,
+        "willRetain": false,
+        "isCurse": false,
+        "isStatus": false,
+        "isAffliction": false,
+        "targetType": "Self",
+        "tags": [],
+        "keywords": [],
+        "enchantment": null,
+        "affliction": null
+      }
+    ],
+    "deckSize": 20
+  },
+  "event": null,
+  "shop": null,
+  "restSite": null,
+  "treasure": null,
+  "map": {
+    "rowCount": 15,
+    "colCount": 7,
+    "currentCoord": null,
+    "bossCoord": {
+      "col": 3,
+      "row": 15
+    },
+    "available": [],
+    "visited": [],
+    "grid": [
+      {
+        "col": 0,
+        "row": 2,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 3,
+        "pointType": "Shop",
+        "children": [
+          {
+            "col": 0,
+            "row": 4
+          },
+          {
+            "col": 1,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 5,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 1,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 9,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 10
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 10,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 1,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 12,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 0,
+        "row": 13,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 1,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 5
+          },
+          {
+            "col": 1,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 5,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 6,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 8,
+        "pointType": "Treasure",
+        "children": [
+          {
+            "col": 0,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 11,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 0,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 1,
+        "row": 14,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 3,
+            "row": 15
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 2,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 1,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 5,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 2,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 6,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 2,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 7,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 2,
+            "row": 8
+          },
+          {
+            "col": 1,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 8,
+        "pointType": "Treasure",
+        "children": [
+          {
+            "col": 2,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 9,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 2,
+            "row": 10
+          },
+          {
+            "col": 3,
+            "row": 10
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 10,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 2,
+            "row": 11
+          },
+          {
+            "col": 3,
+            "row": 11
+          },
+          {
+            "col": 1,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 11,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 3,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 2,
+        "row": 13,
+        "pointType": "Shop",
+        "children": [
+          {
+            "col": 1,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 6,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 2,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 10,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 11,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 3,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 12,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 13
+          },
+          {
+            "col": 3,
+            "row": 13
+          },
+          {
+            "col": 2,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 13,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 3,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 14,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 3,
+            "row": 15
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 2,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 5,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 4,
+            "row": 6
+          },
+          {
+            "col": 3,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 6,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 7,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 4,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 8,
+        "pointType": "Treasure",
+        "children": [
+          {
+            "col": 4,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 9,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 4,
+            "row": 10
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 10,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 4,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 11,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 4,
+            "row": 12
+          },
+          {
+            "col": 3,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 12,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 5,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 4,
+        "row": 13,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 4,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 4,
+        "pointType": "Shop",
+        "children": [
+          {
+            "col": 4,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 13,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 5,
+        "row": 14,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 3,
+            "row": 15
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 1,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 2,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 5,
+            "row": 3
+          },
+          {
+            "col": 6,
+            "row": 3
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 3,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 4
+          },
+          {
+            "col": 6,
+            "row": 4
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 4,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 5
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 5,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 6,
+        "pointType": "Unknown",
+        "children": [
+          {
+            "col": 6,
+            "row": 7
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 7,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 8,
+        "pointType": "Treasure",
+        "children": [
+          {
+            "col": 6,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 9,
+        "pointType": "Elite",
+        "children": [
+          {
+            "col": 6,
+            "row": 10
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 10,
+        "pointType": "RestSite",
+        "children": [
+          {
+            "col": 6,
+            "row": 11
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 11,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 12,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 6,
+            "row": 13
+          }
+        ]
+      },
+      {
+        "col": 6,
+        "row": 13,
+        "pointType": "Monster",
+        "children": [
+          {
+            "col": 5,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "col": 3,
+        "row": 15,
+        "pointType": "Boss",
+        "state": "Untravelable",
+        "offGrid": true,
+        "children": []
+      },
+      {
+        "col": 3,
+        "row": 0,
+        "pointType": "Ancient",
+        "state": "Travelable",
+        "offGrid": true,
+        "children": []
+      }
+    ]
+  },
+  "cardGrid": null,
+  "chooseACardScreen": null,
+  "handSelect": null
+}
