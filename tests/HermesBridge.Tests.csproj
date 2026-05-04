@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>HermesBridge.Tests</RootNamespace>
+    <AssemblyName>HermesBridge.Tests</AssemblyName>
+    <!-- Keep this csproj independent of HermesBridge.csproj (which references Godot/MegaCrit assemblies). -->
+    <!-- We Compile-link only the bridge sources whose tests we run, then declare them in HermesBridge.HermesBridgeCode namespace. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Bridge sources under test. Each must have no dependencies on Godot/MegaCrit/Harmony; -->
+    <!-- if they do, add a stub or a #if TESTS guard in the source. -->
+    <Compile Include="..\HermesBridgeCode\AtomicFileWriter.cs" Link="HermesBridgeCode\AtomicFileWriter.cs" />
+    <Compile Include="..\HermesBridgeCode\BridgePaths.cs" Link="HermesBridgeCode\BridgePaths.cs" />
+  </ItemGroup>
+</Project>

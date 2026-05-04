@@ -162,15 +162,43 @@ Before pasting the prompt above, the operator must:
    `docs/benchmark/opencode.benchmark.json`. MemPalace, webfetch,
    google_search, task, and all non-bridge MCP servers must be
    disabled.
-4. Start a **fresh** OpenCode session (`opencode` with no `-c` resume
+4. **Set the IPC directory** for the game instance you are driving.
+   The bridge (inside Godot) and the autopilot scripts (running in the
+   operator's terminal) each pick their IPC directory **independently**
+   — both must agree, otherwise the agent will read state written by
+   the wrong game:
+   - **Steam instance** (default): no action needed. The bridge
+     defaults to `%APPDATA%\SlayTheSpire2\hermesbridge\`, and so do
+     the scripts.
+   - **Non-Steam instance**: do **both** of the following:
+     1. **Bridge side** — drop a `hermes-instance.cfg` next to the
+        bridge DLL (in the non-Steam install's `mods\HermesBridge\`
+        folder). The file contains a single token matching
+        `[A-Za-z0-9_-]+`, e.g. `nonsteam`. The bridge then writes
+        IPC files under
+        `%APPDATA%\SlayTheSpire2\hermesbridge-nonsteam\`.
+        (The env var has no effect here — Steam launches the game
+        without inheriting your terminal env.)
+     2. **Script side** — set the env var **before** launching
+        OpenCode, in the same terminal:
+        ```powershell
+        $env:HERMES_IPC_DIR = "$env:APPDATA\SlayTheSpire2\hermesbridge-nonsteam"
+        ```
+        This routes all `autopilot-lib.ps1` calls (read-state,
+        send-command, etc.) to the same directory the bridge is
+        writing to.
+
+   The agent is unaware of the routing — it uses the same tools
+   either way.
+5. Start a **fresh** OpenCode session (`opencode` with no `-c` resume
    flag, in `E:\Games\sts2\HermesBridge-StS2`). Note the
    `session_id` from the OpenCode UI/log — you'll need it for the
    run record.
-5. Choose the character for this run from the rotation:
+6. Choose the character for this run from the rotation:
    IRONCLAD → SILENT → DEFECT → REGENT → NECROBINDER. Do **not** let
    the agent choose; assign it explicitly in `<CHARACTER>`.
-6. Note `start_time_utc` (now).
-7. Paste the prompt block above into the agent's first message,
+7. Note `start_time_utc` (now).
+8. Paste the prompt block above into the agent's first message,
    substituting `<RUN_ID>`, `<CHARACTER>`, `<MODEL_SLUG>`.
 
 ### Per-run teardown checklist
@@ -184,13 +212,17 @@ runcap, or manual halt):
    format `ses_<27-char-base32>`, **not** the upstream provider's
    session id), `start_time_utc` / `end_time_utc` (both UTC),
    `duration_minutes`, `model`, `model_provider`.
-3. **Snapshot floor-history.** Copy
-   `%APPDATA%\SlayTheSpire2\hermesbridge\floor-history.jsonl` to
+3. **Snapshot floor-history.** Copy the floor-history file from the
+   instance's IPC directory to
    `docs\benchmark\runs\<RUN_ID>.jsonl` (sibling to the .md record;
    same basename, .jsonl extension). Do this **before** restarting
    the game for the next run — bridge v0.1.5+ truncates the runtime
    file on game startup, so a missed snapshot loses the data
    permanently.
+   - Steam instance:
+     `%APPDATA%\SlayTheSpire2\hermesbridge\floor-history.jsonl`
+   - Non-Steam instance:
+     `%APPDATA%\SlayTheSpire2\hermesbridge-nonsteam\floor-history.jsonl`
 4. If the agent didn't write a run record (e.g. it hit
    `rate_limit` mid-run before reaching the write step), the operator
    creates the record from the template manually. Set

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using HermesBridge.HermesBridgeCode;
 
@@ -186,6 +187,106 @@ void RewardConsumptionRegression()
     Console.WriteLine("PASS: consumed rewards are pruned from cached reward state after AfterRewardTaken.");
 }
 
+void BridgePathsResolutionRegression()
+{
+    var tempRoot = Path.Combine(Path.GetTempPath(), "hermesbridge-paths-test-" + Guid.NewGuid().ToString("N"));
+    var dllDir = Path.Combine(tempRoot, "dll");
+    var appData = Path.Combine(tempRoot, "appdata");
+    Directory.CreateDirectory(dllDir);
+    Directory.CreateDirectory(appData);
+
+    try
+    {
+        var defaultPath = Path.Combine(appData, "SlayTheSpire2", "hermesbridge");
+
+        // 1. env override wins over everything
+        var envResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: @"D:\custom\ipc",
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out var envDiag);
+        AssertTrue(envResult == @"D:\custom\ipc",
+            $"HERMES_IPC_DIR override should be returned literally; got '{envResult}'");
+        AssertTrue(envDiag != null && envDiag.Contains("HERMES_IPC_DIR"),
+            "Env override should produce a HERMES_IPC_DIR diagnostic");
+
+        // 2. valid hermes-instance.cfg → hermesbridge-{id} under appdata
+        var cfgPath = Path.Combine(dllDir, "hermes-instance.cfg");
+        File.WriteAllText(cfgPath, "nonsteam");
+        var cfgResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: null,
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out var cfgDiag);
+        AssertTrue(cfgResult == Path.Combine(appData, "SlayTheSpire2", "hermesbridge-nonsteam"),
+            $"Valid cfg should produce hermesbridge-{{id}} path; got '{cfgResult}'");
+        AssertTrue(cfgDiag != null && cfgDiag.Contains("'nonsteam'"),
+            "Cfg path should produce an instance-config diagnostic");
+
+        // 3. cfg with UTF-8 BOM is stripped before sanitization
+        File.WriteAllText(cfgPath, "\uFEFFwithbom", new UTF8Encoding(true));
+        var bomResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: null,
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out _);
+        AssertTrue(bomResult == Path.Combine(appData, "SlayTheSpire2", "hermesbridge-withbom"),
+            $"BOM should be stripped; got '{bomResult}'");
+
+        // 4. cfg with path-traversal characters → falls through to default
+        File.WriteAllText(cfgPath, "../evil");
+        var evilResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: null,
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out var evilDiag);
+        AssertTrue(evilResult == defaultPath,
+            $"Invalid id should fall through to default; got '{evilResult}'");
+        AssertTrue(evilDiag != null && evilDiag.Contains("no valid id"),
+            "Invalid id should produce a 'no valid id' diagnostic");
+
+        // 5. empty cfg → falls through to default, no diagnostic
+        File.WriteAllText(cfgPath, "   \r\n");
+        var emptyResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: null,
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out _);
+        AssertTrue(emptyResult == defaultPath,
+            $"Empty cfg should fall through to default; got '{emptyResult}'");
+
+        // 6. no cfg, no env → default
+        File.Delete(cfgPath);
+        var fallbackResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: null,
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out var fallbackDiag);
+        AssertTrue(fallbackResult == defaultPath,
+            $"No env, no cfg should give default; got '{fallbackResult}'");
+        AssertTrue(fallbackDiag == null,
+            "Default fallback should produce no diagnostic");
+
+        // 7. SanitizeInstanceId direct unit checks
+        AssertTrue(BridgePaths.SanitizeInstanceId("foo_bar-1") == "foo_bar-1",
+            "SanitizeInstanceId should accept [A-Za-z0-9_-]+");
+        AssertTrue(BridgePaths.SanitizeInstanceId("\uFEFF spaced ") == "spaced",
+            "SanitizeInstanceId should strip BOM and trim whitespace");
+        AssertTrue(BridgePaths.SanitizeInstanceId("a/b") is null,
+            "SanitizeInstanceId should reject path separators");
+        AssertTrue(BridgePaths.SanitizeInstanceId("..") is null,
+            "SanitizeInstanceId should reject parent-dir tokens");
+        AssertTrue(BridgePaths.SanitizeInstanceId("") is null,
+            "SanitizeInstanceId should reject empty input");
+
+        Console.WriteLine("PASS: BridgePaths resolves env, cfg, BOM, traversal, empty, fallback correctly.");
+    }
+    finally
+    {
+        try { Directory.Delete(tempRoot, true); } catch { }
+    }
+}
+
 void EndTurnGuardRegression()
 {
     var dispatcher = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "HermesBridgeCode", "BridgeCommandDispatcher.cs"));
@@ -217,3 +318,4 @@ RestSiteCleanupRegression();
 EventProceedScreenRegression();
 RewardConsumptionRegression();
 EndTurnGuardRegression();
+BridgePathsResolutionRegression();

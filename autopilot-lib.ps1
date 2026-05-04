@@ -28,7 +28,7 @@
 Set-StrictMode -Version Latest
 
 # ---------------- Paths ----------------
-$script:IpcDir      = Join-Path $env:APPDATA 'SlayTheSpire2\hermesbridge'
+$script:IpcDir      = if ($env:HERMES_IPC_DIR) { $env:HERMES_IPC_DIR } else { Join-Path $env:APPDATA 'SlayTheSpire2\hermesbridge' }
 $script:StateFile   = Join-Path $script:IpcDir 'state.json'
 $script:CmdsFile    = Join-Path $script:IpcDir 'commands.json'
 $script:ResFile     = Join-Path $script:IpcDir 'result.json'
