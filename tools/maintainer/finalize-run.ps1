@@ -21,6 +21,11 @@
 #
 # Exits non-zero on any step failure. Stops the pipeline on first
 # error so you can fix and resume.
+#
+# Idempotency: safe to re-run after partial failure. If runs.csv already
+# contains a row for the run_id, step 1 is auto-skipped and the script
+# resumes from parse-run-history. Token frontmatter patching inside
+# append-run-csv is itself idempotent (only fills nullish fields).
 # ---------------------------------------------------------------
 
 [CmdletBinding()]
@@ -73,14 +78,35 @@ if ($SkipRegenerate) { $totalSteps -= 1 }
 $step = 0
 
 # --- 1. append-run-csv.ps1 (also resolves + patches tokens) ------
+# Idempotency: if the CSV already has a row for this run_id, the underlying
+# append-run-csv.ps1 will throw on its duplicate-row guard. That's correct
+# behaviour for a one-shot invocation, but breaks resume-after-failure when
+# step 2 or 3 erred on a previous attempt. So we pre-check here and skip
+# step 1 cleanly when the row is already present (token frontmatter patch
+# is idempotent on its own; re-running would just no-op).
 if (-not $SkipAppend) {
-    $step++
-    Write-Step $step $totalSteps "append-run-csv.ps1 (CSV row + token patch)"
-    $appendArgs = @{ RunId = $RunId }
-    if ($DryRun) { $appendArgs['DryRun'] = $true }
-    & (Join-Path $repoRoot 'tools\maintainer\append-run-csv.ps1') @appendArgs
-    if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) {
-        throw "append-run-csv.ps1 failed with exit $LASTEXITCODE"
+    $csvPath = Join-Path $repoRoot 'docs\benchmark\runs.csv'
+    $alreadyAppended = $false
+    if (Test-Path $csvPath) {
+        $existing = Get-Content -LiteralPath $csvPath
+        if ($existing | Where-Object { $_ -match "^$([regex]::Escape($RunId))," }) {
+            $alreadyAppended = $true
+        }
+    }
+    if ($alreadyAppended) {
+        $totalSteps -= 1
+        Write-Host ""
+        Write-Host "[skip] append-run-csv.ps1 -- runs.csv already has row for $RunId" -ForegroundColor Yellow
+        Write-Host "       (resuming from parse step; pass -SkipAppend explicitly to silence this)" -ForegroundColor DarkGray
+    } else {
+        $step++
+        Write-Step $step $totalSteps "append-run-csv.ps1 (CSV row + token patch)"
+        $appendArgs = @{ RunId = $RunId }
+        if ($DryRun) { $appendArgs['DryRun'] = $true }
+        & (Join-Path $repoRoot 'tools\maintainer\append-run-csv.ps1') @appendArgs
+        if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) {
+            throw "append-run-csv.ps1 failed with exit $LASTEXITCODE"
+        }
     }
 }
 
