@@ -77,6 +77,7 @@ internal static class BridgeCommandDispatcher
                 "SelectTreasureRelic" => DispatchSelectTreasureRelic(command),
                 "DumpScene" => DispatchDumpScene(command),
                 "DumpMapPoints" => DispatchDumpMapPoints(command),
+                "ForceRefresh" => DispatchForceRefresh(command),
                 _ => ("error", $"unknown command type: {type}"),
             };
         }
@@ -2961,6 +2962,63 @@ internal static class BridgeCommandDispatcher
         {
             return ("error", $"DumpMapPoints threw: {ex.GetType().Name}: {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// Force-refresh: re-pull every snapshot slot from canonical game state and
+    /// emit a fresh state.json. Idempotent. Use when an agent suspects state.json
+    /// has drifted from the live game (e.g. <c>combat.available[]</c> empty on a
+    /// non-boss floor for multiple ticks, suggesting a missed hook).
+    ///
+    /// No parameters. Each <c>BridgeSingleton.PushCurrent*</c> method self-checks
+    /// its prerequisites (singleton instance, room field, current player) and
+    /// silently no-ops when not applicable to the current screen — so calling
+    /// all of them in sequence is safe regardless of which screen is active.
+    ///
+    /// The post-dispatch <c>RequestWrite</c> in <see cref="BridgeCommandReader"/>
+    /// commits the rebuilt slots to state.json, advancing both <c>stateVersion</c>
+    /// and <c>revision</c>. Agents detect refresh completion by polling
+    /// <c>stateVersion -gt $beforeStateVersion</c> after the result lands.
+    ///
+    /// Returns ("ok", "force-refresh complete: stateVersion=N").
+    /// </summary>
+    private static (string status, string message) DispatchForceRefresh(JsonElement command)
+    {
+        BridgeTrace.Log("ForceRefresh BEGIN");
+
+        // Each Push* is independently try/catch'd internally, so one failing
+        // slot does not block the others. Order matches expected screen
+        // hierarchy (run-level always relevant; per-room slots refresh
+        // when their respective room is active).
+        try { BridgeSingleton.PushCurrentRun("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentRun threw: {ex.Message}"); }
+
+        try { BridgeSingleton.PushCurrentCombat("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentCombat threw: {ex.Message}"); }
+
+        try { BridgeSingleton.PushCurrentEvent("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentEvent threw: {ex.Message}"); }
+
+        try { BridgeSingleton.PushCurrentShop("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentShop threw: {ex.Message}"); }
+
+        try { BridgeSingleton.PushCurrentRestSite("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentRestSite threw: {ex.Message}"); }
+
+        try { BridgeSingleton.PushCurrentTreasure("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentTreasure threw: {ex.Message}"); }
+
+        try { BridgeSingleton.PushCurrentMap("ForceRefresh"); }
+        catch (Exception ex) { BridgeTrace.Log($"ForceRefresh PushCurrentMap threw: {ex.Message}"); }
+
+        // Note: the post-dispatch RequestWrite in BridgeCommandReader.Tick
+        // will flush these slot updates to state.json with new
+        // stateVersion / revision counters. Read CurrentStateVersion AFTER
+        // that flush; here we report the value BEFORE the flush so the
+        // result message documents what the agent should expect to exceed.
+        var preFlushStateVersion = BridgeSnapshotWriter.CurrentStateVersion;
+        BridgeTrace.Log($"ForceRefresh END preFlushStateVersion={preFlushStateVersion}");
+        return ("ok", $"force-refresh complete; new stateVersion will be > {preFlushStateVersion}");
     }
 }
 
