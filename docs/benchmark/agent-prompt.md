@@ -67,6 +67,23 @@ command):**
 - **One run, one OpenCode session.** No memory persists between runs.
   This session ends with the run.
 
+**Resource calibration (do not end the run early for cost, duration, or
+context concerns):**
+
+- Runs in this benchmark take 30 minutes to 3 hours. Any duration in
+  that range is normal. A 2-hour run is mid-range.
+- Total run cost up to $25 USD is within budget. Your current cost is
+  not your concern — the operator set the budget, not you.
+- Context window usage up to 80% is safe. The operator monitors the
+  session and will manually halt if limits approach. If you have not
+  received a manual halt, continue playing.
+- **The only valid reasons to end a run early are death, victory, stall,
+  rate-limit, or error-streak** (per protocol.md). Cost anxiety is not
+  a halt reason. Duration anxiety is not a halt reason. Context anxiety
+  is not a halt reason. The operator is watching and will intervene if
+  needed — your job is to keep playing until the game ends or the
+  operator tells you to stop.
+
 **Your job:**
 
 1. Read the four required files above.
