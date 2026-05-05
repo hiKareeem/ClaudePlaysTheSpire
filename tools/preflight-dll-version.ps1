@@ -11,7 +11,7 @@
        mismatch means the operator forgot to copy the new build into the
        game's mods folder, or has an old shortcut pointing at a stale
        deployment. Either way the run would record under a misleading
-       modVersion and silently corrupt the dataset — this is the most
+       modVersion and silently corrupt the dataset -- this is the most
        common cross-session footgun and the reason this script exists.
 
     2. Minimum bridge version. The deployed build must be >= the
@@ -67,11 +67,17 @@ param(
     [string] $ModsRoot,
     [string] $ExpectedIpcRoot,
     [string] $MinBridgeVersion = '0.2.0',
-    [string] $RepoRoot = (Split-Path $PSScriptRoot -Parent),
+    [string] $RepoRoot,
     [switch] $SkipRepoMatch
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Defer $PSScriptRoot-derived defaults to script body. In Windows PowerShell
+# 5.1 the automatic variable is not bound during param() default evaluation,
+# which made the original `[string] $RepoRoot = (Split-Path $PSScriptRoot
+# -Parent)` form throw "empty string" when invoked via `-File`.
+if (-not $RepoRoot) { $RepoRoot = (Split-Path $PSScriptRoot -Parent) }
 
 # Result accumulator. Each entry: { Check, Status (PASS|WARN|FAIL), Detail }.
 $results = New-Object System.Collections.Generic.List[psobject]
@@ -106,7 +112,7 @@ if (-not (Test-Path $deployedDll)) {
     Record 'deployment' 'FAIL' "HermesBridge.dll not found at $deployedDll. Set -ModsRoot to the correct StS2 mods directory."
 }
 elseif (-not (Test-Path $deployedManifest)) {
-    Record 'deployment' 'FAIL' "HermesBridge.json not found at $deployedManifest (DLL present but manifest missing — incomplete deployment)."
+    Record 'deployment' 'FAIL' "HermesBridge.json not found at $deployedManifest (DLL present but manifest missing -- incomplete deployment)."
 }
 else {
     Record 'deployment' 'PASS' "DLL + manifest present at $deployedDir"
@@ -157,7 +163,7 @@ function Compare-SemVer {
     param([string] $a, [string] $b)
     # Returns -1 / 0 / 1. Strips any "-suffix" pre-release tag before
     # comparing; for the floor check, "0.2.0-rc1" is treated as 0.2.0
-    # (good enough — pre-release builds are operator-internal anyway).
+    # (good enough -- pre-release builds are operator-internal anyway).
     function Parts([string] $v) {
         $clean = ($v -split '-')[0]
         return @($clean -split '\.' | ForEach-Object {
@@ -176,7 +182,7 @@ function Compare-SemVer {
 }
 
 if (-not $deployedVersion) {
-    Record 'min-version' 'FAIL' "Cannot check min version — deployed manifest version unreadable."
+    Record 'min-version' 'FAIL' "Cannot check min version -- deployed manifest version unreadable."
 }
 elseif ((Compare-SemVer $deployedVersion $MinBridgeVersion) -lt 0) {
     Record 'min-version' 'FAIL' "Deployed v$deployedVersion is below minimum v$MinBridgeVersion. Update the bridge before starting a v1 benchmark session."
@@ -196,7 +202,7 @@ function Resolve-ExpectedIpcRoot {
         return @{ Path = $env:HERMES_IPC_DIR; Source = 'HERMES_IPC_DIR (deprecated)' }
     }
     # Default fallback. We deliberately don't try to read hermes-instance.cfg
-    # here — that's a deployment-side detail and the operator can override
+    # here -- that's a deployment-side detail and the operator can override
     # via -ExpectedIpcRoot if they're using an instance config.
     $appdata = [Environment]::GetFolderPath('ApplicationData')
     return @{ Path = (Join-Path $appdata 'SlayTheSpire2\hermesbridge'); Source = 'default (appdata fallback)' }
@@ -210,7 +216,7 @@ $expected = if ($ExpectedIpcRoot) {
 
 $traceLog = Join-Path $expected.Path 'trace.log'
 if (-not (Test-Path $traceLog)) {
-    # Not necessarily a fail — bridge may not have run yet against this root.
+    # Not necessarily a fail -- bridge may not have run yet against this root.
     # But it does mean we cannot verify the match, so flag it.
     Record 'ipc-root' 'WARN' "trace.log not present at $traceLog (source: $($expected.Source)). Bridge may not have run against this root yet; cannot verify."
 }
@@ -223,7 +229,7 @@ else {
     # Default fallback emits NO diagnostic (BridgePaths.cs comment + test
     # case 6 enforce this), so absence-of-line on a default-path session
     # is correct, and we must not fail the check just because no line is
-    # found — instead, infer that the active root is the default and
+    # found -- instead, infer that the active root is the default and
     # compare that against expected.Path directly.
     try {
         $diagLines = Select-String -Path $traceLog -Pattern 'BridgePaths: .* active: ' -SimpleMatch:$false -ErrorAction Stop
@@ -243,7 +249,7 @@ else {
         }
     }
     else {
-        # Take the LAST matching line — startup diagnostic appears once
+        # Take the LAST matching line -- startup diagnostic appears once
         # per bridge load, but there may be several in a long-lived
         # trace.log across game restarts. The most recent one is what
         # this session is using.
