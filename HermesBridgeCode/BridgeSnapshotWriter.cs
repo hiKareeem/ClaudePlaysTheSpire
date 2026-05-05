@@ -7,9 +7,19 @@ namespace HermesBridge.HermesBridgeCode;
 internal static class BridgeSnapshotWriter
 {
     private static int _revision;
+    private static int _stateVersion;
 
     /// <summary>Current revision counter (last successfully written snapshot).</summary>
     public static int CurrentRevision => _revision;
+
+    /// <summary>
+    /// Agent-facing monotonic state-change counter. Increments on every
+    /// successful write that produced a new JSON payload (skip-on-unchanged
+    /// writes do not advance it). Exposed in state.json as `stateVersion`
+    /// per protocol-v1 §Bridge changes #1. Distinct from <see cref="CurrentRevision"/>
+    /// in contract even though they currently track the same write events.
+    /// </summary>
+    public static int CurrentStateVersion => _stateVersion;
 
     /// <summary>Current coarse screen label that will be emitted in the next snapshot.</summary>
     public static string? CurrentScreen => _currentScreen;
@@ -135,9 +145,19 @@ internal static class BridgeSnapshotWriter
         {
             BridgePaths.EnsureDirectories();
 
+            // Both counters advance on every RequestWrite call (matching
+            // pre-existing `revision` semantics). The unchanged-payload skip
+            // below is effectively never triggered because both counters are
+            // baked into the JSON before comparison; preserved here only as
+            // historical defensive code. Agent harnesses (autopilot-lib.ps1)
+            // poll `revision -gt $afterRevision` to detect state updates, so
+            // the contract is "advance per RequestWrite, regardless of
+            // payload diff". stateVersion is the v1 protocol's name for the
+            // same monotonic counter, exposed under a stable contract key.
             var payload = new
             {
                 schemaVersion = 1,
+                stateVersion = ++_stateVersion,
                 modVersion = MainFile.BridgeVersion,
                 timestampUtc = DateTime.UtcNow,
                 revision = ++_revision,

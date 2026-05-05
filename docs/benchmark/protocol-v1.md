@@ -25,7 +25,7 @@ Source: `docs/benchmark/trial-v0-findings-audit.md`. Full rationale lives there.
 | Halt taxonomy | death, victory, runcap, error_streak, stall, rate_limit, manual | + `state_inconsistent`, + `budget_exhausted` | v0 stalls on 0-available-nodes were not really agent failure. |
 | Composite score | None (descriptive) | `floors + 10·act + 50·victory − 0.1·errors` | Single comparable scalar across cells. |
 | Pre-flight | Manual checklist | Automated DLL `modVersion` + bridge-version check | Run18 lost to stale Steam DLL; pre-v0.1.5 bridges report wrong `modVersion` (hardcoded `0.1.1` literal). |
-| Bridge `state_version` | Implicit revision counter | Explicit `state_version` int on every response | Lets agent detect staleness deterministically. |
+| Bridge `stateVersion` | Implicit revision counter | Explicit `stateVersion` int on every state.json write | Lets agent detect staleness deterministically. |
 | Bridge `force_refresh` verb | Absent | New IPC verb | Let agent recover from `state_inconsistent` once before halt. |
 | Bridge brand | HermesBridge | **SpireBridge** v0.2.0 | Project no longer locked to a single integration host; rebrand follows the Python port. v0 records keep their `HermesBridge` build strings; v1 records emit `SpireBridge`. |
 | Multi-instance | `HERMES_IPC_DIR` + `hermes-instance.cfg` (per `BridgePaths.cs`) | Same, plus `SPIREBRIDGE_IPC_DIR` alias and a pre-flight check that confirms each session targets a distinct IPC root | Concurrent benchmark instances are first-class; cross-talk would corrupt paired-seed comparisons silently. |
@@ -149,7 +149,7 @@ seed: seed_alpha                     # one of three fixed seeds (string, not num
 seed_label: alpha                    # alpha | beta | gamma — for sorting/grouping
 priors_version: v1.0                 # only set if knowledge_condition=B0-priors; matches priors.md frozen version
 composite_score: 47.3                # = floor + 10*act + 50*win - 0.1*errors
-state_version_max: 1247              # max state_version observed during run (v1 bridge field)
+state_version_max: 1247              # max stateVersion observed during run (v1 bridge field, JSON key `stateVersion`)
 force_refresh_count: 0               # number of times agent invoked force_refresh
 halt_reason: state_inconsistent      # extended taxonomy
 ```
@@ -162,7 +162,7 @@ All other v0 fields retained. v0 and v1 records share the same field names where
 
 For the protocol to function, the bridge must add:
 
-1. **`state_version` field** on every state response. Monotonic, increments on every state mutation. Distinct from existing `revision` (which is file-write counter).
+1. **`stateVersion` field — landed in v0.2.0.** Emitted on every state.json write under JSON key `stateVersion` (camelCase, matching sibling fields). Monotonic int, advances by 1 per `BridgeSnapshotWriter.RequestWrite` call. In current v0.2.0 implementation `stateVersion == revision` always, because both counters are incremented before the optional unchanged-payload skip (which is dead code — both fresh counters in the JSON guarantee the equality check fails). The contract distinction is preserved for forward compatibility: `revision` documents bridge-internal write sequence; `stateVersion` is the agent-facing staleness key. v1 agents poll `stateVersion -gt $afterStateVersion` (or `revision`, equivalent today) to detect state updates.
 2. **`force_refresh` IPC verb.** Re-reads game-canonical state and emits a fresh state.json. Idempotent. Returns `{status: ok|error, state: {...}, refreshed: bool}`.
 3. **Pre-flight DLL version check.** Bridge logs its `modVersion` to `trace.log` on startup; pre-flight script reads it and aborts if stale.
 4. **`state_inconsistent` event.** When bridge detects `available[]` empty on non-boss floor for 2 consecutive ticks, emit a structured event. Does not auto-halt — agent still has the option to `force_refresh`.
@@ -245,7 +245,7 @@ These must be resolved before kickoff:
 
 1. **Pick the three seeds.** Operator-side; needs one Opus 4.7 control pass per character to confirm diversity.
 2. **Write `priors.md`.** Source: v0 audit §4 + Opus's behavioral patterns. ~3–5 pages, character-neutral fundamentals + one paragraph per character.
-3. **SpireBridge v0.2.0.** Implement `state_version`, `force_refresh`, `state_inconsistent` event, DLL pre-flight log line, character-resource completeness (Stars / Orbs / Osty-as-ally at stable combat-root paths), `SPIREBRIDGE_IPC_DIR` rename with `HERMES_IPC_DIR` deprecated alias. (`StartRun.seed` already forwards correctly in v0.1.5 — `BridgeCommandDispatcher.DispatchStartRun` calls `NGame.Instance.StartNewSingleplayerRun(..., seed:seed, ...)`. Earlier protocol-v1 wording about silent drop was based on an older bridge revision and has been corrected. `CancelTargeting` deliberately omitted; see Bridge change #8 above.)
+3. **SpireBridge v0.2.0.** Implement `force_refresh`, `state_inconsistent` event, character-resource completeness (Stars / Orbs / Osty-as-ally at stable combat-root paths), `SPIREBRIDGE_IPC_DIR` rename with `HERMES_IPC_DIR` deprecated alias, `tools/preflight-dll-version.ps1` operator script. (Done in v0.2.0: `stateVersion` field on every snapshot, stale `modVersion` literal replaced with `MainFile.BridgeVersion`, startup version log line. `StartRun.seed` already forwarded correctly since v0.1.5; `CancelTargeting` deliberately omitted, see Bridge change #8.)
 4. **Composite score weights — RESOLVED.** Calibrated against v0 data via `tools/calibrate-composite.py` (n=21). Proposed weights produce the expected ranking: deepest run #1 (run11 79.4), Act-1 deaths cluster 24–27, Opus discipline run scores below deeper-floor runs by design (the formula rewards depth, not discipline). 21/21 unique scores; no ties. Weights frozen — see §Scoring calibration table above.
 5. **Run-cap bump confirmation.** Default 500 → 1000 in bridge; operator-side cap also raised.
 6. **`tools/preflight-dll-version.ps1`.** New helper. Verifies (a) `modVersion` matches repo HEAD, (b) bridge build is ≥v0.2.0, (c) the active IPC root reported in `trace.log` matches the operator-intended `SPIREBRIDGE_IPC_DIR` / `HERMES_IPC_DIR` for this run (multi-instance safety).
