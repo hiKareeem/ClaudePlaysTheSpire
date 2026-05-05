@@ -2465,6 +2465,8 @@ internal static class BridgeStateExtractor
 
             object? bossCoord = null;
             int bossRow = -1;
+            string? bossId = null;
+            string? secondBossId = null;
             try
             {
                 var boss = actMap.BossMapPoint;
@@ -2474,8 +2476,37 @@ internal static class BridgeStateExtractor
                     bossCoord = new { col = bc.col, row = bc.row };
                     bossRow = bc.row;
                 }
+
+                // Boss identity is NOT carried on the MapPoint (which only holds
+                // coord + PointType.Boss). It lives on the current ActModel as
+                // BossEncounter / SecondBossEncounter (verified via reflection
+                // dump 2026-05-05: ENCOUNTER.CEREMONIAL_BEAST_BOSS for the
+                // initial probe run, ENCOUNTER:THE_KIN_BOSS for the next).
+                // Pull the ModelId from there. We expose only the id (not a
+                // human display name) because EncounterModel's display
+                // properties are not stable/accessible via simple reflection;
+                // consumers that need a pretty label can derive it from the
+                // id (see tools/read-map.ps1's _PrettyBossId helper) or look
+                // up against docs/benchmark/priors.md's act-pool taxonomy.
+                var actObj = GetProp(state, "Act");
+                if (actObj is not null)
+                {
+                    var bossEnc = GetProp(actObj, "BossEncounter");
+                    if (bossEnc is not null)
+                    {
+                        bossId = SafeModelIdOrNull(GetProp(bossEnc, "Id") as ModelId);
+                    }
+                    var secondEnc = GetProp(actObj, "SecondBossEncounter");
+                    if (secondEnc is not null)
+                    {
+                        secondBossId = SafeModelIdOrNull(GetProp(secondEnc, "Id") as ModelId);
+                    }
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                BridgeTrace.Log($"ExtractMap boss identity probe threw: {ex.Message}");
+            }
 
             // state_inconsistent detection (protocol-v1 §Bridge changes #4):
             // If the player has a known position AND no travelable next nodes
@@ -2531,6 +2562,8 @@ internal static class BridgeStateExtractor
                 colCount,
                 currentCoord,
                 bossCoord,
+                bossId,
+                secondBossId,
                 available,
                 visited,
                 grid,

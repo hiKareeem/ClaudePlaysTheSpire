@@ -1,9 +1,15 @@
 . (Join-Path $PSScriptRoot '..\autopilot-lib.ps1')
+# Diagnostic: dump boss-identity fields from the current state.json snapshot.
+# The supported fields (bridge >= v0.2.0) are map.bossId, map.bossName, map.bossCoord.
+# read-map.ps1 surfaces these inline; this script exists for raw inspection
+# and for verifying field availability after a fresh boot.
 $paths = Get-IpcPaths
 $j = Get-Content -Raw $paths.StateFile | ConvertFrom-Json
-"map.bossName=$($j.map.bossName)"
-"map.bossId=$($j.map.bossId)"
-"map.boss=$($j.map.boss)"
-"run.bossName=$($j.run.bossName)"
-"run.bossId=$($j.run.bossId)"
-$j.map | ConvertTo-Json -Depth 4 -Compress | Out-String | ForEach-Object { if ($_.Length -gt 4000) { $_.Substring(0,4000) } else { $_ } }
+if (-not $j.map) { Write-Host 'No active map.'; return }
+"map.bossId   = $($j.map.bossId)"
+"map.bossName = $($j.map.bossName)"
+if ($j.map.bossCoord) {
+    "map.bossCoord = col=$($j.map.bossCoord.col) row=$($j.map.bossCoord.row)"
+} else {
+    "map.bossCoord = <null>"
+}

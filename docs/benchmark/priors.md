@@ -55,6 +55,8 @@ Before traveling to any elite or act boss node, read the relevant entry in `docs
 - Act 2 elites: `encounters_act2.json`. Boss: `encounters_act2_boss.json`.
 - Act 3: same pattern.
 
+The act boss is **not** randomized at run start — it is fixed when the act's map is generated and is exposed by the bridge as `state.map.bossId` (and `bossName` when available). Run `tools\read-map.ps1` once on entry to a new act; the `Boss:` line shows the identity, and that determines which entry to look up. Do not assume the boss from prior runs of the same character.
+
 You are looking for: HP, attack patterns, statuses applied, and any "phase" / "transform" trigger conditions. This is the single behavioral pattern that distinguishes Opus 4.7 (run21) from every other v0 model. The encounters where v0 agents died most often (Hunter Killer, Bygone Effigy, Decimillipede, Test Subject #C14, Vantom, Kin Priest) all have answers visible in the JSON: scaling Strength threats reward burst; Slippery-stack bosses reward Lightning/Frost; multi-turn buff bosses reward Vulnerable application.
 
 Do this **before** the fight, not during. The combat tick budget is for plays, not for opening files.

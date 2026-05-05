@@ -10,7 +10,29 @@ if ($m.currentCoord) {
     Write-Host 'Current: <not yet on map>'
 }
 if ($m.bossCoord) {
-    Write-Host ("Boss:    col={0} row={1}" -f $m.bossCoord.col, $m.bossCoord.row)
+    # Prettify ENCOUNTER:THE_KIN_BOSS -> "The Kin Boss" for human reading.
+    # The raw id is preserved for agents that need exact matching.
+    function _PrettyBossId($id) {
+        if (-not $id) { return $null }
+        $tail = ($id -replace '^[A-Z_]+:', '')        # strip "ENCOUNTER:"
+        $words = $tail -split '_' | ForEach-Object {
+            if ($_.Length -le 1) { $_ } else {
+                $_.Substring(0,1).ToUpper() + $_.Substring(1).ToLower()
+            }
+        }
+        return ($words -join ' ')
+    }
+    $pretty = _PrettyBossId $m.bossId
+    $bossLabel = ''
+    if ($pretty) { $bossLabel = " -- $pretty" }
+    Write-Host ("Boss:    col={0} row={1}{2}" -f $m.bossCoord.col, $m.bossCoord.row, $bossLabel)
+    if ($m.bossId) {
+        Write-Host ("         id={0}" -f $m.bossId)
+    }
+    if ($m.secondBossId) {
+        $pretty2 = _PrettyBossId $m.secondBossId
+        Write-Host ("Boss 2:  {0}  id={1}" -f $pretty2, $m.secondBossId)
+    }
 }
 
 # Available next nodes — what SelectMapNode can target RIGHT NOW
