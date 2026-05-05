@@ -169,6 +169,7 @@ For the protocol to function, the bridge must add:
 5. **`StartRun.seed` parameter honored.** v0 silently dropped the seed argument. v0.2.0 must accept `{character, seed}` in the `StartRun` command body and forward `seed` to `NGame.Instance.StartNewSingleplayerRun`. If the underlying StartNewSingleplayerRun signature does not currently accept a seed, this requirement also covers a small reflection shim that sets the run's seed before the run actually starts; document the exact mechanism in the v0.2.0 release notes. Pre-v0.2.0 bridges fail pre-flight (§Operator pre-flight item 7).
 6. **Character-specific combat resources in initial `combat` payload.** A single `Read-State` must surface every character-specific combat resource the agent could need to make the next decision: `combat.stars` (Regent), `combat.orbs` + `combat.orbCapacity` (Defect), and Osty as an ally entry under `combat.allies[]` (Necrobinder — Osty is the entire mechanic; soaks unblocked damage before the player does; no separate player-side meter exists). v0 surfaces stars/orbs at the combat root but the v0 helper script (`tools/read-combat.ps1`) did not display them, so weaker agents who never did a follow-up reflection dump flew blind. The bridge contract for v1 is: every character-distinguishing resource is at a stable, documented, top-level path under `combat`, and the v1 helper script must display it. Implementation must enumerate per-character resource paths in the v0.2.0 release notes.
 7. **Multi-instance support (carry-over, formalized).** v0 already supports concurrent StS2 instances via `HERMES_IPC_DIR` env-var override and `hermes-instance.cfg` (per `BridgePaths.cs`, sanitized instance ids `[A-Za-z0-9_-]+`). v1 keeps this first-class. v0.2.0 may rename the env-var to `SPIREBRIDGE_IPC_DIR` in line with the rebrand; if it does, the old name remains honored as a deprecated alias for one minor version (so existing operator scripts keep working). The startup diagnostic line must name the active IPC root (already does in v0; preserve format).
+8. **`CancelTargeting` command.** v0.1.5 returns `unknown command type: CancelTargeting`, leaving no documented way to back out of a wedged target prompt mid-card-play (run22 finding). v0.2.0 must accept `CancelTargeting` (no body) and clear any pending `targeting` substate without consuming the card or energy. If the underlying engine does not expose a clean cancel path (target prompts may auto-resolve to a default target on next tick), the bridge should at minimum return a structured error naming the *correct* command to recover (`PlayCard` re-issue, or `EndTurn` if the card is cancelable). Tracked here so v1 agents have an unambiguous escape from accidental target-prompt entry.
 
 These are additive. v0 records remain readable, but v1 records require a v0.2.0+ bridge.
 
@@ -201,7 +202,7 @@ Run11 protocol violation pattern (tools exposed but unused) is acceptable in v0;
 - Strongly rewards victory (+50 to break ties between deep losses and wins).
 - Mild error penalty (errors don't disqualify a run, but excessive errors cost ~2–5 points).
 
-**Calibration against v0 data (n=21).** Verified via `tools/calibrate-composite.py` against the v0 runs.csv. Selected results:
+**Calibration against v0 data (n=22).** Verified via `tools/calibrate-composite.py` against the v0 runs.csv. Selected results:
 
 | Rank | Score | Run | Halt | Floor | Act | Errors | Notes |
 |---:|---:|:---|:---|---:|---:|---:|:---|
@@ -210,9 +211,10 @@ Run11 protocol violation pattern (tools exposed but unused) is acceptable in v0;
 | 3 | 41.2 | run19 deepseek-v4-pro NECRO | death | 23 | 2 | 18 | Act-2 progress. |
 | 6 | 33.8 | run21 claude-opus-4.7 IRONC | death | 14 | 2 | 2 | Disciplined gold-standard; Act-2 elite kill. |
 | 7 | 28.1 | run15 gpt-5.5 DEFECT stall | stall | 0 | 3 | 19 | Reached Act 3 then stalled; act bonus carries it. |
-| 21 | 16.5 | run03 glm-5.1 REGENT | death | 7 | 1 | 5 | Earliest death (Nibbits F7). |
+| 16 | 24.6 | run22 claude-opus-4.7 SILENT | death | 16 | 1 | 14 | Act-1 boss death; error penalty drops it below the F17 cluster. |
+| 22 | 16.5 | run03 glm-5.1 REGENT | death | 7 | 1 | 5 | Earliest death (Nibbits F7). |
 
-Range: 16.5 – 79.4 (62.9 spread); 21/21 unique scores; per-character medians 25.6–33.8; per-model means 22.0–41.7. Rank ordering matches the qualitative ranking in `trial-v0-findings-audit.md`. Weights are **frozen** at the values above for v1.
+Range: 16.5 – 79.4 (62.9 spread); 22/22 unique scores; per-character medians 24.6–33.8; per-model means 22.0–41.7. Rank ordering matches the qualitative ranking in `trial-v0-findings-audit.md`. Weights are **frozen** at the values above for v1.
 
 **Per-model reporting (v1):**
 - Mean composite_score across 15 cells (5 chars × 3 seeds × 2 conditions).
@@ -243,7 +245,7 @@ These must be resolved before kickoff:
 
 1. **Pick the three seeds.** Operator-side; needs one Opus 4.7 control pass per character to confirm diversity.
 2. **Write `priors.md`.** Source: v0 audit §4 + Opus's behavioral patterns. ~3–5 pages, character-neutral fundamentals + one paragraph per character.
-3. **SpireBridge v0.2.0.** Implement `state_version`, `force_refresh`, `state_inconsistent` event, DLL pre-flight log line, `StartRun.seed` forwarding, character-resource completeness (Stars / Orbs / Osty-as-ally at stable combat-root paths), `SPIREBRIDGE_IPC_DIR` rename with `HERMES_IPC_DIR` deprecated alias.
+3. **SpireBridge v0.2.0.** Implement `state_version`, `force_refresh`, `state_inconsistent` event, DLL pre-flight log line, `StartRun.seed` forwarding, character-resource completeness (Stars / Orbs / Osty-as-ally at stable combat-root paths), `SPIREBRIDGE_IPC_DIR` rename with `HERMES_IPC_DIR` deprecated alias, `CancelTargeting` command (run22 found this missing in v0.1.5).
 4. **Composite score weights — RESOLVED.** Calibrated against v0 data via `tools/calibrate-composite.py` (n=21). Proposed weights produce the expected ranking: deepest run #1 (run11 79.4), Act-1 deaths cluster 24–27, Opus discipline run scores below deeper-floor runs by design (the formula rewards depth, not discipline). 21/21 unique scores; no ties. Weights frozen — see §Scoring calibration table above.
 5. **Run-cap bump confirmation.** Default 500 → 1000 in bridge; operator-side cap also raised.
 6. **`tools/preflight-dll-version.ps1`.** New helper. Verifies (a) `modVersion` matches repo HEAD, (b) bridge build is ≥v0.2.0, (c) the active IPC root reported in `trace.log` matches the operator-intended `SPIREBRIDGE_IPC_DIR` / `HERMES_IPC_DIR` for this run (multi-instance safety).
