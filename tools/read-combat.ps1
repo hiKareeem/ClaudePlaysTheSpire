@@ -41,6 +41,33 @@ if ($p) {
     }
 }
 
+# CHARACTER RESOURCES (Stars: Regent; Orbs: Defect). Bridge emits these on
+# combat root regardless of class; show only when populated/meaningful.
+$stars = Val $c 'stars' -1
+if ($stars -ge 0) {
+    Write-Host ("  Stars: {0}" -f $stars)
+}
+$orbCap = Val $c 'orbCapacity' -1
+$orbs   = Val $c 'orbs' $null
+if ($orbCap -ge 0 -or ($orbs -and $orbs.Count -gt 0)) {
+    $oc = if ($orbs) { $orbs.Count } else { 0 }
+    Write-Host ("  Orbs ({0}/{1}):" -f $oc, $orbCap)
+    if ($orbs) {
+        for ($i = 0; $i -lt $orbs.Count; $i++) {
+            $o = $orbs[$i]
+            if (-not $o) { Write-Host ("    [{0}] (empty)" -f $i); continue }
+            $oid = Val $o 'title' (Val $o 'id' '?')
+            $pv  = Val $o 'passiveVal' ''
+            $ev  = Val $o 'evokeVal' ''
+            $line = "    [{0}] {1}" -f $i, $oid
+            if ($pv -ne '' -or $ev -ne '') { $line += "  passive:$pv  evoke:$ev" }
+            Write-Host $line
+            $od = Val $o 'description' ''
+            if ($od) { Write-Host ("        {0}" -f $od) }
+        }
+    }
+}
+
 # HAND
 $cards = $null
 if (HasProp $c 'hand') {
