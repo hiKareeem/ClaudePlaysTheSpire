@@ -199,7 +199,20 @@ Run11 protocol violation pattern (tools exposed but unused) is acceptable in v0;
 
 - Rewards depth (each act-clear worth +10).
 - Strongly rewards victory (+50 to break ties between deep losses and wins).
-- Mild error penalty (errors don't disqualify a run, but excessive errors cost ~5–10 points).
+- Mild error penalty (errors don't disqualify a run, but excessive errors cost ~2–5 points).
+
+**Calibration against v0 data (n=21).** Verified via `tools/calibrate-composite.py` against the v0 runs.csv. Selected results:
+
+| Rank | Score | Run | Halt | Floor | Act | Errors | Notes |
+|---:|---:|:---|:---|---:|---:|---:|:---|
+| 1 | 79.4 | run11 gpt-5.5 IRONCLAD | death | 50 | 3 | 6 | Deepest run; only Act-3 reach. |
+| 2 | 47.4 | run12 gpt-5.5 SILENT | death | 28 | 2 | 6 | Decimillipede elite kill. |
+| 3 | 41.2 | run19 deepseek-v4-pro NECRO | death | 23 | 2 | 18 | Act-2 progress. |
+| 6 | 33.8 | run21 claude-opus-4.7 IRONC | death | 14 | 2 | 2 | Disciplined gold-standard; Act-2 elite kill. |
+| 7 | 28.1 | run15 gpt-5.5 DEFECT stall | stall | 0 | 3 | 19 | Reached Act 3 then stalled; act bonus carries it. |
+| 21 | 16.5 | run03 glm-5.1 REGENT | death | 7 | 1 | 5 | Earliest death (Nibbits F7). |
+
+Range: 16.5 – 79.4 (62.9 spread); 21/21 unique scores; per-character medians 25.6–33.8; per-model means 22.0–41.7. Rank ordering matches the qualitative ranking in `trial-v0-findings-audit.md`. Weights are **frozen** at the values above for v1.
 
 **Per-model reporting (v1):**
 - Mean composite_score across 15 cells (5 chars × 3 seeds × 2 conditions).
@@ -231,7 +244,7 @@ These must be resolved before kickoff:
 1. **Pick the three seeds.** Operator-side; needs one Opus 4.7 control pass per character to confirm diversity.
 2. **Write `priors.md`.** Source: v0 audit §4 + Opus's behavioral patterns. ~3–5 pages, character-neutral fundamentals + one paragraph per character.
 3. **SpireBridge v0.2.0.** Implement `state_version`, `force_refresh`, `state_inconsistent` event, DLL pre-flight log line, `StartRun.seed` forwarding, character-resource completeness (Stars / Orbs / Osty-as-ally at stable combat-root paths), `SPIREBRIDGE_IPC_DIR` rename with `HERMES_IPC_DIR` deprecated alias.
-4. **Composite score weights.** Calibrate against v0 data: do the proposed weights produce the run-ranking we'd produce by hand? If not, tune before freeze.
+4. **Composite score weights — RESOLVED.** Calibrated against v0 data via `tools/calibrate-composite.py` (n=21). Proposed weights produce the expected ranking: deepest run #1 (run11 79.4), Act-1 deaths cluster 24–27, Opus discipline run scores below deeper-floor runs by design (the formula rewards depth, not discipline). 21/21 unique scores; no ties. Weights frozen — see §Scoring calibration table above.
 5. **Run-cap bump confirmation.** Default 500 → 1000 in bridge; operator-side cap also raised.
 6. **`tools/preflight-dll-version.ps1`.** New helper. Verifies (a) `modVersion` matches repo HEAD, (b) bridge build is ≥v0.2.0, (c) the active IPC root reported in `trace.log` matches the operator-intended `SPIREBRIDGE_IPC_DIR` / `HERMES_IPC_DIR` for this run (multi-instance safety).
 7. **Tool-leakage audit.** Add `preflight_screen` column to runs.csv to track per-run pre-flight state.
