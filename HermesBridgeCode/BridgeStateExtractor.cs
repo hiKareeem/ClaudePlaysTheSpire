@@ -78,6 +78,12 @@ internal static class BridgeStateExtractor
     private static bool _bugTDiagFired;
     private static bool _bugTMethDiagFired; // re-dumps EC.METH0 after adding method scan 2026-04-20
     private static bool _bugTDiscountDiagFired;
+
+    // Counter for state_inconsistent detection (protocol-v1 §Bridge changes #4).
+    // Incremented each ExtractMap call where available[] is empty AND we're on
+    // a non-boss row with a known currentCoord. Resets to 0 the first tick
+    // any of those guards fail. Event emits when counter reaches 2.
+    private static int _consecutiveEmptyMapTicks;
     private static void EmitBugTDiagnostic(CardModel card)
     {
         if (card is null) return;
@@ -2272,10 +2278,16 @@ internal static class BridgeStateExtractor
 
             // Current + visited.
             object? currentCoord = null;
+            int currentRow = -1;
+            int currentCol = -1;
             try
             {
                 if (state.CurrentMapCoord is MapCoord cur)
+                {
                     currentCoord = new { col = cur.col, row = cur.row };
+                    currentRow = cur.row;
+                    currentCol = cur.col;
+                }
             }
             catch { }
 
@@ -2452,6 +2464,7 @@ internal static class BridgeStateExtractor
             try { colCount = actMap.GetColumnCount(); } catch { }
 
             object? bossCoord = null;
+            int bossRow = -1;
             try
             {
                 var boss = actMap.BossMapPoint;
@@ -2459,9 +2472,58 @@ internal static class BridgeStateExtractor
                 {
                     var bc = (MapCoord)(typeof(MapPoint).GetField("coord", InstanceAny)?.GetValue(boss) ?? default(MapCoord));
                     bossCoord = new { col = bc.col, row = bc.row };
+                    bossRow = bc.row;
                 }
             }
             catch { }
+
+            // state_inconsistent detection (protocol-v1 §Bridge changes #4):
+            // If the player has a known position AND no travelable next nodes
+            // are reported AND we're not on the boss row (where available[]
+            // legitimately empties when the boss has been reached), increment
+            // the consecutive-empty counter. Two consecutive empty observations
+            // emit one state_inconsistent event. The counter resets whenever
+            // any of these guards fail.
+            //
+            // Boss-row guard rationale: on the boss floor itself, after the
+            // map screen has been left for combat, available[] is empty by
+            // design — the only "next node" was the boss. We don't want to
+            // false-positive on this routine emptiness.
+            //
+            // currentCoord==null guard rationale: post-Act-boss transition
+            // briefly leaves currentMapCoord null (BKI-002 area). Treating
+            // that as "inconsistent" would fire spuriously on every act
+            // boundary. We require a known coord before counting.
+            try
+            {
+                bool currentKnown = currentRow >= 0;
+                bool isBossRow = bossRow >= 0 && currentRow == bossRow;
+                bool noNextNodes = available.Count == 0;
+                if (currentKnown && !isBossRow && noNextNodes)
+                {
+                    _consecutiveEmptyMapTicks++;
+                    if (_consecutiveEmptyMapTicks == 2)
+                    {
+                        BridgeSnapshotWriter.EmitEvent(new
+                        {
+                            type = "state_inconsistent",
+                            cause = "available_empty_non_boss_floor",
+                            currentCoord = new { col = currentCol, row = currentRow },
+                            bossRow,
+                            consecutiveTicks = _consecutiveEmptyMapTicks,
+                            recommendedAction = "ForceRefresh",
+                        }, "ExtractMap");
+                    }
+                }
+                else
+                {
+                    _consecutiveEmptyMapTicks = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                BridgeTrace.Log($"ExtractMap state_inconsistent detection threw: {ex.Message}");
+            }
 
             return new
             {

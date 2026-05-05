@@ -42,6 +42,15 @@ internal static class BridgeSnapshotWriter
     private static object? _chooseACardScreen;
     private static object? _handSelect;
 
+    // Transient events stream (per protocol-v1 §Bridge changes #4).
+    // Each emitted event is buffered here for the NEXT RequestWrite, then
+    // cleared. Agents observe events on the snapshot revision following
+    // emission. Buffered as List<object> so multiple events from a single
+    // tick survive coalescing. Events outlive the snapshot they fired in
+    // by exactly one write — long enough for a polling agent (which sees
+    // a new revision and re-reads state.json) to observe them.
+    private static readonly System.Collections.Generic.List<object> _eventsBuffer = new();
+
     public static void SetScreen(string screen, string trigger)
     {
         BridgeTrace.Log($"SetScreen screen={screen} trigger={trigger}");
@@ -121,6 +130,28 @@ internal static class BridgeSnapshotWriter
         RequestWrite(trigger);
     }
 
+    /// <summary>
+    /// Append a transient event to the next snapshot. The event will appear
+    /// in the `events` array on the very next state.json write, then be
+    /// cleared. Use sparingly — events are signalling channels for impossible
+    /// or recovery-required states (e.g. <c>state_inconsistent</c>), not
+    /// general-purpose logging. The trigger string is included for trace
+    /// correlation but does NOT auto-flush; the next routine RequestWrite
+    /// will pick the event up.
+    /// </summary>
+    public static void EmitEvent(object payload, string trigger)
+    {
+        try
+        {
+            _eventsBuffer.Add(payload);
+            BridgeTrace.Log($"EmitEvent trigger={trigger} bufferSize={_eventsBuffer.Count}");
+        }
+        catch (Exception ex)
+        {
+            BridgeTrace.Log($"EmitEvent({trigger}) threw: {ex.Message}");
+        }
+    }
+
     public static void ClearTransientPayloads(string reason)
     {
         _rewards = null;
@@ -154,6 +185,26 @@ internal static class BridgeSnapshotWriter
             // the contract is "advance per RequestWrite, regardless of
             // payload diff". stateVersion is the v1 protocol's name for the
             // same monotonic counter, exposed under a stable contract key.
+            // Snapshot the events buffer for this write. We move (not copy)
+            // events into a local so they're consumed atomically: if the
+            // write fails (catch below), the events are already out of the
+            // buffer but never reached state.json, so they're lost. We
+            // accept that loss because re-emitting on every failed write
+            // could spam duplicates if state.json never recovers. Detection
+            // logic is responsible for re-emitting on the next tick if the
+            // condition still holds (see BridgeStateExtractor map-emptiness
+            // counter for state_inconsistent).
+            object[] eventsForThisWrite;
+            if (_eventsBuffer.Count > 0)
+            {
+                eventsForThisWrite = _eventsBuffer.ToArray();
+                _eventsBuffer.Clear();
+            }
+            else
+            {
+                eventsForThisWrite = System.Array.Empty<object>();
+            }
+
             var payload = new
             {
                 schemaVersion = 1,
@@ -178,6 +229,7 @@ internal static class BridgeSnapshotWriter
                 cardGrid = _cardGrid,
                 chooseACardScreen = _chooseACardScreen,
                 handSelect = _handSelect,
+                events = eventsForThisWrite,
             };
 
             var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
