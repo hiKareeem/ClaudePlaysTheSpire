@@ -16,7 +16,8 @@ internal static class BridgePaths
     private static string? _initDiagnostic;
 
     private static readonly string BaseDirectoryValue = ResolveBaseDirectory(
-        envOverride: Environment.GetEnvironmentVariable("HERMES_IPC_DIR"),
+        envOverride: Environment.GetEnvironmentVariable("SPIREBRIDGE_IPC_DIR"),
+        legacyEnvOverride: Environment.GetEnvironmentVariable("HERMES_IPC_DIR"),
         dllDirectory: Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
         appData: Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         diagnostic: out _initDiagnostic);
@@ -24,19 +25,31 @@ internal static class BridgePaths
     /// <summary>
     /// Pure resolution of the IPC base directory. Exposed internal for
     /// testability. Resolution order (first match wins):
-    ///   1. envOverride (HERMES_IPC_DIR) — used literally
-    ///   2. hermes-instance.cfg next to the DLL — appended as
+    ///   1. envOverride (SPIREBRIDGE_IPC_DIR) — used literally
+    ///   2. legacyEnvOverride (HERMES_IPC_DIR) — deprecated alias, still
+    ///      honoured but with a diagnostic warning. Will be removed in a
+    ///      future major version. If both are set, SPIREBRIDGE_IPC_DIR
+    ///      wins and a deprecation note is still logged for HERMES_IPC_DIR.
+    ///   3. hermes-instance.cfg next to the DLL — appended as
     ///      "hermesbridge-{instanceId}" under appData/SlayTheSpire2
-    ///   3. fallback: appData/SlayTheSpire2/hermesbridge
+    ///   4. fallback: appData/SlayTheSpire2/hermesbridge
     ///
     /// The instance id read from hermes-instance.cfg is sanitized: a UTF-8
     /// BOM is stripped, the value is trimmed, and only ASCII letters,
     /// digits, '-' and '_' are accepted. An invalid id falls through to
     /// the fallback (with a diagnostic emitted) — this prevents path
     /// traversal via "../" or unicode tricks.
+    ///
+    /// Note on naming: the cfg filename and on-disk subdirectory still use
+    /// "hermesbridge"/"hermes-instance" for backwards compatibility with
+    /// existing operator deployments. The Hermes→SpireBridge rebrand is
+    /// happening at the env-var and Python-port boundary first; on-disk
+    /// names will be migrated in a separate sweep that includes a one-shot
+    /// move/symlink for existing installs.
     /// </summary>
     internal static string ResolveBaseDirectory(
         string? envOverride,
+        string? legacyEnvOverride,
         string? dllDirectory,
         string appData,
         out string? diagnostic)
@@ -45,8 +58,18 @@ internal static class BridgePaths
 
         if (!string.IsNullOrEmpty(envOverride))
         {
-            diagnostic = $"BridgePaths: HERMES_IPC_DIR override active: {envOverride}";
+            diagnostic = $"BridgePaths: SPIREBRIDGE_IPC_DIR override active: {envOverride}";
+            if (!string.IsNullOrEmpty(legacyEnvOverride))
+            {
+                diagnostic += $" (note: HERMES_IPC_DIR is also set to '{legacyEnvOverride}' but is ignored — SPIREBRIDGE_IPC_DIR takes precedence; HERMES_IPC_DIR is deprecated and will be removed in a future major version)";
+            }
             return envOverride;
+        }
+
+        if (!string.IsNullOrEmpty(legacyEnvOverride))
+        {
+            diagnostic = $"BridgePaths: HERMES_IPC_DIR override active: {legacyEnvOverride} (DEPRECATED — please rename to SPIREBRIDGE_IPC_DIR; the HERMES_IPC_DIR alias will be removed in a future major version)";
+            return legacyEnvOverride;
         }
 
         if (!string.IsNullOrEmpty(dllDirectory))

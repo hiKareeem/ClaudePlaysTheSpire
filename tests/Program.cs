@@ -199,22 +199,48 @@ void BridgePathsResolutionRegression()
     {
         var defaultPath = Path.Combine(appData, "SlayTheSpire2", "hermesbridge");
 
-        // 1. env override wins over everything
+        // 1. SPIREBRIDGE_IPC_DIR env override wins over everything
         var envResult = BridgePaths.ResolveBaseDirectory(
             envOverride: @"D:\custom\ipc",
+            legacyEnvOverride: null,
             dllDirectory: dllDir,
             appData: appData,
             diagnostic: out var envDiag);
         AssertTrue(envResult == @"D:\custom\ipc",
-            $"HERMES_IPC_DIR override should be returned literally; got '{envResult}'");
-        AssertTrue(envDiag != null && envDiag.Contains("HERMES_IPC_DIR"),
-            "Env override should produce a HERMES_IPC_DIR diagnostic");
+            $"SPIREBRIDGE_IPC_DIR override should be returned literally; got '{envResult}'");
+        AssertTrue(envDiag != null && envDiag.Contains("SPIREBRIDGE_IPC_DIR"),
+            "Env override should produce a SPIREBRIDGE_IPC_DIR diagnostic");
+
+        // 1b. HERMES_IPC_DIR is honored as deprecated alias when SPIREBRIDGE_IPC_DIR is unset
+        var legacyResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: null,
+            legacyEnvOverride: @"D:\legacy\ipc",
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out var legacyDiag);
+        AssertTrue(legacyResult == @"D:\legacy\ipc",
+            $"HERMES_IPC_DIR alias should still resolve; got '{legacyResult}'");
+        AssertTrue(legacyDiag != null && legacyDiag.Contains("DEPRECATED") && legacyDiag.Contains("HERMES_IPC_DIR"),
+            "Legacy alias should produce a DEPRECATED diagnostic naming HERMES_IPC_DIR");
+
+        // 1c. SPIREBRIDGE_IPC_DIR wins when both are set; deprecation note still logged
+        var bothResult = BridgePaths.ResolveBaseDirectory(
+            envOverride: @"D:\new\ipc",
+            legacyEnvOverride: @"D:\old\ipc",
+            dllDirectory: dllDir,
+            appData: appData,
+            diagnostic: out var bothDiag);
+        AssertTrue(bothResult == @"D:\new\ipc",
+            $"SPIREBRIDGE_IPC_DIR should beat HERMES_IPC_DIR; got '{bothResult}'");
+        AssertTrue(bothDiag != null && bothDiag.Contains("SPIREBRIDGE_IPC_DIR") && bothDiag.Contains("HERMES_IPC_DIR"),
+            "When both set, diagnostic should mention both env vars");
 
         // 2. valid hermes-instance.cfg → hermesbridge-{id} under appdata
         var cfgPath = Path.Combine(dllDir, "hermes-instance.cfg");
         File.WriteAllText(cfgPath, "nonsteam");
         var cfgResult = BridgePaths.ResolveBaseDirectory(
             envOverride: null,
+            legacyEnvOverride: null,
             dllDirectory: dllDir,
             appData: appData,
             diagnostic: out var cfgDiag);
@@ -227,6 +253,7 @@ void BridgePathsResolutionRegression()
         File.WriteAllText(cfgPath, "\uFEFFwithbom", new UTF8Encoding(true));
         var bomResult = BridgePaths.ResolveBaseDirectory(
             envOverride: null,
+            legacyEnvOverride: null,
             dllDirectory: dllDir,
             appData: appData,
             diagnostic: out _);
@@ -237,6 +264,7 @@ void BridgePathsResolutionRegression()
         File.WriteAllText(cfgPath, "../evil");
         var evilResult = BridgePaths.ResolveBaseDirectory(
             envOverride: null,
+            legacyEnvOverride: null,
             dllDirectory: dllDir,
             appData: appData,
             diagnostic: out var evilDiag);
@@ -249,6 +277,7 @@ void BridgePathsResolutionRegression()
         File.WriteAllText(cfgPath, "   \r\n");
         var emptyResult = BridgePaths.ResolveBaseDirectory(
             envOverride: null,
+            legacyEnvOverride: null,
             dllDirectory: dllDir,
             appData: appData,
             diagnostic: out _);
@@ -259,6 +288,7 @@ void BridgePathsResolutionRegression()
         File.Delete(cfgPath);
         var fallbackResult = BridgePaths.ResolveBaseDirectory(
             envOverride: null,
+            legacyEnvOverride: null,
             dllDirectory: dllDir,
             appData: appData,
             diagnostic: out var fallbackDiag);
