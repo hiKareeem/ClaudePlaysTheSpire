@@ -2487,7 +2487,7 @@ internal static class BridgeStateExtractor
                 // properties are not stable/accessible via simple reflection;
                 // consumers that need a pretty label can derive it from the
                 // id (see tools/read-map.ps1's _PrettyBossId helper) or look
-                // up against docs/benchmark/priors.md's act-pool taxonomy.
+                // up against docs/benchmark/priors-<CHARACTER>.md's act-pool taxonomy.
                 var actObj = GetProp(state, "Act");
                 if (actObj is not null)
                 {

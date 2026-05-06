@@ -52,15 +52,15 @@ No prior-run context, no persistent memory across runs, no web search, no traini
 
 Identical to A0 **except** the agent is required to read one additional file before play:
 
-- `docs/benchmark/priors.md` — frozen for the duration of v1, single hand-curated rules sheet.
+- `docs/benchmark/priors-<CHARACTER>.md` — frozen for the duration of v1, hand-curated rules sheet for the agent's assigned character (one of `priors-IRONCLAD.md`, `priors-SILENT.md`, `priors-DEFECT.md`, `priors-REGENT.md`, `priors-NECROBINDER.md`). The agent reads **only** the file for its assigned character; the other four are out-of-whitelist.
 
-`priors.md` content scope (frozen by v1 freeze date):
+`priors-<CHARACTER>.md` content scope (frozen by v1 freeze date, identical structure across all five files):
 - Combat fundamentals: block density, scaling-vs-burst trade-off, energy curve.
 - Pre-elite / pre-boss checklist: "before each elite or act boss, read the relevant `docs/data/eng/encounters_*.json` entry."
 - Map literacy: when to skip an elite, when to take rest, deck-thinning thresholds.
-- Character-specific notes (one paragraph each, no card-pick recommendations — that crosses into strategy contamination).
+- Character-specific notes (one paragraph, no card-pick recommendations — that crosses into strategy contamination). Cross-character text is tuned to the assigned character (e.g. only Defect's file documents the orb queue in detail; Ironclad's file mentions other characters' resources only by reference).
 
-`priors.md` is **frozen at v1 freeze date**. Edits invalidate prior B0 runs (re-tag `incomparable`, do not silently overwrite).
+`priors-<CHARACTER>.md` is **frozen at v1 freeze date**. Edits to any of the five files invalidate prior B0 runs of the affected character (re-tag `incomparable`, do not silently overwrite).
 
 The B0 condition makes the *implicit* tool-use discipline observed in Opus 4.7 (consistent docs-json checking) into an *explicit* instruction the weaker models can follow. Hypothesis: B0 closes ~half of combat-misplay deaths in mid-tier models.
 
@@ -147,7 +147,7 @@ bridge_version: SpireBridge-0.2.0    # bumped + rebranded
 knowledge_condition: B0-priors       # A0-zero-shot | B0-priors
 seed: seed_alpha                     # one of three fixed seeds (string, not numeric)
 seed_label: alpha                    # alpha | beta | gamma — for sorting/grouping
-priors_version: v1.0                 # only set if knowledge_condition=B0-priors; matches priors.md frozen version
+priors_version: v1.0                 # only set if knowledge_condition=B0-priors; matches priors-<CHARACTER>.md frozen version
 composite_score: 47.3                # = floor + 10*act + 50*win - 0.1*errors
 state_version_max: 1247              # max stateVersion observed during run (v1 bridge field, JSON key `stateVersion`)
 force_refresh_count: 0               # number of times agent invoked ForceRefresh command
@@ -235,7 +235,7 @@ This document freezes at v1 first-run kickoff. Same amendment rules as v0:
 - Schema-affecting changes invalidate prior runs (re-tag `incomparable`).
 - Workflow-only changes do not bump `spec_version`.
 
-**`priors.md` is frozen with this protocol.** Editing `priors.md` mid-trial invalidates all prior B0 runs.
+**`priors-<CHARACTER>.md` files are frozen with this protocol.** Editing any of them mid-trial invalidates all prior B0 runs of the affected character.
 
 ---
 
@@ -244,13 +244,13 @@ This document freezes at v1 first-run kickoff. Same amendment rules as v0:
 These must be resolved before kickoff:
 
 1. **Pick the three seeds.** Operator-side; needs one Opus 4.7 control pass per character to confirm diversity.
-2. **Write `priors.md`.** Source: v0 audit §4 + Opus's behavioral patterns. ~3–5 pages, character-neutral fundamentals + one paragraph per character.
+2. **Write `priors-<CHARACTER>.md` (×5).** Source: v0 audit §4 + Opus's behavioral patterns. One file per character (`priors-IRONCLAD.md`, `priors-SILENT.md`, `priors-DEFECT.md`, `priors-REGENT.md`, `priors-NECROBINDER.md`); each ~3–5 pages with character-neutral fundamentals + the assigned character's notes inlined. Rules 1–6 universal across all five files; Rule 2 and Rule 4 lightly tuned per character; the closing "Character notes" section is unique per file.
 3. **SpireBridge v0.2.0.** Implement character-resource completeness (Stars / Orbs / Osty-as-ally at stable combat-root paths). (Done in v0.2.0: `stateVersion` field on every snapshot, stale `modVersion` literal replaced with `MainFile.BridgeVersion`, startup version log line, `ForceRefresh` IPC verb, `state_inconsistent` event detection (`available[]` empty on non-boss floor for two consecutive ticks), `SPIREBRIDGE_IPC_DIR` rename with `HERMES_IPC_DIR` deprecated alias, `tools/preflight-dll-version.ps1` operator script. `StartRun.seed` already forwarded correctly since v0.1.5; `CancelTargeting` deliberately omitted, see Bridge change #8.)
 4. **Composite score weights — RESOLVED.** Calibrated against v0 data via `tools/calibrate-composite.py` (n=21). Proposed weights produce the expected ranking: deepest run #1 (run11 79.4), Act-1 deaths cluster 24–27, Opus discipline run scores below deeper-floor runs by design (the formula rewards depth, not discipline). 21/21 unique scores; no ties. Weights frozen — see §Scoring calibration table above.
 5. **Run-cap bump confirmation.** Default 500 → 1000 in bridge; operator-side cap also raised.
 6. **`tools/preflight-dll-version.ps1`.** New helper. Verifies (a) `modVersion` matches repo HEAD, (b) bridge build is ≥v0.2.0, (c) the active IPC root reported in `trace.log` matches the operator-intended `SPIREBRIDGE_IPC_DIR` / `HERMES_IPC_DIR` for this run (multi-instance safety).
 7. **Tool-leakage audit.** Add `preflight_screen` column to runs.csv to track per-run pre-flight state.
-8. **Necrobinder per-character resource — RESOLVED.** No separate player-side meter exists. Osty (in `combat.allies[]`) is the entire mechanic: Osty soaks unblocked damage before the player does. Documented in `priors.md` Rule 2 and the Necrobinder character paragraph; no v0.2.0 bridge work needed beyond the already-spec'd ally rendering.
+8. **Necrobinder per-character resource — RESOLVED.** No separate player-side meter exists. Osty (in `combat.allies[]`) is the entire mechanic: Osty soaks unblocked damage before the player does. Documented in `priors-NECROBINDER.md` Rule 2 and the Necrobinder character paragraph; no v0.2.0 bridge work needed beyond the already-spec'd ally rendering.
 9. **Update Python port spec to match.** `docs/port-autopilot-lib-python.md` must reflect the SpireBridge rename, env-var alias policy, and multi-instance test plan; update before port begins.
 
 ---

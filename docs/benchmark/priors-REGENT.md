@@ -1,9 +1,9 @@
-# SpireBench priors — Trial v1 (B0 condition)
+# SpireBench priors — Trial v1 (B0 condition) — Regent
 
-> **Status:** Draft. Frozen at trial-v1 first-run kickoff (TBD). Editing this file mid-trial invalidates all prior B0 runs.
+> **Status:** Draft. Frozen at trial-v1 first-run kickoff (TBD). Editing this file mid-trial invalidates all prior B0 Regent runs.
 >
 > **Spec version:** `priors-v1` (matches `priors_version: v1.0` in v1 run records)
-> **Protocol:** governed by `docs/benchmark/protocol-v1.md`. This file is read **only** by agents in the `B0-priors` knowledge condition.
+> **Protocol:** governed by `docs/benchmark/protocol-v1.md`. This file is read **only** by agents in the `B0-priors` knowledge condition who have been assigned the `REGENT` character. Other characters have their own `priors-<CHARACTER>.md` and you must not read theirs.
 
 ---
 
@@ -26,26 +26,23 @@ If a rule here conflicts with `docs/benchmark/protocol-v1.md`, **the protocol wi
 
 Three classes of action invalidate the most recent `state.json` you read:
 
-- **Any `PlayCard`.** Hand re-packs by `handIndex` after every play. A `handIndex` you computed before the play is stale. Across v0, the single largest source of `status=error` responses was stale `handIndex` use (run03 5 errors, run05 ~15 errors, run20 25 errors — all the same root cause).
+- **Any `PlayCard`.** Hand re-packs by `handIndex` after every play. A `handIndex` you computed before the play is stale. Across v0, the single largest source of `status=error` responses was stale `handIndex` use (run03 5 errors, run05 ~15 errors, run20 25 errors — all the same root cause). **Regent amplifies this**: star-spending plays change `combat.stars` mid-turn, and several Regent cards generate stars on play — the stars value you read before the play is stale.
 - **Any reward claim.** Reward arrays shift to position 0 after each `SelectReward`; the index of the next reward is **always 0** until the screen closes. (Documented in run04 bridge findings.)
 - **Any `UsePotion` that opens a modal.** Power Potion, Skill Potion, Attack Potion, Colorless Potion all open `ChooseACardScreen`. The modal sometimes appears one tick later — if your next read does not show `chooseACardScreen.visible=true`, read again before issuing `PlayCard`. (run04 bridge finding; run20 bridge finding.)
 
 Heuristic: if your previous tool call wrote to game state (anything that isn't a pure read), your next tool call is `read-state.ps1` or `read-combat.ps1`. **Do not chain two state-mutating commands without an intervening read.**
 
-## Rule 2 — Character-specific resources are at documented stable paths
+## Rule 2 — Character-specific resources are at documented stable paths — for Regent, the star count
 
-A single `read-combat.ps1` surfaces every character-distinguishing resource v1 cares about. Specifically:
+A single `read-combat.ps1` surfaces every character-distinguishing resource v1 cares about. For Regent specifically:
 
-| Character | Resource | Field | Helper output |
-|---|---|---|---|
-| **Regent** | Stars | `combat.stars` (int, ≥0 when relevant; hidden as `-1` for non-Regent) | `Stars: N` line in `read-combat.ps1` output |
-| **Defect** | Orb queue + capacity | `combat.orbs` (array), `combat.orbCapacity` (int) | `Orbs (N/M):` block listing `[i] <orb> passive:X evoke:Y` |
-| **Necrobinder** | Osty (the summoned ally) | `combat.allies[]` entry — Osty has its own HP/Block/Powers like any ally | Rendered in the `Allies:` block of `read-combat.ps1` |
-| Ironclad / Silent | none beyond standard combat | — | — |
+| Resource | Field | Helper output |
+|---|---|---|
+| Stars | `combat.stars` (int, ≥0 when relevant; hidden as `-1` for non-Regent) | `Stars: N` line in `read-combat.ps1` output |
 
-**Necrobinder mechanic — Osty soaks unblocked damage.** Necrobinder has no separate player-side meter; the entire character mechanic is **Osty**. Osty takes any unblocked damage **before** the player does. Practical consequences: (1) Osty's HP is your effective HP buffer, not a side resource — read `combat.allies[]` every turn, treat low Osty HP the same way you'd treat low player HP; (2) when Osty dies, the player takes the full unblocked hit on the next attack — do not enter a turn with Osty at 1-2 HP and zero block planning unless you have a way to heal/replace Osty or block the incoming damage; (3) "block density" for Necrobinder is calculated against player+Osty combined HP, and a fight that looks survivable while Osty is up flips on the turn Osty drops.
+Stars are your primary resource. Several Regent cards generate stars (e.g. Solar Strike), some events refund stars on certain choices, and the boss rewards usually include star-cost amplifiers. **Stars at 0 is a valid game state**, not a bug — `read-combat.ps1` displays the line whenever it's non-negative; `-1` only appears when you're playing a non-Regent character (so for you it should always be ≥0 in combat).
 
-In v0 several runs (notably weaker models on Defect and Regent) made decisions without consulting these resources because the v0 helper script did not display them. v1's `read-combat.ps1` shows them in the same single read as everything else; **use that single read**, do not assume a follow-up "reflection dump" is required.
+In v0 several Regent runs made decisions without consulting `combat.stars` because the v0 helper script did not display it clearly. v1's `read-combat.ps1` shows it in the same single read as everything else; **use that single read**, do not assume a follow-up "reflection dump" is required.
 
 ## Rule 3 — Pre-elite and pre-boss, read the encounter JSON
 
@@ -59,19 +56,20 @@ The act boss is **not** randomized at run start — it is fixed when the act's m
 
 You are looking for: HP, attack patterns, statuses applied, and any "phase" / "transform" trigger conditions. This is the single behavioral pattern that distinguishes Opus 4.7 (run21) from every other v0 model. The encounters where v0 agents died most often (Hunter Killer, Bygone Effigy, Decimillipede, Test Subject #C14, Vantom, Kin Priest) all have answers visible in the JSON: scaling Strength threats reward burst; Slippery-stack bosses reward Lightning/Frost; multi-turn buff bosses reward Vulnerable application.
 
-Do this **before** the fight, not during. The combat tick budget is for plays, not for opening files.
+Do this **before** the fight, not during. **Especially for Regent**: stars are a budget you spend per encounter, and spending them blind is the v0 Regent failure mode (run03, run13, run18 all spent stars greedily early without reading the elite/boss pool first; the Regent runs that lasted longer treated stars as "save for the encounter you've identified the answer for"). The combat tick budget is for plays, not for opening files.
 
-## Rule 4 — Block density is non-negotiable for Ironclad and Necrobinder
+## Rule 4 — Block density is non-negotiable; for Regent, watch the star-cost trade
 
-These two characters die when their deck has too few `Defend`-class cards relative to incoming damage. The v0 audit (§4) flagged this as the second-largest death cluster (~4 boss-underprepped deaths).
+Regent has standard block-card access plus star-amplified plays. The same survival logic that applies to Ironclad/Necrobinder applies to you, with the wrinkle that some of your block options compete with stars for activation.
 
 Concretely:
 
-- A starter deck has 4 `Defend` cards out of 10. If you remove a `Defend` (e.g. via a card-removal event) and have not replaced its block contribution with another block source (Iron Wave, Body Slam tech, Toric Toughness, etc.), expect to fold to any boss whose attack pattern includes a 20+ unblocked turn.
+- A starter deck has 4 `Defend` cards out of 10. If you remove a `Defend` (e.g. via a card-removal event) and have not replaced its block contribution with another block source, expect to fold to any boss whose attack pattern includes a 20+ unblocked turn.
 - Treat "block density" as a number you track explicitly: rough rule of thumb, you want **at least 30% of the deck to be block-or-block-equivalent** before the Act 1 boss, more before Act 2.
+- If your block plan depends on a star-amplified card, account for the stars budget — a block card you can't afford to amp on the lethal turn is a block card you don't have on that turn.
 - If you skip a block card pickup to keep the deck thin, you have made a deliberate trade and should be able to name the burst-damage answer that justifies it.
 
-Silent and Defect have alternate block lines (Defect via Frost orbs and Block-on-channel; Silent via card-draw discard plays); the same logic applies via different cards.
+(For reference, Ironclad and Necrobinder need raw `Defend` density; Defect blocks via Frost orbs; Silent via Dex stacking and discard plays — those don't apply to you on this run.)
 
 ## Rule 5 — Scaling threats need scaling answers
 
@@ -79,7 +77,7 @@ A "scaling threat" is any enemy whose damage grows over time — Strength gains 
 
 A scaling fight you don't kill quickly is a fight you lose. Two viable plans:
 
-- **Burst:** end the fight in 3–4 turns with concentrated damage. Requires energy/draw fixing or a finisher card.
+- **Burst:** end the fight in 3–4 turns with concentrated damage. Requires energy/draw fixing or a finisher card. For Regent, a star-amped premium attack on turn 3-4 is a textbook burst answer when you've banked stars for it.
 - **Reset:** apply Vulnerable / Weak / Strength-down before the scaling tips lethal, AND have block to bridge until you tip the math back. Pure block without a damage answer just delays the loss.
 
 If the deck has neither, do not take the elite path; take the rest path and pray the boss is in the burst-friendly half of the pool. (Boss pool per `encounters_act1_boss.json` etc.)
@@ -93,36 +91,19 @@ This rule is in the protocol but bears repeating because v0 had three runs that 
 - **Run cap is 1000 commands** (was 500 in v0). If you approach 900 and you're still in Act 1, you are likely in a non-progressing state — re-evaluate before spending the remaining budget.
 - **Halt without a record is a benchmark failure.** Write the run record before stopping, even on rate-limit / error-streak. (Per `agent-prompt.md`.)
 
-## Character notes (one paragraph each, deliberately neutral on card picks)
-
-### Ironclad
-
-Block-and-burst character. Strength scales attacks; the deck wants enough block to survive long enough for Strength gains and Heavy Blade / Bludgeon to land lethal. The two failure modes seen most in v0 are (a) under-blocking against 20+ unblocked turns at boss, and (b) hand-index drift when chaining 0-cost or attack-doubling effects (One-Two Punch, Pommel Strike). Re-read state after every card in long turns. Tender and Vulnerable are first-class concerns — they modify damage math both ways and `state.combat.player.powers[]` is where you check.
-
-### Silent
-
-Discard / poison / dexterity character. Dies when the agent forgets that discarding cards from hand can change what's available to play next turn — discard-pile shuffle isn't intuitive. Poison scaling is the alternative damage path; if your deck has neither block density (Dex stacking + Defends) nor poison scaling, you have no plan against an Act 1 boss. The hand-index drift problem is amplified by frequent draw / discard effects. Re-read after every meaningful card play, not just between turns.
-
-### Defect
-
-Orb-pilot character. Channel orbs into the queue (`combat.orbs`, capacity `combat.orbCapacity`); each orb has `passiveVal` (per-turn effect) and `evokeVal` (effect on evoke). Frost = block, Lightning = damage, Dark = scaling damage, Plasma = energy. The decisions Defect agents missed in v0 were almost all "what is currently in the orb queue" — the v0 helper script didn't display it; v1's does. **Read it.** The most reliable Act 1 boss answer is Frost density + a Lightning burst card; alternatives exist but they require setup turns the boss may not give you.
-
-### Regent
+## Character notes — Regent
 
 Star-spending character. `combat.stars` is your primary resource; it's a small int that you spend on premium effects. Several Regent cards generate stars (e.g. Solar Strike), some events refund stars on certain choices, and the boss rewards usually include star-cost amplifiers. The v0 Regent runs that died early (run03, run13, run18) all spent stars greedily early without reading the elite/boss pool first; the Regent runs that lasted longer treated stars as "save for the encounter you've identified the answer for." Stars at 0 is a **valid game state** — `read-combat.ps1` displays the line — and means your next turn is starless, not buggy.
-
-### Necrobinder
-
-Summon character. The Osty ally is the entire character mechanic — Osty soaks any unblocked damage **before** the player does, so Osty's HP is functionally part of your HP pool, not a side resource. Read `combat.allies[]` every turn; treat low-Osty-HP the same way you'd treat low player HP. When Osty dies, the next unblocked attack hits the player at full force — never end a turn with Osty at 1-2 HP and no plan to either block the incoming damage, heal Osty, or re-summon. The starter deck has low burst — long fights against Illusion-revive enemies (Eye With Teeth, Wrigglers) snowball badly without Vulnerable / Weak application or burst draw. The pre-elite encounter-JSON read is especially important for this character because its damage profile is "consistent low" — fights that look winnable on turn 1 can grind through Osty + player HP over 7+ rounds (run04 lost this way to Fogmog at full HP, then died next floor on residual).
 
 ---
 
 ## What this file deliberately does not contain
 
-- **Card-pick advice.** "Take Inflame over Strike+" is strategy contamination.
+- **Card-pick advice.** "Take Solar Strike over Lunar Wave" is strategy contamination.
 - **Specific seed knowledge.** The agent does not know the seed-to-Act-1 mapping; that's in `seeds-v1.md` (operator-only).
 - **Bridge IPC quirks beyond Rule 1.** Those live in `docs/bridge-protocol-notes.md` and `SKILL.md`.
 - **Cost / time guidance.** Already in `agent-prompt.md` resource-calibration block.
+- **Priors for other characters.** They live in `priors-IRONCLAD.md`, `priors-SILENT.md`, `priors-DEFECT.md`, `priors-NECROBINDER.md` and are out-of-whitelist for a Regent run.
 
 ---
 
