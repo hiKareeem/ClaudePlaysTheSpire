@@ -360,6 +360,29 @@ if (-not (Test-Path $promptFile)) {
 
 $promptText = Get-Content -Raw -LiteralPath $promptFile
 
+# Slice between the "Copy from here" and "Copy to here" markers so the
+# operator-facing header (purpose, placeholder legend, "for B0 use the
+# other file" notes) is NOT pasted into the agent's first message. Only
+# the contract body the agent should see is sent.
+#
+# Markers are matched as ATX headings starting with one or more `#`,
+# followed by any whitespace, then the literal phrase. This is forgiving
+# of stray double-spaces that have crept into templates historically.
+$startRegex = [regex]'(?m)^#+\s+Copy\s+from\s+here\b.*$'
+$endRegex   = [regex]'(?m)^#+\s+Copy\s+to\s+here\b.*$'
+$startMatch = $startRegex.Match($promptText)
+$endMatch   = $endRegex.Match($promptText)
+if (-not $startMatch.Success -or -not $endMatch.Success -or $endMatch.Index -le $startMatch.Index) {
+    throw "Prompt template '$promptFile' is missing a 'Copy from here' / 'Copy to here' heading pair; cannot slice agent-visible body."
+}
+# Body starts on the line AFTER the start marker, ends BEFORE the end
+# marker. Trim trailing whitespace and re-add a single trailing newline.
+$bodyStart = $startMatch.Index + $startMatch.Length
+# Skip the newline immediately following the start-marker line, if any.
+if ($bodyStart -lt $promptText.Length -and $promptText[$bodyStart] -eq "`r") { $bodyStart++ }
+if ($bodyStart -lt $promptText.Length -and $promptText[$bodyStart] -eq "`n") { $bodyStart++ }
+$promptText = $promptText.Substring($bodyStart, $endMatch.Index - $bodyStart).Trim() + "`r`n"
+
 # Plain string replacement (not -replace) so values containing regex
 # metacharacters or `$1`-style backreferences are handled literally.
 # Order matters: substitute <CHARACTER> first so any leftover

@@ -187,4 +187,4 @@ summary.
 
 **Begin by reading `docs/benchmark/protocol-v1.md`.**
 
-##  Copy to here
+## Copy to here
