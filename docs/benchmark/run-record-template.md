@@ -10,6 +10,7 @@ opencode_session_id: ses_xxxxxxxxxxxxxxxxxxxxxx
 character: IRONCLAD            # IRONCLAD | SILENT | DEFECT | REGENT | NECROBINDER
 ascension: 0
 seed: null
+seed_label: null               # alpha | beta | gamma (paired-3-seeds cohort tag, trial-v1+ only; null for trial-v0)
 start_time_utc: YYYY-MM-DDTHH:MM:SSZ
 end_time_utc: YYYY-MM-DDTHH:MM:SSZ
 duration_minutes: 0.0

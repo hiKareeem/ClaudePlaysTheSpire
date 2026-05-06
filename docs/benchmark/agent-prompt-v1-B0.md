@@ -6,7 +6,7 @@ copy-pastes into the agent's first message at the start of a B0
 it's part of the user message itself, so the agent commits to the trial
 contract before reading anything.
 
-The launcher fills in four placeholders:
+The launcher fills in five placeholders:
 
 - `<RUN_ID>`           - e.g. `2026-05-12-claude-opus-4.7-ironclad-run042`
 - `<CHARACTER>`        - `IRONCLAD` | `SILENT` | `DEFECT` | `REGENT` | `NECROBINDER`
@@ -14,6 +14,10 @@ The launcher fills in four placeholders:
 - `<SEED>`             - 64-bit unsigned decimal, sourced from
                          `docs/benchmark/trial-v1-schedule.csv`. Reproducibility
                          depends on this seed being passed verbatim to `StartRun`.
+- `<SEED_LABEL>`       - `alpha` | `beta` | `gamma` (paired-seed cohort tag,
+                         derived from the schedule row's `k_index`). Required
+                         in the run record front-matter; identifies the
+                         shared seed within the (character, k_index) cohort.
 
 Knowledge condition for this prompt is **B0-with-priors**. The agent is
 permitted (and required) to read the per-character priors document
@@ -39,6 +43,7 @@ SpireBridge.
 - Knowledge condition: `B0-with-priors`
 - Model: `<MODEL_SLUG>`
 - Seed: `<SEED>`
+- Seed label: `<SEED_LABEL>`
 
 **Your contract is `docs/benchmark/protocol-v1.md`. Read it first, in
 full, before doing anything else.** That document is the authoritative
@@ -150,6 +155,7 @@ once `screen` is `GameOver` or `Victory`, before stopping):**
 - [ ] `docs/benchmark/runs/<RUN_ID>.md` exists on disk
 - [ ] front-matter `run_id` matches `<RUN_ID>` exactly
 - [ ] front-matter `seed` matches `<SEED>` exactly
+- [ ] front-matter `seed_label` matches `<SEED_LABEL>` exactly
 - [ ] front-matter `character`, `model`, `ascension`,
       `knowledge_condition` (`B0-with-priors`), `bridge_version`,
       `game_version`, `spec_version` (`trial-v1`) filled

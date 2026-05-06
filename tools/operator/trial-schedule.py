@@ -20,7 +20,13 @@ CSV columns:
   character       IRONCLAD | SILENT | DEFECT | REGENT | NECROBINDER
   prior           A0 (zero-shot) | B0 (with priors)
   k_index         1..k (which repeat within the cell)
-  seed            64-bit unsigned game seed
+  seed            64-bit unsigned game seed -- PAIRED across the cohort:
+                  rows that share (character, k_index) share the same seed,
+                  so every (model x prior) combo in a cell plays the same
+                  three maps. This is the core of the paired-3-seeds design.
+  seed_label      alpha (k=1) | beta (k=2) | gamma (k=3). Same label inside
+                  a (character, seed) row group; required by the run-record
+                  schema (protocol-v1 sec.149).
   slot_assigned   slot label set when start-run claims it ("" until claimed)
   status          pending | in_progress | complete | failed
   started_utc     ISO timestamp when start-run claimed it
@@ -72,14 +78,32 @@ DEFAULT_K = 3
 DEFAULT_SEED_SOURCE = 20260506  # date trial-v1 was scheduled
 
 
-def stable_seed_for_cell(seed_source: int, model: str, character: str, prior: str, k_index: int) -> int:
-    """Derive a deterministic 64-bit unsigned seed from cell coordinates.
+# k_index -> seed_label mapping per protocol-v1 sec.149.
+# Trial-v1 uses k=3 -> alpha/beta/gamma. If k>3 the labels run out and we
+# fall back to "k<n>" for the extras; that's intentional, the operator
+# should notice and either bump the spec or stop overshooting k.
+SEED_LABELS = ["alpha", "beta", "gamma"]
+
+
+def seed_label_for_k(k_index: int) -> str:
+    if 1 <= k_index <= len(SEED_LABELS):
+        return SEED_LABELS[k_index - 1]
+    return f"k{k_index}"
+
+
+def stable_seed_for_cell(seed_source: int, character: str, k_index: int) -> int:
+    """Derive a deterministic 64-bit unsigned seed from (character, k_index).
+
+    Critically, the seed depends on character + k_index ONLY -- not on
+    model or prior. This is what makes the trial paired: every
+    (model, prior) combo in the (character, k_index) cohort plays the
+    same map.
 
     SHA-256 is overkill but free, eliminates any concern about RNG-state
     contamination across cells, and lets us regenerate any single cell
     without re-rolling the whole schedule.
     """
-    key = f"{seed_source}|{model}|{character}|{prior}|{k_index}".encode("utf-8")
+    key = f"{seed_source}|{character}|{k_index}".encode("utf-8")
     digest = hashlib.sha256(key).digest()
     # Take first 8 bytes as unsigned 64-bit. Game accepts up to 2^63 in some
     # paths so we mask to 63 bits to stay safe across all StS2 seed inputs.
@@ -165,7 +189,7 @@ def build_schedule(
         for character in characters:
             for prior in priors:
                 for k_index in range(1, k + 1):
-                    seed = stable_seed_for_cell(seed_source, model, character, prior, k_index)
+                    seed = stable_seed_for_cell(seed_source, character, k_index)
                     cells.append(
                         {
                             "trial": trial,
@@ -174,6 +198,7 @@ def build_schedule(
                             "prior": prior,
                             "k_index": k_index,
                             "seed": seed,
+                            "seed_label": seed_label_for_k(k_index),
                             "slot_assigned": "",
                             "status": "pending",
                             "started_utc": "",
@@ -200,6 +225,7 @@ def write_csv(path: Path, rows: list[dict]) -> None:
         "prior",
         "k_index",
         "seed",
+        "seed_label",
         "slot_assigned",
         "status",
         "started_utc",
@@ -284,7 +310,7 @@ def main(argv: list[str]) -> int:
         print()
         print("DRY RUN. First 5 rows:")
         for r in rows[:5]:
-            print(f"  run_id={r['run_id']:3d}  {r['model']:24s}  {r['character']:11s}  {r['prior']}  k={r['k_index']}  seed={r['seed']}")
+            print(f"  run_id={r['run_id']:3d}  {r['model']:24s}  {r['character']:11s}  {r['prior']}  k={r['k_index']} ({r['seed_label']:5s})  seed={r['seed']}")
         return 0
 
     if out_path.exists() and not args.force:

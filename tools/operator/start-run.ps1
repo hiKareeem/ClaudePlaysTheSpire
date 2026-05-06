@@ -22,7 +22,8 @@
          2026-05-06-claude-opus-4.7-ironclad-run047) and select the
          prompt template by the row's `prior` column (A0 -> v1-A0.md,
          B0 -> v1-B0.md).
-      6. Substitute <RUN_ID>, <CHARACTER>, <MODEL_SLUG>, <SEED> into the
+      6. Substitute <RUN_ID>, <CHARACTER>, <MODEL_SLUG>, <SEED>, <SEED_LABEL>
+         into the
          template body and copy the result to the clipboard via
          Set-Clipboard.
       7. Spawn a new pwsh window titled
@@ -292,6 +293,17 @@ try {
     $claimedPrior    = $target.prior
     $claimedKIndex   = $target.k_index
     $claimedSeed     = $target.seed
+    $claimedSeedLabel = if ($target.PSObject.Properties.Match('seed_label').Count -gt 0) { $target.seed_label } else { '' }
+    if (-not $claimedSeedLabel) {
+        # Pre-paired-seed schedules omit seed_label; derive it from k_index
+        # using the same alpha/beta/gamma mapping the generator now writes.
+        $claimedSeedLabel = switch ([int]$claimedKIndex) {
+            1 { 'alpha' }
+            2 { 'beta' }
+            3 { 'gamma' }
+            default { "k$claimedKIndex" }
+        }
+    }
 
     if ($PSCmdlet.ShouldProcess("schedule row $claimedRunId", "claim for slot $Slot")) {
         $target.slot_assigned = $Slot
@@ -391,6 +403,7 @@ $promptText = $promptText.Substring($bodyStart, $endMatch.Index - $bodyStart).Tr
 $filled = $promptText.Replace('<CHARACTER>',  $claimedCharacter)
 $filled = $filled.Replace('<MODEL_SLUG>',     $claimedModel)
 $filled = $filled.Replace('<SEED>',           $claimedSeed)
+$filled = $filled.Replace('<SEED_LABEL>',     $claimedSeedLabel)
 $filled = $filled.Replace('<RUN_ID>',         $wallRunId)
 
 if ($filled -match '<[A-Z_]+>') {
@@ -456,7 +469,7 @@ if (-not $NoTail) {
 # Banner
 # ---------------------------------------------------------------------
 Write-Banner -Title "SLOT $Slot - run $claimedRunId ($claimedPrior)" -Color Cyan -Lines @(
-    "  run_id      : $claimedRunId  (k=$claimedKIndex)"
+    "  run_id      : $claimedRunId  (k=$claimedKIndex / $claimedSeedLabel)"
     "  wall run-id : $wallRunId"
     "  model       : $claimedModel"
     "  character   : $claimedCharacter"
