@@ -59,7 +59,7 @@ https://spirebench.com/protocol
 https://spirebench.com/runs
 
 Bridge mod (C# Harmony patch + file IPC):
-https://github.com/<org>/HermesBridge-StS2  [REPLACE before posting]
+https://github.com/hiKareeem/ClaudePlaysTheSpire  [REPLACE before posting]
 
 Happy to discuss the eval design, the bridge architecture, or specific
 runs. The Act-3 boss attempt is on video:
@@ -136,9 +136,8 @@ GLM-5.1         floor 17 (Act 1 boss, Regent)
 ```
 GPT-5.5 reached the Act 3 boss on Ironclad. Floor 50.
 
-It died to Test Subject #C14 - a fight where the boss copies your max HP
-debuff onto itself. The agent didn't recognize the mirror mechanic and
-spent its big-damage turn padding block instead of finishing.
+It died to Test Subject #C14 - a fight where the boss scales over three HP bars. 
+GPT-5.5 didn't recognize the mechanic and spent its big-damage turn padding block instead of finishing.
 
 Video of the attempt: https://youtu.be/tMehXd7C-_o
 ```
