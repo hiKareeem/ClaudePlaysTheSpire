@@ -446,5 +446,5 @@ Write-Banner -Title "SLOT $Slot - run $claimedRunId ($claimedPrior)" -Color Cyan
     '    1. Confirm StS2 is on the title screen for this slot.'
     '    2. Open a FRESH OpenCode session (no carry-over context).'
     '    3. Paste the clipboard contents and press enter.'
-    '    4. When the run terminates, run finalize-and-scaffold.ps1.'
+    '    4. When the run terminates, run finalize-and-complete.ps1.'
 )
