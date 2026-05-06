@@ -258,4 +258,5 @@ These must be resolved before kickoff:
 Source documents:
 - `docs/benchmark/protocol.md` — trial-v0 (predecessor).
 - `docs/benchmark/trial-v0-findings-audit.md` — empirical justification for every v1 delta above.
-- `docs/benchmark/agent-prompt.md` — operator-pasted run preamble; will get a v1 variant.
+- `docs/benchmark/agent-prompt-v0.md` — trial-v0 run preamble (frozen, archival).
+- `docs/benchmark/agent-prompt-v1-A0.md` / `agent-prompt-v1-B0.md` — trial-v1 run preambles (zero-shot / with priors).

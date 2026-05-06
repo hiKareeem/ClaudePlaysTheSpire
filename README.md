@@ -174,7 +174,7 @@ Copy-Item "$root\docs\data\changelogs\*.json" "$stage\docs\data\changelogs\"
 New-Item -ItemType Directory -Force "$stage\docs\benchmark\charts" | Out-Null
 Copy-Item @(
   "$root\docs\benchmark\protocol.md",
-  "$root\docs\benchmark\agent-prompt.md",
+  "$root\docs\benchmark\agent-prompt-v0.md",
   "$root\docs\benchmark\run-record-template.md",
   "$root\docs\benchmark\trial-v0-summary.md",
   "$root\docs\benchmark\runs.csv",
