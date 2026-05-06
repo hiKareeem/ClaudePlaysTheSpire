@@ -158,15 +158,39 @@ def load_all_floor_histories(
 
 
 def final_floor(row: pd.Series) -> float:
-    """Resolve final_floor from death_floor or victory_floor.
+    """Resolve final_floor as deepest cumulative floor reached.
 
-    Returns NaN if neither is set (e.g. operator-halt with no recorded
-    floor). Callers should drop NaN before plotting.
+    Trial-v0 records authored ``death_floor`` inconsistently: earlier
+    records (gpt-5.5, deepseek, gemini, glm) wrote cumulative depth
+    (e.g. run11 death_floor=50 = Act 3 boss), while later records
+    (claude cohort) wrote in-act depth which resets at each Act boundary
+    (e.g. run25 death_floor=16 in-act, total_floors=33 cumulative).
+
+    ``total_floors`` is the cumulative count of completed floors, which
+    is one less than the deepest floor entered when the run ended in
+    combat (e.g. run11 total_floors=48 because the agent died on F48
+    without completing F49/F50, but death_floor=50 because the Act 3
+    boss combat began on F50).
+
+    The deepest floor reached is therefore ``max(death_floor,
+    total_floors)``: cumulative-encoded ``death_floor`` wins for early
+    records, while ``total_floors`` rescues the in-act-encoded claude
+    cohort. For victories, ``victory_floor`` takes precedence.
+
+    Returns NaN if no floor field is set (e.g. operator-halt with no
+    recorded floor). Callers should drop NaN before plotting.
     """
     if pd.notna(row.get("victory_floor")):
         return float(row["victory_floor"])
-    if pd.notna(row.get("death_floor")):
-        return float(row["death_floor"])
+    candidates = []
+    df_v = row.get("death_floor")
+    tf_v = row.get("total_floors")
+    if pd.notna(df_v) and float(df_v) > 0:
+        candidates.append(float(df_v))
+    if pd.notna(tf_v) and float(tf_v) > 0:
+        candidates.append(float(tf_v))
+    if candidates:
+        return max(candidates)
     return float("nan")
 
 
@@ -298,19 +322,26 @@ def chart_floor_reach_distribution(df: pd.DataFrame, out_path: Path) -> bool:
 
 
 def chart_death_heatmap(df: pd.DataFrame, out_path: Path) -> bool:
-    """Heatmap: rows = models, cols = death floor, cell = death count."""
+    """Heatmap: rows = models, cols = cumulative death floor, cell = count.
+
+    Uses ``final_floor`` (cumulative across acts) rather than the raw
+    ``death_floor`` column, since the latter was authored inconsistently
+    across trial-v0 (some records cumulative, some in-act). See
+    :func:`final_floor` for the resolution order.
+    """
     deaths = df[df["halt_reason"] == "death"].copy()
-    deaths = deaths.dropna(subset=["death_floor", "model"])
+    deaths["final_floor"] = deaths.apply(final_floor, axis=1)
+    deaths = deaths.dropna(subset=["final_floor", "model"])
     if deaths.empty:
         return False
 
     models = sorted(deaths["model"].unique(),
                     key=lambda m: list(MODEL_COLORS).index(m) if m in MODEL_COLORS else 999)
-    floor_max = max(DEFAULT_FLOOR_MAX, int(deaths["death_floor"].max()))
+    floor_max = max(DEFAULT_FLOOR_MAX, int(deaths["final_floor"].max()))
     grid = np.zeros((len(models), floor_max), dtype=int)
     for _, r in deaths.iterrows():
         mi = models.index(r["model"])
-        fi = int(r["death_floor"]) - 1
+        fi = int(r["final_floor"]) - 1
         if 0 <= fi < floor_max:
             grid[mi, fi] += 1
 

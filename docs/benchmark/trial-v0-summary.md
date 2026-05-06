@@ -5,8 +5,8 @@ re-run the script after appending new runs to `runs.csv`._
 
 ## Overview
 
-- Total runs: **22** (with run records: 22)
-- Halt reasons: death=19, stall=3
+- Total runs: **25** (with run records: 25)
+- Halt reasons: death=22, stall=3
 - Models tested: claude-opus-4.7, deepseek-v4-pro, gemini-3.1-pro-preview, glm-5.1, gpt-5.5
 - Characters: DEFECT, IRONCLAD, NECROBINDER, REGENT, SILENT
 
@@ -14,10 +14,10 @@ re-run the script after appending new runs to `runs.csv`._
 
 | model | runs | victories | deaths | rate_limits | median_floor | max_floor | mean_tokens_total | mean_cost_usd | mean_wall_seconds |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| gpt-5.5 | 5 | 0 | 4 | 0 | 22.50 | 50.00 | 134052550 | 0.00 | 46834 |
+| gpt-5.5 | 5 | 0 | 4 | 0 | 28.00 | 50.00 | 134052550 | 0.00 | 46834 |
+| claude-opus-4.7 | 5 | 0 | 5 | 0 | 23.00 | 33.00 | 67519126 | 0.00 | 17138 |
 | deepseek-v4-pro | 5 | 0 | 4 | 0 | 20.00 | 23.00 | 94419575 | 14.57 | 4751 |
-| gemini-3.1-pro-preview | 5 | 0 | 4 | 0 | 16.00 | 17.00 | 23490997 | 0.00 | 3485 |
-| claude-opus-4.7 | 2 | 0 | 2 | 0 | 15.00 | 16.00 | 66855074 | 0.00 | 8338 |
+| gemini-3.1-pro-preview | 5 | 0 | 4 | 0 | 17.00 | 19.00 | 23490997 | 0.00 | 3485 |
 | glm-5.1 | 5 | 0 | 5 | 0 | 15.00 | 17.00 | 31671320 | 0.00 | 6181 |
 
 
@@ -25,11 +25,11 @@ re-run the script after appending new runs to `runs.csv`._
 
 | character | runs | victories | median_floor | max_floor |
 | --- | --- | --- | --- | --- |
-| IRONCLAD | 5 | 0 | 16.00 | 50.00 |
-| SILENT | 5 | 0 | 16.00 | 28.00 |
-| DEFECT | 4 | 0 | 17.00 | 22.00 |
-| REGENT | 4 | 0 | 17.00 | 17.00 |
-| NECROBINDER | 4 | 0 | 17.00 | 23.00 |
+| IRONCLAD | 5 | 0 | 20.00 | 50.00 |
+| SILENT | 5 | 0 | 17.00 | 28.00 |
+| DEFECT | 5 | 0 | 22.00 | 41.00 |
+| REGENT | 5 | 0 | 17.00 | 19.00 |
+| NECROBINDER | 5 | 0 | 17.00 | 23.00 |
 
 
 ## Charts
